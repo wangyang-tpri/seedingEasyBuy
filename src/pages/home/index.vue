@@ -1,4 +1,5 @@
 <template>
+
   <z-paging
     ref="paging"
     bg-color="#f5f6fa"
@@ -7,7 +8,17 @@
     :refresher-enabled="false"
     :auto-clean-list-when-reload="false"
   >
+    
     <div class="header" slot="top">
+        <!-- <u--input v-model="value" type="text" class="search_input" placeholder="请输入苗木名称" border="surround"></u--input> -->
+        <div style="width: 90%; margin-left: 5%;" >
+            <u--input
+	    placeholder="请输入苗木名称"
+	    suffixIcon="search"
+	    suffixIconStyle="color: #909399"
+        shape="circle"
+        ></u--input>
+        </div> 
       <!-- <img
         class="title_img"
         mode="widthFix"
@@ -127,6 +138,7 @@ export default {
       ],
       noticeList: [],
       exemplarList: [],
+      value: '',
     };
   },
   onShow () {
@@ -197,6 +209,19 @@ export default {
   background-position: top center;
   background-size: 100%;
   background-repeat: no-repeat;
+  margin-top: 80rpx;
+  .search_input {
+    border-radius: 100rpx;
+    border-color: blue !important;
+    margin-left: 52rpx !important;
+    width: 80%;
+    margin-top: 100rpx;
+  }
+  .search_icon {
+    position: absolute;
+    right: 90rpx;
+    top: 30rpx;
+  }
   .title_img {
     padding-top: calc(var(--status-bar-height) + 24rpx);
     width: 406rpx;
@@ -217,7 +242,7 @@ export default {
       // width: 100%;
       &__line {
         @include flex;
-        margin-top: 20px;
+        margin-top: 10px;
         // overflow: hidden;
         width: 100%;
         &__item {
@@ -283,7 +308,7 @@ export default {
   }
 }
 .content {
-  // margin-top: 80rpx;
+  margin-top: 10rpx;
   /* #ifndef MP-WEIXIN */
   padding-bottom: 20rpx;
   /* #endif */

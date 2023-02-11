@@ -1,0 +1,35 @@
+<!--
+ * @Author: liu_x25@hdec.com
+ * @Date: 2022-06-23 14:55:38
+ * @LastEditors: liu_x25@hdec.com
+ * @LastEditTime: 2022-06-27 08:48:46
+ * @Description: 
+-->
+<div class="bar_c">
+    <div class="bar">
+        <div class="item" wx:for="{{list}}" wx:key="index">
+            <div class="big" wx:if="{{item.isBig}}" bindtap="showMoreHandler">
+                <image class="add" src="/static/icon/add.png" class="{{showMore ? 'add on' : 'add'}}" />
+            </div>
+            <div class="normal" wx:else bindtap="switchTab" data-path="{{item.pagePath}}" data-index="{{index}}">
+                <image class="img" hidden="{{ currentTab != index }}" src="{{item.selectedIconPath}}" />
+                <image class="img" hidden="{{ currentTab == index }}" src="{{item.iconPath}}" />
+                <div class="{{currentTab == index? 'text on' : 'text'}}">
+                    {{ item.text }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="mask_c" wx:if="{{showMore}}" bindtap="close" catch:touchmove="close2">
+        <div class="mask" catchtap="close2">
+            <div class="function_list">
+                <div class="item" wx:for="{{functionList}}" wx:key="index" bindtap="jumpTo" data-path="{{item.url}}">
+                    <div class="image">
+                        <image class="img" src="{{item.image}}" />
+                    </div>
+                    <div class="name">{{ item.name }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

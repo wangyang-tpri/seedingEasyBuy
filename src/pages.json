@@ -1,0 +1,105 @@
+{
+	"pages": [
+		{
+			"path": "pages/home/index",
+			"style": {
+				"navigationBarTextStyle": "white",
+				"navigationStyle": "custom",
+				"disableScroll": true
+			}
+		},
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTextStyle": "white",
+				"navigationStyle": "custom",
+				"disableScroll": true
+			}
+		},
+		{
+			"path": "pages/user/index",
+			"style": {
+				"navigationBarTitleText": "个人中心",
+				"navigationBarTextStyle": "white",
+				"navigationStyle": "custom",
+				"disableScroll": true
+			}
+		},
+		{
+			"path": "pages/user/login",
+			"style": {
+				"navigationBarBackgroundColor": "#1560D6",
+				"navigationBarTextStyle": "white",
+				"navigationStyle": "custom",
+				"disableScroll": true
+			}
+		},
+		{
+			"path": "pages/user/scoreRank",
+			"style": {
+				"navigationBarTitleText": "我的积分"
+			}
+		},
+		{
+			"path": "pages/user/scoreRankList",
+			"style": {
+				"navigationBarTitleText": "积分排行榜"
+			}
+		},
+
+		{
+			"path": "pages/treeRecord/index",
+			"style": {
+				"navigationBarTitleText": "苗木记录"
+			}
+		},
+        {
+            "path": "pages/treeRecord/detail",
+            "style": {
+                "navigationBarTitleText": "记录详情"
+            }
+        },
+        {
+            "path": "pages/treeSearch/index",
+            "style": {
+                "navigationBarTitleText": "苗木搜索"
+            }
+        },
+        {
+            "path": "pages/treeDetail/index",
+            "style": {
+                "navigationBarTitleText": "苗木详情"
+            }
+        }
+	],
+	"tabBar": {
+		"color": "#989898",
+		"selectedColor": "#1560D6",
+		"borderStyle": "black",
+		"backgroundColor": "#ffffff",
+		"custom": true,
+		"list": [
+			{
+				"pagePath": "pages/home/index",
+				"iconPath": "static/icon/home.png",
+				"selectedIconPath": "static/icon/home_on.png",
+				"text": "首页"
+			},
+			{
+				"pagePath": "pages/user/index",
+				"iconPath": "static/icon/user.png",
+				"selectedIconPath": "static/icon/user_on.png",
+				"text": "我的"
+			}
+		]
+	},
+	"easycom": {
+		"^u-(.*)": "uview-ui/components/u-$1/u-$1.vue"
+	},
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "苗木",
+		"navigationBarBackgroundColor": "#ffffff",
+		"backgroundColor": "#F5F6FA"
+	}
+}

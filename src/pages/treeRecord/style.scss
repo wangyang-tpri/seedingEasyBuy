@@ -1,0 +1,47 @@
+.container {
+    padding: 10rpx 30rpx 0;
+    overflow-y: auto;
+
+    .key {
+        color: black;
+        margin: 20rpx 0;
+        font-size: 28rpx;
+    }
+
+    .item2 {
+        z-index: 99999;
+        border-bottom: 1px solid #eee;
+
+        .key {
+            padding: 20rpx 0rpx;
+            position: relative;
+            color: #333333;
+            font-size: 15px;
+        }
+
+        .textArea {
+            width: 100%;
+            background-color: #fff;
+
+            .boxAll {
+                width: 92%;
+                margin-left: 4%;
+                padding-bottom: 30rpx;
+
+                .likeTextarea {
+                    // width: 100%;
+                    height: 200rpx;
+                    border: 1rpx solid #ccc;
+                    border-radius: 10rpx;
+                    white-space: pre-wrap;
+                    color: #606266;
+                    padding: 16rpx;
+                    font-size: 30rpx;
+                    line-height: 34rpx;
+                    overflow-y: auto;
+                    vertical-align: middle;
+                }
+            }
+        }
+    }
+}

@@ -1,10 +1,3 @@
-/*
- * @Author: liu_x25@hdec.com
- * @Date: 2022-06-16 10:54:38
- * @LastEditors: liu_x25@hdec.com
- * @LastEditTime: 2022-06-25 15:08:33
- * @Description: 
- */
 import { getUserDetail, getDictionary, postPhone } from "@/api/common";
 export const actions = {
     login ({ dispatch }, data) {

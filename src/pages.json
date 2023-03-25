@@ -77,13 +77,18 @@
 		"selectedColor": "#1560D6",
 		"borderStyle": "black",
 		"backgroundColor": "#ffffff",
-		"custom": true,
 		"list": [
 			{
 				"pagePath": "pages/home/index",
 				"iconPath": "static/icon/home.png",
 				"selectedIconPath": "static/icon/home_on.png",
 				"text": "首页"
+			},
+            {
+				"pagePath": "pages/treeRecord/index",
+				"iconPath": "static/icon/home.png",
+				"selectedIconPath": "static/icon/home_on.png",
+				"text": "苗木记录"
 			},
 			{
 				"pagePath": "pages/user/index",

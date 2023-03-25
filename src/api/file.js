@@ -1,12 +1,3 @@
-/*
- * @Author: xie_sm
- * @Date: 2022-03-16 08:57:40
- * @LastEditors: xie_sm
- * @LastEditTime: 2022-03-17 14:42:47
- * @FilePath: \mobile-template\src\api\file.js
- * @Description: 参考凤翎web端，存储服务相关接口
- *
- */
 import request from "@/utils/request";
 
 /**

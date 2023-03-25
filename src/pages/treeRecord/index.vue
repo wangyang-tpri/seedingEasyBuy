@@ -125,7 +125,7 @@
         <div style="margin-top: 80rpx">
 
             <u-button text="提交" type="primary"></u-button>
-            <u-button text="重置" type="error" style="margin-top: 40rpx"></u-button>
+            <u-button text="重置" type="error" style="margin-top: 100rpx"></u-button>
         </div>
       </u-form>
     </view>
@@ -255,8 +255,6 @@
       };
     },
     mounted () {
-    //   this.$refs.form.setRules(this.rules);
-      // 设置时间选择器
     },
   };
   </script>

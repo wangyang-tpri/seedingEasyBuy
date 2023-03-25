@@ -1,19 +1,14 @@
-/*
- * @Author: liu_x25@hdec.com
- * @Date: 2022-04-28 11:30:07
- * @LastEditors: liu_x25@hdec.com
- * @LastEditTime: 2022-08-09 10:26:18
- * @Description: 
- */
 import Vue from 'vue'
 import App from './App'
 import uView from "uview-ui";
 import store from './store';
 import Mixin from './mixins';
+import request  from './utils/request';
 Vue.use(uView);
 Vue.mixin(Mixin);
 Vue.prototype.$store = store
 Vue.config.productionTip = false
+Vue.prototype.$request = request
 App.mpType = 'app';
 
 

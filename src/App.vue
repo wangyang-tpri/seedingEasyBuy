@@ -1,10 +1,3 @@
-<!--
- * @Author: liu_x25@hdec.com
- * @Date: 2022-04-28 11:30:07
- * @LastEditors: liu_x25@hdec.com
- * @LastEditTime: 2022-06-27 10:19:11
- * @Description: 
--->
 <script>
 import { mapActions } from "vuex";
 export default {

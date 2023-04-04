@@ -7,56 +7,64 @@
                 <u--input placeholder="请输入苗木名称" suffixIcon="search" suffixIconStyle="color: #909399"
                     shape="circle"></u--input>
             </div>
-            <div class="iconToBox">
-                <view class="scroll-list__line" v-for="(item, index) in functionList" :key="index">
-                    <view class="scroll-list__line__item" v-for="(item1, index1) in item" :key="index1"
-                        @click="jumpTo(item1.url)">
-                        <image class="scroll-list__line__item__image" :src="item1.image" mode=""></image>
-                        <text class="scroll-list__line__item__text">{{
-                            item1.name
-                        }}</text>
-                    </view>
-                </view>
-            </div>
         </div>
 
         <div class="content">
             <div class="title">
                 <div class="name">记录详情</div>
-                <div class="more" @click="jumpTo('/pages/treeRecord/detail')">
-                    更多<span>></span>
-                </div>
             </div>
+            <view class="con_table">
+                <view class="table_header">
+                    <text style="width: 40%"> 树名</text>
+                    <text style="width: 40%">时间</text>
+                    <text style="width: 20%">操作</text>
+                </view>
+                <view>
+                    <view v-for="( item, index ) in treeData" :key="index" class="table_header"
+                        style="border-bottom: 1px dotted green; background-color: #ddd;">
+                        <text style="width: 40%">
+                            {{ item.name }}
+                        </text>
+                        <text style="width: 40%">
+                            {{ item.box_date.split('T')[0] }}
+                        </text>
+                        <text class="info_detail" @click="jumpTo(`/pages/treeDetail/index?messageId=${item.message_id}`)">
+                            详情
+                        </text>
+                    </view>
+                </view>
+
+            </view>
         </div>
     </z-paging>
 </template>
 <script>
-import { getNotice, getExemplaryDeeds } from "@/api/partyBuilding";
 export default {
+    components: {
+    },
     data() {
         return {
             functionList: [
-                [
-                    {
-                        image: "/static/images/记录.png",
-                        name: "苗木记录",
-                        url: "/pages/treeRecord/index",
-                    },
-                ],
+                {
+                    image: "/static/images/记录.png",
+                    name: "苗木记录",
+                    url: "./pages/treeRecord/index",
+                },
+
             ],
             noticeList: [],
             exemplarList: [],
             value: '',
+            treeData: '',
         };
     },
     onShow() {
-
+        this._initData()
     },
     mounted() {
     },
     methods: {
         jumpTo(url) {
-            console.log( '测试')
             if (!url) {
                 return false;
             }
@@ -68,25 +76,26 @@ export default {
             uni.showLoading({
                 title: "加载中",
             });
-            this.$request('/user/info', 'POST', '').then((res) => {
-                console.log( res )
+            this.$request('/stored/info', 'GET', '').then((res) => {
+                console.log(res)
+                console.log(res[1].data)
+                this.treeData = res[1].data;
             })
         },
     },
-    onLoad(){
-        console.log( 50 ) 
-        this._initData()
+    onLoad() {
+
     }
 };
 </script>
 <style lang="scss" scoped>
 .header {
-    height: 350rpx;
+    height: 100rpx;
     position: relative;
     background-position: top center;
     background-size: 100%;
     background-repeat: no-repeat;
-    margin-top: 80rpx;
+    margin-top: 120rpx;
 
     .search_input {
         border-radius: 100rpx;
@@ -214,7 +223,7 @@ export default {
         .name {
             padding-left: 22rpx;
             font-size: 34rpx;
-            font-weight: 500;
+            font-weight: bold;
             color: #333333;
             line-height: 48rpx;
             position: relative;
@@ -247,6 +256,28 @@ export default {
 
             span {
                 padding-left: 10rpx;
+            }
+        }
+    }
+
+    .con_table {
+        width: 90%;
+        padding: 20rpx 5%;
+
+        .table_header {
+            font-size: 18px;
+            display: flex;
+            justify-content: space-between;
+            background-color: #ccc;
+            height: 36px;
+            line-height: 36px;
+            padding: 0 20px;
+            text-align: center;
+
+            .info_detail {
+                color: blue;
+                width: 20%;
+                text-align: center;
             }
         }
     }

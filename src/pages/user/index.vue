@@ -1,10 +1,3 @@
-<!--
- * @Author: liu_x25@hdec.com
- * @Date: 2022-04-28 16:08:44
- * @LastEditors: liu_x25@hdec.com
- * @LastEditTime: 2022-06-27 10:24:23
- * @Description: 
--->
 <template>
   <div class="container">
     <div class="back">
@@ -47,7 +40,7 @@
           </div>
         </div>
       </div>
-      <div class="list">
+      <!-- <div class="list">
         <div class="item" @tap="jumpTo('/pages/user/scoreRank')">
           <div class="name">
             <image class="img" src="/static/user/score.png" />我的积分
@@ -63,7 +56,7 @@
           </div>
           <div class="more">></div>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>

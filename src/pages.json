@@ -1,15 +1,15 @@
 {
 	"pages": [
+        {
+            "path": "pages/index/index",
+            "style": {
+                "navigationBarTextStyle": "white",
+                "navigationStyle": "custom",
+                "disableScroll": true
+            }
+        },
 		{
 			"path": "pages/home/index",
-			"style": {
-				"navigationBarTextStyle": "white",
-				"navigationStyle": "custom",
-				"disableScroll": true
-			}
-		},
-		{
-			"path": "pages/index/index",
 			"style": {
 				"navigationBarTextStyle": "white",
 				"navigationStyle": "custom",
@@ -86,8 +86,8 @@
 			},
             {
 				"pagePath": "pages/treeRecord/index",
-				"iconPath": "static/icon/home.png",
-				"selectedIconPath": "static/icon/home_on.png",
+				"iconPath": "static/icon/record_on.png",
+				"selectedIconPath": "static/images/记录.png",
 				"text": "苗木记录"
 			},
 			{

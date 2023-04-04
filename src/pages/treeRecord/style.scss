@@ -2,6 +2,27 @@
     padding: 10rpx 30rpx 0;
     overflow-y: auto;
 
+    .title {
+        height: 80rpx;
+        line-height: 80rpx;
+        font-weight: bold;
+        font-size: 30rpx;
+        position: relative;
+        &::after {
+            position: absolute;
+            content: "";
+            left: -20rpx;
+            top: 0;
+            bottom: 0;
+            margin: auto;
+
+            width: 6rpx;
+            height: 35rpx;
+            background: #027aff;
+            border-radius: 3rpx;
+        }
+    }
+
     .key {
         color: black;
         margin: 20rpx 0;
@@ -23,6 +44,7 @@
             width: 100%;
             background-color: #fff;
             padding-top: 36rpx;
+
             .boxAll {
                 width: 92%;
                 margin-left: 4%;

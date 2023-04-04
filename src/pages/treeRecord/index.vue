@@ -1,263 +1,204 @@
 <template>
     <div class="container">
-    <view>
-      <u-form
-        labelPosition="left"
-        :model="formData"
-        ref="form"
-        :borderBottom="true"
-      >
-        <u-form-item
-          label="苗木名称"
-          prop="vehicleNumber"
-          borderBottom
-        >
-          <u--input
-            v-model="formData.vehicleNumber"
-            placeholder="请输入"
-            border="none"
-            inputAlign="right"
-          />
-        </u-form-item>
-        <u-form-item label="苗木地址" prop="alarmLocation" borderBottom>
-          <div  style="display: flex; width: 100%">
-            <u--text
-              :text="formData.alarmLocation || '请选择'"
-              :color="formData.alarmLocation ? '#000' : '#ccc'"
-              align="right"
-            ></u--text>
-            <u-icon
-              slot="right"
-              name="arrow-right"
-              color="#ccc"
-            ></u-icon>
-          </div>
-        </u-form-item>
-        <u-form-item label="苗木直径" prop="alarmType" borderBottom>
-          <u--input
-            border="true"
-            readonly
-            inputAlign="right"
-            placeholder="请选择"
-          ></u--input>
-        </u-form-item>
-        <u-form-item label="苗木名称" prop="alarmPersonFullName" borderBottom>
-          <div style="display: flex; width: 100%">
-            <u--input
-              placeholder="请选择"
-              v-model="formData.alarmPersonFullName"
-              inputAlign="right"
-              border="none"
-              readonly
-            ></u--input>
-            <u-icon
-              slot="right"
-              name="arrow-right"
-              color="#ccc"
-            ></u-icon>
-          </div>
-        </u-form-item>
-        <u-form-item
-          label="苗木图片"
-          prop="vehicleName"
-          borderBottom
-        >
-          <u--input
-            v-model="formData.vehicleName"
-            placeholder="请输入"
-            border="none"
-            inputAlign="right"
-          />
-        </u-form-item>
-        <u-form-item
-          label="记录人"
-          prop="vehicleName"
-          borderBottom
-        >
-          <u--input
-            v-model="formData.vehicleName"
-            placeholder="请输入"
-            border="none"
-            inputAlign="right"
-          />
-        </u-form-item>
-        <u-form-item
-          label="手机号"
-          prop="vehicleName"
-          borderBottom
-        >
-          <u--input
-            v-model="formData.vehicleName"
-            placeholder="请输入"
-            border="none"
-            inputAlign="right"
-          />
-        </u-form-item>
-        <div class="item2">
-          <div class="key">备注</div>
-          <div class="textArea">
-            <div class="boxAll">
-              <div
-                class="likeTextarea"
-                @click="isShowTextarea = true"
-                v-show="!isShowTextarea"
-                :style="[
-                  formData.remark
-                    ? { color: '#606266' }
-                    : { color: 'rgb(192,196,204)' },
-                ]"
-              >
-                {{ formData.remark || "请输入" }}
-              </div>
-              <u--textarea
-                :focus="isShowTextarea"
-                @blur="isShowTextarea = false"
-                v-if="isShowTextarea"
-                v-model="formData.remark"
-                confirmType="done"
-                placeholder="请输入"
-                height="100"
-                maxlength="300"
-              ></u--textarea>
-            </div>
-          </div>
-        </div>
+        <view class="title">
+            苗圃详情</view>
+        <view>
+            <u--form labelPosition="left" :model="formData" :borderBottom="true">
+                <u-form-item label="苗圃位置" prop="nurLocation" borderBottom>
+                    <div style="display: flex; width: 100%" @click="showAddressHandler">
+                        <u--text :text="formData.nurLocation || '请选择苗圃位置'" :color="formData.nurLocation ? '#000' : '#ccc'"
+                            align="right"></u--text>
+                        <u-icon slot="right" name="arrow-right" color="#ccc"></u-icon>
+                    </div>
+                </u-form-item>
+                <u-form-item label="手机号" prop="nurPhone" borderBottom>
+                    <u--input v-model="formData.nurPhone" placeholder="请输入" border="none" inputAlign="right" />
+                </u-form-item>
+                <view class="title">
+                    苗木详情</view>
+                <u-form-item label="苗木名称" prop="nurName" borderBottom>
+                    <u--input v-model="formData.nurName" placeholder="请输入手机号" border="none" inputAlign="right" />
+                </u-form-item>
+                <u-form-item label="苗木价格" prop="nurPri" borderBottom>
+                    <u--input v-model="formData.nurPri" placeholder="请输入苗木价格" border="none" inputAlign="right" />
+                </u-form-item>
+                <u-form-item label="苗木直径" prop="nurSize" borderBottom>
+                    <u--input border="none" inputAlign="right" placeholder="请输入苗木直径" v-model="formData.nurSize"></u--input>
+                </u-form-item>
+                <u-form-item label="苗木图片" prop="vehicleName" borderBottom>
+                    <u-upload :fileList="picList" @afterRead="afterRead" @delete="deletePic" name="1" :maxCount="3"
+                        uploadIconColor="red" :previewFullImage="true"></u-upload>
+                </u-form-item>
+            </u--form>
+        </view>
         <div style="margin-top: 80rpx">
-
-            <u-button text="提交" type="primary"></u-button>
-            <u-button text="重置" type="error" style="margin-top: 100rpx"></u-button>
+            <u-button text="提交" type="primary" @click="submit"></u-button>
         </div>
-      </u-form>
-    </view>
+        <div style="margin-top: 40rpx">
+            <u-button text="重置" type="error" @click="clear"></u-button>
+        </div>
+
     </div>
-  </template>
+</template>
   
-  <script>
-  import { getFlowInstance } from "@/api/bpm";
-  import jadeImageUpload from "@/components/jade-image-upload/jade-image-upload.vue";
-  import uploadImage from "@/components/uploadImage";
-  export default {
+<script>
+import { getFlowInstance } from "@/api/bpm";
+import jadeImageUpload from "@/components/jade-image-upload/jade-image-upload.vue";
+import uploadImage from "@/components/uploadImage";
+export default {
     components: { jadeImageUpload, uploadImage },
-    data () {
-      return {
-        showTarget: false,
-        showEvent: false,
-        showTime: false,
-        showUser: false,
-        showEventGrade: false,
-        minDate: Date.now(),
-        isShowTextarea: false,
-        userType: "",
-        alarmTime: "",
-        formData: {
-          jointDefenseCaptainFullname: "", //联防队长
-          jointDefenseCaptain: "",
-          alarmTime: new Date().getTime(),
-          alarmLocation: "",
-          remark: "",
-          inspectUserFullname: "", //审批人
-          dealUserFullname: "", //执行人
-          dealUserName: "",
-          inspectUser: "",
-          notifyMethod: JSON.stringify(["0"]),
-          alarmType: "2",
-          executorFeedbackResult: "", //执行人反馈结果
-          executorFeedbackPicture: "", //  执行人反馈图片
-          executorFeedbackTime: "", //  执行人反馈时间
-          approvalComments: "", // 审批意见
-          approvalTime: "", //  审批时间
-          lastApproverName: "",
-          lastApproverFullname: "",
-          equipmentNumber: "",
-          approverName1: "",
-          approverFullname1: "",
-          vehicleNumber: "",
-          picture: "",
-          alarmPersonName: "",
-          alarmPersonFullName: "",
-          reserveUser: "",
-          vehicleName: "",
-          alertorType: "",
-          targetType: "",
-        },
-        rules: {
-          alarmPersonFullName: [
-            {
-              required: true,
-              message: "请选择报警人",
-              trigger: ["change"],
+    data() {
+        return {
+            minDate: Date.now(),
+            formData: {
+                nurLocation: '',
+                nurPhone: '',
+                nurSize: '',
+                nurName: '',
+                nurPic: '',
+                nurPri: ''
             },
-          ],
-          eventName: [
-            {
-              required: true,
-              message: "请输入事件名称",
-              trigger: ["change"],
+            rules: {
+                nurName: [
+                    {
+                        required: true,
+                        message: "请填写苗木名称",
+                        trigger: ["change"],
+                    },
+                ],
+                nurPhone: [
+                    {
+                        validator: (rule, value, callback) => {
+                            return uni.$u.test.mobile(value);
+                        },
+                        message: "手机号码不正确",
+                        trigger: ["change"],
+                    },
+                ],
+                nurLocation: [
+                    {
+                        required: true,
+                        message: "请选择苗圃位置",
+                        trigger: ["change"],
+                    },
+                ],
+                jointDefenseCaptainFullname: [
+                    {
+                        required: true,
+                        message: "请选择联防队长",
+                        trigger: ["change"],
+                    },
+                ],
+                vehicleNumber: [
+                    {
+                        require: true,
+                        message: "请输入车牌号",
+                        trigger: ["change"],
+                    },
+                    {
+                        require: true,
+                        validator: (role, val, cb) => {
+                            return this.$u.test.carNo(val);
+                        },
+                        message: "请输入正确的车牌号",
+                        trigger: ["blur"],
+                    },
+                ],
+                vehicleName: [
+                    {
+                        required: true,
+                        message: "请输入叉车车牌号",
+                        trigger: ["change"],
+                    },
+                ],
             },
-          ],
-          eventReportUserPhone: [
-            {
-              validator: (rule, value, callback) => {
-                return uni.$u.test.mobile(value);
-              },
-              message: "上报人手机号码不正确",
-              trigger: ["change"],
-            },
-          ],
-          alarmLocation: [
-            {
-              required: true,
-              message: "请选择报警位置",
-              trigger: ["change"],
-            },
-          ],
-          jointDefenseCaptainFullname: [
-            {
-              required: true,
-              message: "请选择联防队长",
-              trigger: ["change"],
-            },
-          ],
-          vehicleNumber: [
-            {
-              require: true,
-              message: "请输入车牌号",
-              trigger: ["change"],
-            },
-            {
-              require: true,
-              validator: (role, val, cb) => {
-                return this.$u.test.carNo(val);
-              },
-              message: "请输入正确的车牌号",
-              trigger: ["blur"],
-            },
-          ],
-          vehicleName: [
-            {
-              required: true,
-              message: "请输入叉车车牌号",
-              trigger: ["change"],
-            },
-          ],
-        },
-        taskList: ["UserTask_2", "UserTask_3"],
-        showExecutorInfo: false, //流程全部走完时显示 走到审核人时也要显示 处理人处理完成
-        showAuditorInfo: false, //流程全部走完时显示 审核人已经审批
-        uploadImage: false,
-        hasImage: false,
-        userRole: "",
-        showOtherMsg: false,
-        formBizId: this.bizId,
-        processState: "",
-        imageList: [],
-        showCloth: false,
-      };
+            picList: [],
+            messageId: '',
+        };
     },
-    mounted () {
+    methods: {
+        getRandom(num) {
+            this.messageId = Math.floor((Math.random()+Math.floor(Math.random()*9+1))*Math.pow(10,num-1))+ '';
+        },
+        showAddressHandler() {
+            uni.chooseLocation({
+                success: (res) => {
+                    this.formData.nurLocation = res.address;
+                },
+            });
+        },
+        clear() {
+            for (let key in this.formData) {
+                this.formData[key] = '';
+            }
+        },
+        submit(data) {
+            this.formData.messageId = this.messageId;
+            this.$request('/stored/info', 'POST', this.formData).then((res) => {
+                console.log(res)
+            })
+        },
+        async afterRead(event) {
+            let lists = [].concat(event.file)
+            let fileListLen = this.picList.length
+            lists.map((item) => {
+                this.picList.push({
+                    ...item,
+                    status: 'uploading',
+                    message: '上传中'
+                })
+            })
+            for (let i = 0; i < lists.length; i++) {
+                const result = await this.uploadFilePromise(lists[i].url, this.messageId)
+                console.log( result )
+                let item = this.picList[fileListLen]
+                this.picList.splice(fileListLen, 1, Object.assign(item, {
+                    status: 'success',
+                    message: '',
+                    url: result.data
+                }))
+                fileListLen++
+            }
+            console.log( this.picList)
+        },
+        uploadFilePromise(url, messageId) {
+            return new Promise((resolve, reject) => {
+                uni.uploadFile({
+                    url: 'http://10.218.72.73:8081/upload/image',
+                    filePath: url,
+                    name: 'file',
+                    header: { 'content-type': 'multipart/form-data' },
+                    formData: {
+                        user: 'test',
+                        messageId: messageId
+                    },
+                    success: (res) => {
+                        setTimeout(() => {
+                            resolve( JSON.parse( res.data ) )
+                        }, 1000)
+                    },
+                    fail: (res) => {
+                        console.log(res)
+                    }
+                });
+            })
+        },
+        deletePic(event) {
+            this.picList.splice(event.index, 1)
+        }
     },
-  };
-  </script>
-  <style lang="scss" scoped>
-  @import "./style.scss";
-  </style>
+    onLoad(){
+        this.getRandom( 10 )
+    },
+    mounted() {
+    },
+};
+</script>
+<style>
+/deep/.u-upload__button {
+    background-color: rgb(218, 213, 213) !important;
+}
+</style>
+<style lang="scss" scoped>
+@import "./style.scss";
+</style>

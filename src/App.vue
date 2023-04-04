@@ -1,37 +1,11 @@
 <script>
-import { mapActions } from "vuex";
 export default {
     onLaunch: function () {
-        this.getUserCode();
-        if (uni.getStorageSync("token")) {
-            this.getUserInfo();
-        } else {
+        if( uni.getStorageSync('phone')) {
             uni.reLaunch({
-                // url: "/pages/user/login",
                 url: '/pages/home/index'
-            });
+            })
         }
-    },
-
-    watch: {
-        isLogin(val) {
-            if (val) {
-                this.getDictionary();
-            }
-        },
-    },
-    methods: {
-        ...mapActions(["getUserInfo", "getDictionary"]),
-        getUserCode() {
-            uni.login({
-                provider: "weixin",
-                success: (res) => {
-                    if (res.code) {
-                      uni.setStorageSync('wxCode', res.code);
-                    }
-                },
-            });
-        },
     },
     onShow: function () {
     },

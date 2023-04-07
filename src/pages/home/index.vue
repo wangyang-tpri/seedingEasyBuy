@@ -3,9 +3,9 @@
         :auto-clean-list-when-reload="false">
 
         <div class="header" slot="top">
-            <div style="width: 90%; margin-left: 5%;">
+            <div style="width: 90%; margin-left: 5%; margin-top: 150rpx">
                 <u--input placeholder="请输入苗木名称" suffixIcon="search" suffixIconStyle="color: #909399"
-                    shape="circle"></u--input>
+                    shape="circle" v-model="searchName" @change="search" @clear="_initData" custom-style="background:#fff;"></u--input>
             </div>
         </div>
 
@@ -56,6 +56,7 @@ export default {
             exemplarList: [],
             value: '',
             treeData: '',
+            searchName: ''
         };
     },
     onShow() {
@@ -64,6 +65,15 @@ export default {
     mounted() {
     },
     methods: {
+        search(){
+            this.$request('/keyWord/search', 'GET', {'searchName': this.searchName }).then(( res ) => {
+                if (res) {
+                    this.treeData = res[1].data;
+                } else {
+
+                }
+            })
+        },
         jumpTo(url) {
             if (!url) {
                 return false;
@@ -77,8 +87,6 @@ export default {
                 title: "加载中",
             });
             this.$request('/stored/info', 'GET', '').then((res) => {
-                console.log(res)
-                console.log(res[1].data)
                 this.treeData = res[1].data;
             })
         },
@@ -90,13 +98,12 @@ export default {
 </script>
 <style lang="scss" scoped>
 .header {
-    height: 100rpx;
+    height: 300rpx;
     position: relative;
     background-position: top center;
     background-size: 100%;
     background-repeat: no-repeat;
-    margin-top: 120rpx;
-
+    background-image: url(https://img.huamu.com/data/upload/article/201807/12/201807120919327838.jpg);
     .search_input {
         border-radius: 100rpx;
         border-color: blue !important;
@@ -204,7 +211,7 @@ export default {
 }
 
 .content {
-    margin-top: 10rpx;
+    margin-top: 20rpx;
     /* #ifndef MP-WEIXIN */
     padding-bottom: 20rpx;
     /* #endif */

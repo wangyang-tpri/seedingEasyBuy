@@ -1,11 +1,11 @@
 <script>
 export default {
     onLaunch: function () {
-        if( uni.getStorageSync('phone')) {
-            uni.reLaunch({
-                url: '/pages/home/index'
-            })
-        }
+        // if( uni.getStorageSync('phone')) {
+        //     uni.reLaunch({
+        //         url: '/pages/home/index'
+        //     })
+        // }
     },
     onShow: function () {
     },

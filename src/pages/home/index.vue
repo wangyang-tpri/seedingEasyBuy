@@ -67,11 +67,7 @@ export default {
     methods: {
         search(){
             this.$request('/keyWord/search', 'GET', {'searchName': this.searchName }).then(( res ) => {
-                if (res) {
-                    this.treeData = res[1].data;
-                } else {
-
-                }
+                res && (this.treeData = res[1].data);
             })
         },
         jumpTo(url) {
@@ -83,9 +79,7 @@ export default {
             });
         },
         _initData() {
-            uni.showLoading({
-                title: "加载中",
-            });
+            this.searchName = ''
             this.$request('/stored/info', 'GET', '').then((res) => {
                 this.treeData = res[1].data;
             })
@@ -124,90 +118,7 @@ export default {
         margin: 0 50rpx 20rpx;
     }
 
-    .iconToBox {
-        width: 690rpx;
-        height: 180rpx;
-        background: #ffffff;
-        box-shadow: 0rpx 4rpx 20rpx 0rpx rgba(192, 200, 210, 0.38);
-        border-radius: 12rpx;
-        position: relative;
-        // top: 50%;
-        left: 50%;
-        transform: translate(-50%, 10%);
 
-        .scroll-list {
-            @include flex(column);
-
-            // width: 100%;
-            &__line {
-                @include flex;
-                margin-top: 10px;
-                // overflow: hidden;
-                width: 100%;
-
-                &__item {
-                    width: 235rpx;
-                    text-align: center;
-                    padding: 30rpx 0 0 0;
-                    font-size: 28rpx;
-                    color: #333333;
-                    text-shadow: 0px 4rpx 20rpx rgba(192, 200, 210, 0.38);
-                    margin-top: 20rpx;
-
-                    &__image {
-                        margin: 0 auto;
-                        display: flex;
-                        justify-content: center;
-                        width: 30px;
-                        height: 30px;
-                    }
-
-                    &__text {
-                        margin-top: 5px;
-                        color: $u-content-color;
-                        font-size: 12px;
-                        text-align: center;
-                    }
-
-                    &--no-margin-right {
-                        margin-right: 0;
-                    }
-                }
-            }
-        }
-    }
-
-    .function_list {
-        display: flex;
-        align-items: center;
-        flex-wrap: wrap;
-        margin: 20rpx 30rpx 20rpx;
-        background: #fff;
-        padding-bottom: 30rpx;
-        box-shadow: 0px 4rpx 20rpx 0px rgba(192, 200, 210, 0.38);
-        border-radius: 12rpx;
-
-        .item {
-            width: 25%;
-            text-align: center;
-            padding: 30rpx 0 0 0;
-            font-size: 28rpx;
-            color: #333333;
-            text-shadow: 0px 4rpx 20rpx rgba(192, 200, 210, 0.38);
-
-            .image {
-                margin: 0 auto;
-                display: flex;
-                justify-content: center;
-
-                .img {
-                    width: 64rpx;
-                    height: 64rpx;
-                    margin-bottom: 12rpx;
-                }
-            }
-        }
-    }
 }
 
 .content {

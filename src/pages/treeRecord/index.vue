@@ -123,6 +123,7 @@ export default {
         showAddressHandler() {
             uni.chooseLocation({
                 success: (res) => {
+                    /**这个res中应该有许多的内容 还需要将经纬度信息存储到数据库中 */
                     this.formData.nurLocation = res.address;
                 },
             });
@@ -135,7 +136,6 @@ export default {
         submit(data) {
             this.formData.messageId = this.messageId;
             this.$request('/stored/info', 'POST', this.formData).then((res) => {
-                console.log(res)
             })
         },
         async afterRead(event) {
@@ -150,7 +150,6 @@ export default {
             })
             for (let i = 0; i < lists.length; i++) {
                 const result = await this.uploadFilePromise(lists[i].url, this.messageId)
-                console.log( result )
                 let item = this.picList[fileListLen]
                 this.picList.splice(fileListLen, 1, Object.assign(item, {
                     status: 'success',
@@ -159,7 +158,6 @@ export default {
                 }))
                 fileListLen++
             }
-            console.log( this.picList)
         },
         uploadFilePromise(url, messageId) {
             return new Promise((resolve, reject) => {
@@ -178,7 +176,6 @@ export default {
                         }, 1000)
                     },
                     fail: (res) => {
-                        console.log(res)
                     }
                 });
             })
@@ -195,7 +192,7 @@ export default {
 };
 </script>
 <style>
-/deep/.u-upload__button {
+::v-deep .u-upload__button {
     background-color: rgb(218, 213, 213) !important;
 }
 </style>

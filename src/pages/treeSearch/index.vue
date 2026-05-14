@@ -1,5 +1,5 @@
 <template>
-    <div>苗木搜索</div>
+  <div>苗木搜索</div>
 </template>
 <script>
 </script>

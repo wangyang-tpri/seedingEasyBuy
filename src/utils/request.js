@@ -1,35 +1,47 @@
-/**
-* uni.request请求
-* 
-*/
-let config = {
-  baseUrl: 'http://10.218.72.80:8081',
-  header: { 'content-type': 'application/x-www-form-urlencoded' }
+const config = {
+  baseUrl: process.env.VUE_APP_BASE_API || 'http://localhost:8080/api',
+  timeout: 15000
 }
-let request = (url = '', type = 'GET', data) => {
-  uni.showLoading({
-    title: "加载中",
-  });
+
+function request(url = '', method = 'GET', data) {
+  const token = uni.getStorageSync('token')
+  const header = {
+    'content-type': 'application/json'
+  }
+  if (token) {
+    header['Authorization'] = 'Bearer ' + token
+  }
   return new Promise((resolve, reject) => {
     uni.request({
       url: config.baseUrl + url,
-      method: type,
+      method: method,
       data: data,
       dataType: 'json',
-      header: config.header,
-    }).then((res) => {
-      setTimeout(() => {
-        uni.hideLoading()
-      }, 200)
-      resolve(res)
-    }, (res) => {
-      if (res.statusCode == 401) {
-        uni.reLaunch({
-          url: "/pages/index"
-        })
+      header: header,
+      timeout: config.timeout,
+      success: (res) => {
+        const result = res.data
+        if (result && result.code === 200) {
+          resolve(result.data)
+        } else if (result && result.code === 401) {
+          uni.removeStorageSync('token')
+          uni.reLaunch({ url: '/pages/user/login' })
+          reject(result)
+        } else {
+          const msg = (result && result.message) || '请求失败'
+          reject({ message: msg })
+        }
+      },
+      fail: (err) => {
+        reject(err)
       }
-      reject(res)
     })
   })
 }
+
 export default request
+
+export const get = (url, params) => request(url, 'GET', params)
+export const post = (url, data) => request(url, 'POST', data)
+export const put = (url, data) => request(url, 'PUT', data)
+export const del = (url, data) => request(url, 'DELETE', data)

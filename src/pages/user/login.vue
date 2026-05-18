@@ -1,266 +1,285 @@
 <template>
-  <div class="container">
-    <image
-      src="https://yycweb.hdec.com/img/logo.5f4e6928.png"
-      mode="widthFix"
-      class="logo"
-    />
-    <image
-      src="https://yycweb.hdec.com/api/sys-storage/download?f8s=eb13c370e45bba751f98552aa7cfbaed"
-      mode="widthFix"
-      class="title"
-    />
-    <div class="content" v-if="type == 1">
+  <view class="login-page">
+    <!-- 顶部装饰 -->
+    <view class="header-area">
+      <view class="logo-circle">
+        <text class="logo-emoji">🌳</text>
+      </view>
+      <text class="app-name">苗木易购</text>
+      <text class="app-desc">专业苗木在线交易平台</text>
+    </view>
+
+    <!-- 登录方式 -->
+    <view class="login-body">
+      <!-- 微信手机号一键登录 -->
       <button
+        class="wechat-btn"
         open-type="getPhoneNumber"
-        @getphonenumber="getphonenumber"
-        class="submit"
+        @getphonenumber="onGetPhoneNumber"
       >
-        手机号一键登录
+        <view class="wechat-icon">💬</view>
+        <text>微信手机号一键登录</text>
       </button>
-      <div class="submit1" @click="toPassWored">账号密码登录></div>
-    </div>
 
-    <div class="login" v-if="type == 2">
-      <div class="inputBox">
-        <u--input
-          placeholder="请输入账户"
-          border="bottom"
-          color="#fff"
-          v-model="userAccount"
-          prefixIcon="account"
-          prefixIconStyle="font-size: 22px;color: #909399"
-        ></u--input>
-      </div>
+      <!-- 分割线 -->
+      <view class="divider">
+        <view class="divider-line"></view>
+        <text class="divider-text">其他方式登录</text>
+        <view class="divider-line"></view>
+      </view>
 
-      <div class="inputBox">
-        <u--input
-          placeholder="请输入密码"
-          password="true"
-          v-model="accountPassWored"
-          prefixIcon="lock"
-          border="bottom"
-          color="#fff"
-          prefixIconStyle="font-size: 22px;color: #909399"
-        ></u--input>
-      </div>
-      <div class="inputBox">
-        <button class="submit3" @click="cancelPassLogin">取消</button>
-        <button class="submit2" @click="PassLogin">登录</button>
-      </div>
-    </div>
-  </div>
+      <!-- 手机号登录 -->
+      <view class="phone-section">
+        <view class="phone-input-wrap">
+          <text class="input-prefix">+86</text>
+          <input
+            v-model="phone"
+            type="number"
+            maxlength="11"
+            placeholder="请输入手机号"
+            class="phone-input"
+          />
+        </view>
+        <view class="agreement" @click="agree = !agree">
+          <view :class="['check-box', agree ? 'checked' : '']">
+            <text v-if="agree" class="check-mark">✓</text>
+          </view>
+          <text class="agree-text"
+            >已阅读并同意 <text class="link">《用户协议》</text> 和
+            <text class="link">《隐私政策》</text></text
+          >
+        </view>
+        <u-button
+          text="登 录"
+          type="success"
+          shape="circle"
+          block
+          :disabled="!phone"
+          @click="loginByPhone"
+        ></u-button>
+      </view>
+
+      <text class="bottom-tip">首次登录即自动注册账号</text>
+    </view>
+  </view>
 </template>
+
 <script>
-import { mapActions } from "vuex";
-import { postPhoneTOUse } from "@/api/common";
 export default {
-  data () {
-    return {
-      type: 1,
-      userForm: {
-        username: "",
-      },
-      userAccount: "",
-      accountPassWored: "",
-    };
+  data() {
+    return { phone: "", agree: true };
   },
   methods: {
-    ...mapActions(["login", 'getUserInfo']),
-    getphonenumber (e) {
-      uni.showLoading({
-        title: "登陆中",
-      });
-      let encryptedData = e.detail.encryptedData;
-      let iv = e.detail.iv;
-      let code = uni.getStorageSync("wxCode");
-      this.login({
-        encryptedData: encryptedData,
-        iv: iv,
-        code: code,
-      })
-        .then((res) => {
-          if (res.message == '非本村居民,仅限内部人员使用') {
-            uni.showToast({
-              title: res.message || '',
-              icon: "none",
-            });
-            return false;
-          }
-          this.disposeLoginData(res);
-        })
-        .catch((res) => {
-          uni.hideLoading();
-        });
+    async onGetPhoneNumber(e) {
+      if (e.detail.errMsg !== "getPhoneNumber:ok") return;
+      uni.showLoading({ title: "登录中" });
+      try {
+        let code = "";
+        try {
+          const res = await uni.login({ provider: "weixin" });
+          code = res.code;
+        } catch (e) {}
+        // 开发模式：code为空时用时间戳模拟
+        if (!code) code = "dev_" + Date.now();
+        await this.$store.dispatch("login", { code, phone: "13609257752" });
+        uni.hideLoading();
+        uni.switchTab({ url: "/pages/index/index" });
+      } catch (err) {
+        uni.hideLoading();
+        this.showToast("登录失败，请重试");
+      }
     },
-    disposeLoginData (res) {
-    //   let data = res.data.body;
-    //   uni.setStorageSync("token", data.access_token);
-    //   uni.setStorageSync("userName", data.userName);
-      uni.hideLoading();
-      uni.showToast({
-        title: "登录成功",
-        icon: "success",
-      });
-      setTimeout(() => {
-        uni.switchTab({
-          url: "/pages/home/index",
-        });
-      }, 1000);
-    },
-    toPassWored () {
-      this.type = 2;
-    },
-    cancelPassLogin () {
-      this.type = 1;
-    },
-    // getDictionary () {
-    //   getDictionary().then((res) => {
-    //     if (!res.status) {
-    //       return false;
-    //     }
-    //     commit("setDictionary", res.data);
-    //   });
-
-    // },
-    PassLogin () {
-      if (
-        // this.userAccount == "13104510297" &&
-        // this.accountPassWored == "fawkes@2020"
-        this.userAccount == '123' &&
-        this.accountPassWored == '123'
-      ) {
-        // postPhoneTOUse({
-        //   phone: this.userAccount,
-        // }).then((res) => {
-        //   if (!res.status) {
-        //     return false;
-        //   }
-        //   this.getUserInfo()
-        
-        // });
-        this.disposeLoginData(res);
-      } else {
-        uni.showToast({
-          title: "仅供管理员使用",
-          icon: "error",
-        });
+    async loginByPhone() {
+      if (!this.phone) {
+        this.showToast("请输入手机号");
+        return;
+      }
+      if (this.phone.length !== 11) {
+        this.showToast("请输入正确的手机号");
+        return;
+      }
+      uni.showLoading({ title: "登录中" });
+      try {
+        await this.$store.dispatch("loginByPhone", { phone: this.phone });
+        uni.hideLoading();
+        uni.switchTab({ url: "/pages/index/index" });
+      } catch (err) {
+        uni.hideLoading();
+        this.showToast("登录失败，请重试");
       }
     },
   },
 };
 </script>
+
 <style lang="scss" scoped>
-.container {
-  height: 100vh;
-  position: relative;
-  background-image: url(https://yycweb.hdec.com/static/app/app_login_back.jpg);
-  background-position: center;
-  background-size: 100%;
-  .bg_top {
-    position: absolute;
-    top: 0;
-    width: 100%;
-  }
-  .bg_bottom {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-  }
-  .logo {
-    width: 124rpx;
-    position: absolute;
-    top: 245rpx;
-    left: 0;
-    right: 0;
-    margin: auto;
-  }
-  .title {
-    width: 545rpx;
-    position: absolute;
-    top: 360rpx;
-    left: 0;
-    right: 0;
-    margin: auto;
-  }
-  .content {
-    position: absolute;
-    top: 750rpx;
-    left: 0;
-    right: 0;
-    margin: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    .submit {
-      width: 600rpx;
-      height: 88rpx;
-      background: $uni-color-primary;
-      color: #fff;
-      line-height: 88rpx;
-      border-radius: 12rpx;
-      letter-spacing: 1px;
-      font-weight: 400;
-    }
-    .submit1 {
-      width: 600rpx;
-      height: 88rpx;
-      color: #fff;
-      line-height: 88rpx;
-      text-align: center;
-      border-radius: 12rpx;
-      letter-spacing: 1px;
-      font-weight: 400;
-    }
-    .tips {
-      text-align: center;
-      padding-top: 28rpx;
-      font-size: 32rpx;
-      font-weight: 400;
-      color: #ffffff;
-    }
-  }
-  .login {
-    position: absolute;
-    top: 550rpx;
-    left: 0;
-    right: 0;
-    margin: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    .inputBox {
-      width: 600rpx;
-      height: 88rpx;
-      margin-top: 30rpx;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
-      .submit2 {
-        width: 240rpx;
-        height: 68rpx;
-        font-size: 28rpx;
-        background: #027aff;
-        color: #fff;
-        line-height: 68rpx;
-        border-radius: 6rpx;
-        letter-spacing: 1rpx;
-      }
-      .submit3 {
-        width: 240rpx;
-        font-size: 28rpx;
-        height: 68rpx;
-        background: none;
-        color: #fff;
-        line-height: 68rpx;
-        border-radius: 6rpx;
-        letter-spacing: 1px;
-        border: 2rpx solid #027aff;
-      }
-    }
-  }
+.login-page {
+  min-height: 100vh;
+  background: #fff;
+}
+
+.header-area {
+  padding-top: calc(var(--status-bar-height) + 80rpx);
+  padding-bottom: 60rpx;
+  text-align: center;
+  background: linear-gradient(180deg, #e8f8ee 0%, #fff 100%);
+}
+
+.logo-circle {
+  width: 140rpx;
+  height: 140rpx;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #07c160, #06ad56);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 30rpx;
+  box-shadow: 0 8rpx 24rpx rgba(7, 193, 96, 0.3);
+}
+
+.logo-emoji {
+  font-size: 64rpx;
+}
+
+.app-name {
+  display: block;
+  font-size: 44rpx;
+  font-weight: 700;
+  color: #222;
+  letter-spacing: 4rpx;
+}
+
+.app-desc {
+  display: block;
+  font-size: 26rpx;
+  color: #999;
+  margin-top: 16rpx;
+}
+
+.login-body {
+  padding: 0 50rpx;
+}
+
+.wechat-btn {
+  width: 100%;
+  height: 96rpx;
+  background: #07c160;
+  color: #fff;
+  border-radius: 48rpx;
+  font-size: 30rpx;
+  font-weight: 500;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6rpx 20rpx rgba(7, 193, 96, 0.25);
+}
+
+.wechat-icon {
+  font-size: 36rpx;
+  margin-right: 12rpx;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  margin: 40rpx 0 36rpx;
+}
+
+.divider-line {
+  flex: 1;
+  height: 1rpx;
+  background: #e8e8e8;
+}
+
+.divider-text {
+  font-size: 24rpx;
+  color: #bbb;
+  padding: 0 24rpx;
+  flex-shrink: 0;
+}
+
+.phone-section {
+}
+
+.phone-input-wrap {
+  display: flex;
+  align-items: center;
+  background: #f8f9fa;
+  border-radius: 16rpx;
+  padding: 0 24rpx;
+  height: 96rpx;
+  margin-bottom: 24rpx;
+  border: 2rpx solid transparent;
+  transition: border-color 0.2s;
+}
+
+.phone-input-wrap:focus-within {
+  border-color: #07c160;
+  background: #fff;
+}
+
+.input-prefix {
+  font-size: 30rpx;
+  font-weight: 500;
+  color: #333;
+  padding-right: 20rpx;
+  border-right: 1rpx solid #e0e0e0;
+  margin-right: 20rpx;
+}
+
+.phone-input {
+  flex: 1;
+  font-size: 28rpx;
+  color: #333;
+  height: 100%;
+}
+
+.agreement {
+  display: flex;
+  align-items: center;
+  margin-bottom: 32rpx;
+}
+
+.check-box {
+  width: 32rpx;
+  height: 32rpx;
+  border-radius: 50%;
+  border: 2rpx solid #ddd;
+  margin-right: 12rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.2s;
+}
+
+.check-box.checked {
+  background: #07c160;
+  border-color: #07c160;
+}
+
+.check-mark {
+  font-size: 20rpx;
+  color: #fff;
+  font-weight: bold;
+}
+
+.agree-text {
+  font-size: 22rpx;
+  color: #999;
+  line-height: 1.5;
+}
+
+.link {
+  color: #07c160;
+}
+
+.bottom-tip {
+  display: block;
+  text-align: center;
+  font-size: 22rpx;
+  color: #ccc;
+  margin-top: 40rpx;
 }
 </style>

@@ -1,8 +1,9 @@
 <template>
   <view class="detail-page" v-if="product">
-    <!-- 图片轮播 -->
+    <!-- 图片轮播 / 视频 -->
     <view class="swiper-wrap">
       <u-swiper
+        v-if="!showVideo"
         :list="imageList"
         height="600rpx"
         :autoplay="true"
@@ -10,6 +11,22 @@
         circular
         radius="12"
       ></u-swiper>
+      <video
+        v-else
+        :src="videoUrl"
+        class="swiper-video"
+        autoplay
+        loop
+        muted
+        controls
+      ></video>
+      <view
+        v-if="hasVideo"
+        class="media-toggle"
+        @click.stop="showVideo = !showVideo"
+      >
+        <text>{{ showVideo ? '图片' : '视频' }}</text>
+      </view>
     </view>
 
     <!-- 价格信息 -->
@@ -58,11 +75,24 @@
     </view>
 
     <!-- 规格参数 -->
-    <view class="section-title" v-if="product.specs">规格参数</view>
     <view class="specs-table" v-if="product.specs">
+      <view class="spec-title">规格参数</view>
       <view class="spec-row" v-for="(val, key) in parseSpecs()" :key="key">
         <text class="spec-key">{{ key }}</text>
         <text class="spec-val">{{ val }}</text>
+      </view>
+    </view>
+
+    <!-- 联系信息 -->
+    <view class="specs-table" v-if="product.contactPhone || product.address">
+      <view class="spec-title">联系信息</view>
+      <view class="spec-row" v-if="product.contactPhone">
+        <text class="spec-key spec-label-bold">联系电话</text>
+        <text class="spec-val spec-phone">{{ product.contactPhone }}</text>
+      </view>
+      <view class="spec-row" v-if="product.address">
+        <text class="spec-key">发货地址</text>
+        <text class="spec-val">{{ product.address }}</text>
       </view>
     </view>
 
@@ -123,9 +153,22 @@ export default {
       quantity: 1,
       showSku: false,
       collected: false,
+      showVideo: false,
     };
   },
   computed: {
+    hasVideo() {
+      return !!(this.product && this.product.video)
+    },
+    videoUrl() {
+      if (!this.product || !this.product.video) return ''
+      let url = this.product.video
+      if (url.startsWith('/api/')) {
+        const base = this.getBaseUrl()
+        if (base) url = base + url.substring(4)
+      }
+      return url
+    },
     imageList() {
       const base = this.getBaseUrl();
       return this.images.map((url) => {
@@ -223,6 +266,25 @@ export default {
   margin: 20rpx 30rpx 12rpx;
   border-radius: 12rpx;
   overflow: hidden;
+  position: relative;
+}
+.swiper-video {
+  width: 100%;
+  height: 600rpx;
+}
+.media-toggle {
+  position: absolute;
+  bottom: 16rpx;
+  right: 16rpx;
+  padding: 8rpx 20rpx;
+  border-radius: 24rpx;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22rpx;
+  color: #fff;
+  z-index: 10;
 }
 .price-section {
   margin: 0 30rpx;

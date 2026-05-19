@@ -90,6 +90,18 @@
       }
     },
     {
+      "path": "pages/product/manage",
+      "style": {
+        "navigationBarTitleText": "苗木管理"
+      }
+    },
+    {
+      "path": "pages/product/edit",
+      "style": {
+        "navigationBarTitleText": "编辑苗木"
+      }
+    },
+    {
       "path": "pages/collection/collection",
       "style": {
         "navigationBarTitleText": "我的收藏"

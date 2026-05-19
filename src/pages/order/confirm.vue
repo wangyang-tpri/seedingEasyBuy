@@ -8,9 +8,13 @@
           <view class="addr-main">
             <text class="addr-name">{{ selectedAddress.receiverName }}</text>
             <text class="addr-phone">{{ selectedAddress.phone }}</text>
-            <view class="addr-tag" v-if="selectedAddress.isDefault === 1">默认</view>
+            <view class="addr-tag" v-if="selectedAddress.isDefault === 1"
+              >默认</view
+            >
           </view>
-          <text class="addr-detail">{{ selectedAddress.fullAddress || selectedAddress.detailAddress }}</text>
+          <text class="addr-detail">{{
+            selectedAddress.fullAddress || selectedAddress.detailAddress
+          }}</text>
         </view>
         <text class="no-addr" v-else>请选择收货地址</text>
       </view>
@@ -23,7 +27,11 @@
         <text class="shop-name">{{ shop.shopName }}</text>
       </view>
       <view class="item" v-for="item in shop.items" :key="item.id">
-        <image :src="item.productImage || '/static/placeholder.png'" mode="aspectFill" class="item-img" />
+        <image
+          :src="fixImageUrl(item.productImage)"
+          mode="aspectFill"
+          class="item-img"
+        />
         <view class="item-info">
           <text class="item-name">{{ item.productName }}</text>
           <text class="item-sku" v-if="item.skuName">{{ item.skuName }}</text>
@@ -42,8 +50,12 @@
         <text class="coupon-label">优惠券</text>
       </view>
       <view class="coupon-right">
-        <text class="coupon-placeholder" v-if="!selectedCoupon">暂无可用优惠券</text>
-        <text class="coupon-value" v-else>-{{ formatPrice(selectedCoupon.value) }}</text>
+        <text class="coupon-placeholder" v-if="!selectedCoupon"
+          >暂无可用优惠券</text
+        >
+        <text class="coupon-value" v-else
+          >-{{ formatPrice(selectedCoupon.value) }}</text
+        >
         <u-icon name="arrow-right" color="#bbb" size="14"></u-icon>
       </view>
     </view>
@@ -54,7 +66,14 @@
         <text class="msg-icon">✏️</text>
         <text class="msg-label">买家留言</text>
       </view>
-      <u--textarea v-model="message" placeholder="选填：如有特殊要求请留言" maxlength="200" border="none" height="60" autoHeight></u--textarea>
+      <u--textarea
+        v-model="message"
+        placeholder="选填：如有特殊要求请留言"
+        maxlength="200"
+        border="none"
+        height="60"
+        autoHeight
+      ></u--textarea>
     </view>
 
     <!-- 金额汇总 -->
@@ -96,78 +115,101 @@
 </template>
 
 <script>
-import { get, post } from '@/utils/request'
+import { get, post } from "@/utils/request";
 export default {
   data() {
     return {
       cartItems: [],
       selectedAddress: null,
       selectedCoupon: null,
-      message: ''
-    }
+      message: "",
+    };
   },
   computed: {
     shopGroups() {
-      const map = {}
-      this.cartItems.forEach(item => {
-        const name = item.shopName || '店铺'
-        if (!map[name]) map[name] = []
-        map[name].push(item)
-      })
-      return Object.entries(map).map(([shopName, items]) => ({ shopName, items }))
+      const map = {};
+      this.cartItems.forEach((item) => {
+        const name = item.shopName || "店铺";
+        if (!map[name]) map[name] = [];
+        map[name].push(item);
+      });
+      return Object.entries(map).map(([shopName, items]) => ({
+        shopName,
+        items,
+      }));
     },
     totalAmount() {
-      return this.cartItems.reduce((sum, item) => sum + Number(item.price) * item.quantity, 0)
+      return this.cartItems.reduce(
+        (sum, item) => sum + Number(item.price) * item.quantity,
+        0
+      );
     },
     realAmount() {
-      const discount = this.selectedCoupon ? Number(this.selectedCoupon.value) : 0
-      return Math.max(0, this.totalAmount - discount)
-    }
+      const discount = this.selectedCoupon
+        ? Number(this.selectedCoupon.value)
+        : 0;
+      return Math.max(0, this.totalAmount - discount);
+    },
   },
   onShow() {
-    this.loadCart()
-    this.loadAddress()
+    this.loadCart();
+    this.loadAddress();
   },
   methods: {
     async loadCart() {
       try {
-        const cartData = await get('/cart/list') || []
-        this.cartItems = []
-        cartData.forEach(shop => {
-          shop.items.forEach(item => {
-            if (item.selected === 1) this.cartItems.push(item)
-          })
-        })
+        const cartData = (await get("/cart/list")) || [];
+        this.cartItems = [];
+        cartData.forEach((shop) => {
+          shop.items.forEach((item) => {
+            if (item.selected === 1) this.cartItems.push(item);
+          });
+        });
       } catch (e) {}
     },
     async loadAddress() {
       try {
-        const addresses = await get('/address/list') || []
-        this.selectedAddress = addresses.find(a => a.isDefault === 1) || addresses[0] || null
+        const addresses = (await get("/address/list")) || [];
+        this.selectedAddress =
+          addresses.find((a) => a.isDefault === 1) || addresses[0] || null;
       } catch (e) {}
     },
-    async submitOrder() {
-      if (!this.selectedAddress) { this.showToast('请选择收货地址'); return }
-      if (this.cartItems.length === 0) { this.showToast('没有可结算的商品'); return }
-      uni.showLoading({ title: '提交中', mask: true })
-      try {
-        const order = await post('/order/create', {
-          addressId: this.selectedAddress.id,
-          message: this.message
-        })
-        await post(`/order/pay/${order.id}`)
-        uni.hideLoading()
-        this.showToast('下单成功')
-        setTimeout(() => {
-          uni.switchTab({ url: '/pages/order/list?status=-1' })
-        }, 1000)
-      } catch (e) {
-        uni.hideLoading()
-        this.showToast('下单失败')
+    fixImageUrl(url) {
+      if (!url) return "/static/placeholder.png";
+      if (url.startsWith("/api/")) {
+        const base = this.getBaseUrl();
+        return base ? base + url.substring(4) : url;
       }
-    }
-  }
-}
+      return url;
+    },
+    async submitOrder() {
+      if (!this.selectedAddress) {
+        this.showToast("请选择收货地址");
+        return;
+      }
+      if (this.cartItems.length === 0) {
+        this.showToast("没有可结算的商品");
+        return;
+      }
+      uni.showLoading({ title: "提交中", mask: true });
+      try {
+        const order = await post("/order/create", {
+          addressId: this.selectedAddress.id,
+          message: this.message,
+        });
+        await post(`/order/pay/${order.id}`);
+        uni.hideLoading();
+        this.showToast("下单成功");
+        setTimeout(() => {
+          uni.switchTab({ url: "/pages/order/list?status=-1" });
+        }, 1000);
+      } catch (e) {
+        uni.hideLoading();
+        this.showToast("下单失败");
+      }
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
@@ -220,7 +262,7 @@ export default {
 }
 .addr-tag {
   font-size: 20rpx;
-  color: #07C160;
+  color: #07c160;
   background: #e8f8ee;
   padding: 2rpx 12rpx;
   border-radius: 6rpx;
@@ -255,10 +297,10 @@ export default {
   border-bottom: 1rpx solid #f0f0f0;
 }
 .shop-header::before {
-  content: '';
+  content: "";
   width: 6rpx;
   height: 28rpx;
-  background: #07C160;
+  background: #07c160;
   border-radius: 3rpx;
   margin-right: 12rpx;
 }
@@ -272,7 +314,9 @@ export default {
   align-items: center;
   padding: 20rpx 24rpx;
   border-bottom: 1rpx solid #f8f8f8;
-  &:last-child { border-bottom: none; }
+  &:last-child {
+    border-bottom: none;
+  }
 }
 .item-img {
   width: 140rpx;
@@ -308,7 +352,7 @@ export default {
 }
 .item-price {
   font-size: 28rpx;
-  color: #FF6B35;
+  color: #ff6b35;
   font-weight: 600;
   display: block;
 }
@@ -354,7 +398,7 @@ export default {
 }
 .coupon-value {
   font-size: 26rpx;
-  color: #FF6B35;
+  color: #ff6b35;
   font-weight: 600;
 }
 
@@ -416,19 +460,21 @@ export default {
   font-weight: 500;
 }
 .freight-free {
-  color: #07C160;
+  color: #07c160;
 }
 .discount {
-  color: #FF6B35;
+  color: #ff6b35;
 }
 .total-price {
   font-size: 36rpx;
-  color: #FF6B35;
+  color: #ff6b35;
   font-weight: 700;
 }
 
 /* ========== 底部占位 ========== */
-.footer-space { height: 40rpx; }
+.footer-space {
+  height: 40rpx;
+}
 
 /* ========== 提交栏 ========== */
 .submit-bar {
@@ -455,12 +501,12 @@ export default {
 }
 .submit-price {
   font-size: 40rpx;
-  color: #FF6B35;
+  color: #ff6b35;
   font-weight: 700;
   margin-left: 8rpx;
 }
 .submit-btn {
-  background: linear-gradient(135deg, #07C160, #06AD56);
+  background: linear-gradient(135deg, #07c160, #06ad56);
   color: #fff;
   font-size: 30rpx;
   font-weight: 600;

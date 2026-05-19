@@ -7,8 +7,12 @@
           <text class="label-icon">👤</text>
           <text class="label-text">收货人</text>
         </view>
-        <input v-model="formData.receiverName" placeholder="请输入收货人姓名"
-               class="field-input" placeholder-style="color: #ccc" />
+        <input
+          v-model="formData.receiverName"
+          placeholder="请输入收货人姓名"
+          class="field-input"
+          placeholder-style="color: #ccc"
+        />
       </view>
 
       <!-- 手机号 -->
@@ -17,8 +21,14 @@
           <text class="label-icon">📱</text>
           <text class="label-text">手机号</text>
         </view>
-        <input v-model="formData.phone" type="number" maxlength="11"
-               placeholder="请输入手机号" class="field-input" placeholder-style="color: #ccc" />
+        <input
+          v-model="formData.phone"
+          type="number"
+          maxlength="11"
+          placeholder="请输入手机号"
+          class="field-input"
+          placeholder-style="color: #ccc"
+        />
       </view>
 
       <!-- 所在地区 -->
@@ -28,8 +38,10 @@
           <text class="label-text">所在地区</text>
         </view>
         <view class="field-right">
-          <text :class="['field-value', !formData.fullAddress && 'placeholder']">
-            {{ formData.fullAddress || '点击选择省/市/区' }}
+          <text
+            :class="['field-value', !formData.fullAddress && 'placeholder']"
+          >
+            {{ formData.fullAddress || "点击选择省/市/区" }}
           </text>
           <u-icon name="arrow-right" color="#ccc" size="14"></u-icon>
         </view>
@@ -41,8 +53,12 @@
           <text class="label-icon">🏠</text>
           <text class="label-text">详细地址</text>
         </view>
-        <input v-model="formData.detailAddress" placeholder="街道/门牌号/楼层"
-               class="field-input" placeholder-style="color: #ccc" />
+        <input
+          v-model="formData.detailAddress"
+          placeholder="街道/门牌号/楼层"
+          class="field-input"
+          placeholder-style="color: #ccc"
+        />
       </view>
     </view>
 
@@ -50,9 +66,12 @@
     <view class="tag-section">
       <text class="tag-title">地址标签</text>
       <view class="tag-row">
-        <view v-for="tag in tags" :key="tag.value"
-              :class="['tag-item', formData.label === tag.value ? 'active' : '']"
-              @click="formData.label = tag.value">
+        <view
+          v-for="tag in tags"
+          :key="tag.value"
+          :class="['tag-item', formData.label === tag.value ? 'active' : '']"
+          @click="formData.label = tag.value"
+        >
           <text class="tag-icon">{{ tag.icon }}</text>
           <text>{{ tag.name }}</text>
         </view>
@@ -62,12 +81,23 @@
     <!-- 设为默认 -->
     <view class="switch-row">
       <text class="switch-label">设为默认地址</text>
-      <u-switch v-model="formData.isDefault" :activeValue="1" :inactiveValue="0" activeColor="#07C160" />
+      <u-switch
+        v-model="formData.isDefault"
+        :activeValue="1"
+        :inactiveValue="0"
+        activeColor="#07C160"
+      />
     </view>
 
     <!-- 保存 -->
     <view class="save-btn">
-      <u-button text="保 存" type="success" shape="circle" block @click="save"></u-button>
+      <u-button
+        text="保 存"
+        type="success"
+        shape="circle"
+        block
+        @click="save"
+      ></u-button>
     </view>
 
     <!-- 删除 -->
@@ -78,97 +108,109 @@
 </template>
 
 <script>
-import { get, post, put, del } from '@/utils/request'
+import { get, post, put, del } from "@/utils/request";
 export default {
   data() {
     return {
       id: null,
-      formData: { receiverName: '', phone: '', province: '', city: '', district: '', fullAddress: '', detailAddress: '', isDefault: 0, label: '' },
+      formData: {
+        receiverName: "",
+        phone: "",
+        province: "",
+        city: "",
+        district: "",
+        fullAddress: "",
+        detailAddress: "",
+        isDefault: 0,
+        label: "",
+      },
       tags: [
-        { name: '家', value: '家', icon: '🏠' },
-        { name: '公司', value: '公司', icon: '🏢' },
-        { name: '学校', value: '学校', icon: '🏫' }
-      ]
-    }
+        { name: "家", value: "家", icon: "🏠" },
+        { name: "公司", value: "公司", icon: "🏢" },
+        { name: "学校", value: "学校", icon: "🏫" },
+      ],
+    };
   },
   onLoad(options) {
     if (options.id) {
-      this.id = options.id
-      this.loadDetail()
+      this.id = options.id;
+      this.loadDetail();
     }
   },
   methods: {
     async loadDetail() {
       try {
-        const list = await get('/address/list') || []
-        const addr = list.find(a => a.id == this.id)
-        if (addr) this.formData = { ...addr }
+        const list = (await get("/address/list")) || [];
+        const addr = list.find((a) => a.id == this.id);
+        if (addr) this.formData = { ...addr };
       } catch (e) {}
     },
     chooseLocation() {
       uni.chooseLocation({
         success: (res) => {
           if (res.address) {
-            this.formData.fullAddress = res.address
+            this.formData.fullAddress = res.address;
             // 尝试解析省市
-            const addr = res.address
-            const provMatch = addr.match(/^(.+?省|.+?自治区|北京|上海|天津|重庆)/)
-            if (provMatch) this.formData.province = provMatch[1]
-            const cityMatch = addr.match(/(?:省|自治区)(.+?市)/)
-            if (cityMatch) this.formData.city = cityMatch[1]
-            const distMatch = addr.match(/(?:市)(.+?区|.+?县)/)
-            if (distMatch) this.formData.district = distMatch[1]
+            const addr = res.address;
+            const provMatch = addr.match(
+              /^(.+?省|.+?自治区|北京|上海|天津|重庆)/
+            );
+            if (provMatch) this.formData.province = provMatch[1];
+            const cityMatch = addr.match(/(?:省|自治区)(.+?市)/);
+            if (cityMatch) this.formData.city = cityMatch[1];
+            const distMatch = addr.match(/(?:市)(.+?区|.+?县)/);
+            if (distMatch) this.formData.district = distMatch[1];
           }
           if (res.name && !this.formData.detailAddress) {
-            this.formData.detailAddress = res.name
+            this.formData.detailAddress = res.name;
           }
         },
         fail: () => {
-          this.showToast('请授权位置权限')
-        }
-      })
+          this.showToast("请授权位置权限");
+        },
+      });
     },
     async save() {
       if (!this.formData.receiverName || !this.formData.phone) {
-        this.showToast('请填写收货人和手机号')
-        return
+        this.showToast("请填写收货人和手机号");
+        return;
       }
       if (!this.formData.detailAddress) {
-        this.showToast('请填写详细地址')
-        return
+        this.showToast("请填写详细地址");
+        return;
       }
-      uni.showLoading({ title: '保存中' })
+      uni.showLoading({ title: "保存中" });
       try {
         if (this.id) {
-          await put('/address/update', { ...this.formData, id: this.id })
+          await put("/address/update", { ...this.formData, id: this.id });
         } else {
-          await post('/address/add', this.formData)
+          await post("/address/add", this.formData);
         }
-        uni.hideLoading()
-        this.showToast('保存成功')
-        setTimeout(() => uni.navigateBack(), 800)
+        uni.hideLoading();
+        this.showToast("保存成功");
+        setTimeout(() => uni.navigateBack(), 800);
       } catch (e) {
-        uni.hideLoading()
-        this.showToast('保存失败')
+        uni.hideLoading();
+        this.showToast("保存失败");
       }
     },
     confirmDelete() {
       uni.showModal({
-        title: '提示',
-        content: '确定删除该地址吗？',
+        title: "提示",
+        content: "确定删除该地址吗？",
         success: async (res) => {
           if (res.confirm) {
             try {
-              await del(`/address/delete/${this.id}`)
-              this.showToast('已删除')
-              setTimeout(() => uni.navigateBack(), 800)
+              await del(`/address/delete/${this.id}`);
+              this.showToast("已删除");
+              setTimeout(() => uni.navigateBack(), 800);
             } catch (e) {}
           }
-        }
-      })
-    }
-  }
-}
+        },
+      });
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
@@ -281,8 +323,8 @@ export default {
 
 .tag-item.active {
   background: #e8f8ee;
-  border-color: #07C160;
-  color: #07C160;
+  border-color: #07c160;
+  color: #07c160;
   font-weight: 500;
 }
 
@@ -319,6 +361,6 @@ export default {
   padding: 30rpx;
   margin-top: 20rpx;
   font-size: 28rpx;
-  color: #FF6B35;
+  color: #ff6b35;
 }
 </style>

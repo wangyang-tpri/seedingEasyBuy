@@ -330,7 +330,7 @@ export default {
   border-radius: 14rpx;
   overflow: hidden;
   margin-bottom: 14rpx;
-  box-shadow: 0 1rpx 8rpx rgba(0,0,0,0.04);
+  box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.08);
   transition: all 0.18s ease;
 }
 

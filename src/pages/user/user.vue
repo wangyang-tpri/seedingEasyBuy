@@ -29,11 +29,11 @@
         ><text class="asset-label">积分</text></view
       >
       <view class="asset-item"
-        ><text class="asset-num">0</text
+        ><text class="asset-num">{{ couponCount }}</text
         ><text class="asset-label">优惠券</text></view
       >
       <view class="asset-item" @click="goPage('/pages/collection/collection')"
-        ><text class="asset-num">-</text
+        ><text class="asset-num">{{ collectionCount }}</text
         ><text class="asset-label">收藏</text></view
       >
     </view>
@@ -82,10 +82,13 @@
 
 <script>
 import { mapState, mapGetters } from "vuex";
+import { get } from "@/utils/request";
 
 export default {
   data() {
     return {
+      collectionCount: 0,
+      couponCount: 0,
       orderTabs: [
         { icon: "💰", label: "待付款", url: "/pages/order/list?status=0" },
         { icon: "📦", label: "待发货", url: "/pages/order/list?status=1" },
@@ -104,7 +107,16 @@ export default {
     ...mapState(["isLogin", "user"]),
     ...mapGetters(["isLoggedIn"]),
   },
+  onShow() {
+    if (this.isLogin) this.loadCounts()
+  },
   methods: {
+    async loadCounts() {
+      try {
+        const list = await get('/collection/list') || []
+        this.collectionCount = list.length
+      } catch (e) {}
+    },
     handleLogout() {
       this.$store.dispatch("logout");
       this.showToast("已退出登录");

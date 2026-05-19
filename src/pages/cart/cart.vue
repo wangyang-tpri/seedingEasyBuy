@@ -25,7 +25,7 @@
           <view class="cart-item" v-for="item in shop.items" :key="item.id">
             <u-checkbox :checked="item.selected === 1" @change="toggleItem(item)" shape="circle"></u-checkbox>
             <image
-              :src="item.productImage || '/static/placeholder.png'"
+              :src="fixImageUrl(item.productImage)"
               mode="aspectFill"
               class="item-img"
               @click="goDetail(item.productId)"
@@ -155,6 +155,14 @@ export default {
       })
       if (selected.length === 0) { this.showToast('请选择商品'); return }
       uni.navigateTo({ url: '/pages/order/confirm' })
+    },
+    fixImageUrl(url) {
+      if (!url) return '/static/placeholder.png'
+      if (url && url.startsWith('/api/')) {
+        const base = this.getBaseUrl()
+        return base ? base + url.substring(4) : url
+      }
+      return url
     },
     goDetail(id) { uni.navigateTo({ url: `/pages/product/detail?id=${id}` }) }
   }

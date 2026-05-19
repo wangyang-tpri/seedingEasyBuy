@@ -30,18 +30,20 @@
       :auto-show-back-to-top="true"
     >
       <!-- 骨架屏 -->
-      <view class="product-grid" v-if="loading">
-        <view class="skeleton-card" v-for="i in 6" :key="'s' + i">
-          <view class="sk-img"></view>
-          <view class="sk-info">
-            <view class="sk-line"></view>
-            <view class="sk-line w60"></view>
+      <template #loading>
+        <view class="product-grid">
+          <view class="skeleton-card" v-for="i in 6" :key="'s' + i">
+            <view class="sk-img"></view>
+            <view class="sk-info">
+              <view class="sk-line"></view>
+              <view class="sk-line w60"></view>
+            </view>
           </view>
         </view>
-      </view>
+      </template>
 
       <!-- 商品网格 -->
-      <view class="product-grid" v-else-if="productList.length > 0">
+      <view class="product-grid" v-if="productList.length > 0">
         <view
           class="product-card"
           v-for="item in productList"
@@ -77,11 +79,13 @@
       </view>
 
       <!-- 空状态 -->
-      <view class="empty-box" v-else>
-        <view class="empty-icon">📭</view>
-        <text class="empty-text">暂无商品</text>
-        <text class="empty-sub">换个关键词试试吧</text>
-      </view>
+      <template #empty>
+        <view class="empty-box">
+          <view class="empty-icon">📭</view>
+          <text class="empty-text">暂无商品</text>
+          <text class="empty-sub">换个关键词试试吧</text>
+        </view>
+      </template>
     </z-paging>
   </view>
 </template>
@@ -94,7 +98,6 @@ export default {
       productList: [],
       categoryId: 0,
       sortBy: "default",
-      loading: false,
       sorts: [
         { key: "default", label: "综合" },
         { key: "sales", label: "销量" },
@@ -115,7 +118,6 @@ export default {
       return now - created < 7 * 24 * 60 * 60 * 1000;
     },
     async loadProducts(pageNo, pageSize) {
-      this.loading = true;
       try {
         const result = await get(
           `/product/page?categoryId=${this.categoryId}&sortBy=${this.sortBy}&current=${pageNo}&size=${pageSize}`
@@ -125,12 +127,10 @@ export default {
       } catch (e) {
         this.$refs.paging.complete(false);
       }
-      this.loading = false;
     },
     switchSort(key) {
       if (this.sortBy === key) return;
       this.sortBy = key;
-      this.loading = true;
       this.$refs.paging.reload();
     },
     goDetail(id) {
@@ -204,17 +204,15 @@ export default {
 
 /* ========== 商品卡片 ========== */
 .product-card {
-  width: calc(50% - 8rpx);
+  width: calc(50% - 10rpx);
   background: #fff;
-  border-radius: 14rpx;
+  border-radius: 12rpx;
   overflow: hidden;
-  margin-bottom: 16rpx;
-  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.04);
-  transition: all 0.18s ease;
+  margin-bottom: 20rpx;
 }
 .card-hover {
   transform: scale(0.97);
-  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.08);
+  opacity: 0.9;
 }
 
 .img-wrap {
@@ -224,7 +222,7 @@ export default {
 }
 .product-img {
   width: 100%;
-  height: 340rpx;
+  height: 200rpx;
   display: block;
   background: #f0f0f0;
 }
@@ -239,33 +237,25 @@ export default {
   border-radius: 6rpx;
   font-weight: 600;
   letter-spacing: 1rpx;
-  &.hot {
-    background: linear-gradient(135deg, #ff6b35, #ff5c2a);
-  }
-  &.new {
-    background: linear-gradient(135deg, #07c160, #06ad56);
-  }
+  &.hot { background: linear-gradient(135deg, #ff6b35, #ff5c2a); }
+  &.new { background: linear-gradient(135deg, #07c160, #06ad56); }
 }
 
 .card-info {
-  padding: 16rpx 16rpx 18rpx;
+  padding: 10rpx 16rpx 16rpx;
 }
 .product-name {
-  font-size: 27rpx;
+  font-size: 26rpx;
   color: #333;
-  font-weight: 500;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
   overflow: hidden;
-  line-height: 1.45;
-  min-height: 76rpx;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .card-bottom {
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
-  margin-top: 12rpx;
+  align-items: baseline;
+  margin-top: 6rpx;
 }
 .price-col {
   display: flex;
@@ -275,8 +265,7 @@ export default {
 .product-price {
   font-size: 30rpx;
   color: #ff6b35;
-  font-weight: 700;
-  letter-spacing: -1rpx;
+  font-weight: bold;
 }
 .product-original {
   font-size: 20rpx;
@@ -284,14 +273,14 @@ export default {
   text-decoration: line-through;
 }
 .product-sales {
-  font-size: 20rpx;
-  color: #bbb;
+  font-size: 22rpx;
+  color: #999;
   flex-shrink: 0;
 }
 
 /* ========== 骨架屏 ========== */
 .skeleton-card {
-  width: calc(50% - 8rpx);
+  width: calc(50% - 10rpx);
   background: #fff;
   border-radius: 14rpx;
   overflow: hidden;
@@ -299,7 +288,7 @@ export default {
 }
 .sk-img {
   width: 100%;
-  height: 340rpx;
+  height: 200rpx;
   background: linear-gradient(90deg, #f3f3f3 25%, #e8e8e8 50%, #f3f3f3 75%);
   background-size: 200% 100%;
   animation: shimmer 1.6s ease infinite;

@@ -72,7 +72,7 @@
 			"desc": "你的位置信息将用于小程序定位"
 			}
 		},
-        "requiredPrivateInfos": ["choosePoi", "chooseAddress"]
+        "requiredPrivateInfos": ["choosePoi", "chooseAddress", "chooseLocation"]
 	},
 	"mp-alipay": {
 		"usingComponents": true

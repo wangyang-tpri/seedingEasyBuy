@@ -34,7 +34,7 @@
         :key="cat.id"
         @click="goCategory(cat)"
       >
-        <view class="category-icon">{{ cat.name.charAt(0) }}</view>
+        <view class="category-icon" :style="{ background: getCatColor(cat.id).bg, color: getCatColor(cat.id).text }">{{ cat.name.charAt(0) }}</view>
         <text class="category-name">{{ cat.name }}</text>
       </view>
       <view v-if="categories.length === 0" class="empty-full">
@@ -207,6 +207,16 @@ export default {
         this.loading = false;
       }
     },
+    getCatColor(id) {
+      const colors = {
+        1: { bg: '#FFF0F5', text: '#E85D75' },
+        2: { bg: '#FFF7E6', text: '#E8A44C' },
+        3: { bg: '#E8F8EE', text: '#07C160' },
+        4: { bg: '#EDF4FF', text: '#4A90D9' },
+        5: { bg: '#FFF3E0', text: '#E67E22' },
+      }
+      return colors[id] || { bg: '#f5f6fa', text: '#999' }
+    },
     goCategory(cat) {
       this.$store.commit("SET_CATEGORY_ID", cat.id);
       uni.switchTab({ url: "/pages/category/category" });
@@ -276,8 +286,7 @@ export default {
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background: #e8f8ee;
-  color: #07c160;
+
   font-size: 32rpx;
   font-weight: bold;
   margin: 0 auto 10rpx;

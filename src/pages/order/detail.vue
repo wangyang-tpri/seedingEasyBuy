@@ -22,7 +22,7 @@
     <!-- 商品列表 -->
     <view class="items-card">
       <view class="order-item" v-for="item in items" :key="item.id">
-        <image :src="item.productImage || '/static/placeholder.png'" mode="aspectFill" class="item-img" />
+        <image :src="fixImageUrl(item.productImage)" mode="aspectFill" class="item-img" />
         <view class="item-info">
           <text class="item-name">{{ item.productName }}</text>
           <text class="item-sku" v-if="item.skuName">{{ item.skuName }}</text>
@@ -46,6 +46,14 @@ export default {
   data() { return { order: null, items: [] } },
   onLoad(options) { this.loadDetail(options.id) },
   methods: {
+    fixImageUrl(url) {
+      if (!url) return '/static/placeholder.png'
+      if (url.startsWith('/api/')) {
+        const base = this.getBaseUrl()
+        return base ? base + url.substring(4) : url
+      }
+      return url
+    },
     async loadDetail(id) {
       try {
         const result = await get(`/order/detail/${id}`)

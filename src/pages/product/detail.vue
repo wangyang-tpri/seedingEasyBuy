@@ -1,13 +1,16 @@
 <template>
   <view class="detail-page" v-if="product">
     <!-- 图片轮播 -->
-    <u-swiper
-      :list="imageList"
-      height="600rpx"
-      :autoplay="true"
-      keyName="image"
-      circular
-    ></u-swiper>
+    <view class="swiper-wrap">
+      <u-swiper
+        :list="imageList"
+        height="600rpx"
+        :autoplay="true"
+        keyName="image"
+        circular
+        radius="12"
+      ></u-swiper>
+    </view>
 
     <!-- 价格信息 -->
     <view class="price-section">
@@ -216,7 +219,14 @@ export default {
   padding-bottom: calc(120rpx + env(safe-area-inset-bottom));
   background: #f5f6fa;
 }
+.swiper-wrap {
+  margin: 20rpx 30rpx 12rpx;
+  border-radius: 12rpx;
+  overflow: hidden;
+}
 .price-section {
+  margin: 0 30rpx;
+  border-radius: 12rpx 12rpx 0 0;
   padding: 28rpx 30rpx 20rpx;
   background: #fff;
 }
@@ -237,57 +247,47 @@ export default {
   margin-left: 16rpx;
 }
 .name-section {
+  margin: 0 30rpx;
   padding: 0 30rpx 28rpx;
   background: #fff;
+  border-radius: 0 0 12rpx 12rpx;
 }
-.product-name {
-  font-size: 32rpx;
-  font-weight: bold;
-  color: #333;
-}
-.product-subtitle {
-  font-size: 24rpx;
-  color: #999;
-  display: block;
-  margin-top: 10rpx;
-}
+.product-name { font-size: 32rpx; font-weight: bold; color: #333; }
+.product-subtitle { font-size: 24rpx; color: #999; display: block; margin-top: 10rpx; }
 .sku-section {
+  margin: 12rpx 30rpx 0;
   padding: 28rpx 30rpx;
   background: #fff;
-  margin-top: 12rpx;
+  border-radius: 12rpx;
 }
-.sku-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.sku-label {
-  font-size: 28rpx;
-  color: #333;
-}
+.sku-header { display: flex; justify-content: space-between; align-items: center; }
+.sku-label { font-size: 28rpx; color: #333; }
 .qty-section {
+  margin: 12rpx 30rpx 0;
   padding: 28rpx 30rpx;
   background: #fff;
-  margin-top: 12rpx;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 28rpx;
-  color: #333;
+  border-radius: 12rpx;
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 28rpx; color: #333;
 }
 .section-title {
-  font-size: 30rpx;
-  font-weight: bold;
+  font-size: 30rpx; font-weight: bold;
+  margin: 12rpx 30rpx 0;
   padding: 30rpx 30rpx 16rpx;
+  background: #fff;
+  border-radius: 12rpx 12rpx 0 0;
 }
 .desc-content {
+  margin: 0 30rpx;
   padding: 0 30rpx 30rpx;
   background: #fff;
+  border-radius: 0 0 12rpx 12rpx;
 }
 .specs-table {
+  margin: 12rpx 30rpx 0;
   padding: 0 30rpx 30rpx;
   background: #fff;
-  margin-top: 12rpx;
+  border-radius: 12rpx;
 }
 .spec-row {
   display: flex;

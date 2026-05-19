@@ -110,6 +110,14 @@ export default {
     if (options.categoryId) this.activeCategory = Number(options.categoryId)
     this.loadCategories()
   },
+  onShow() {
+    const id = this.$store.state.selectedCategoryId
+    if (id && id !== this.activeCategory && this.categories.length > 0) {
+      this.$store.commit('SET_CATEGORY_ID', 0)
+      const cat = this.categories.find(c => c.id === id)
+      if (cat) this.onCategoryClick(cat)
+    }
+  },
   methods: {
     getCatIcon(name) { return CAT_ICONS[name] || '🌿' },
 
@@ -117,6 +125,11 @@ export default {
       try {
         this.categories = await get('/category/list') || []
         if (this.categories.length > 0) {
+          const pendingId = this.$store.state.selectedCategoryId
+          if (pendingId && !this.activeCategory && this.categories.find(c => c.id === pendingId)) {
+            this.activeCategory = pendingId
+            this.$store.commit('SET_CATEGORY_ID', 0)
+          }
           if (!this.activeCategory || !this.categories.find(c => c.id === this.activeCategory)) {
             this.activeCategory = this.categories[0].id
           }

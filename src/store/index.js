@@ -7,7 +7,8 @@ Vue.use(Vuex)
 const state = {
   token: '',
   isLogin: false,
-  user: {}
+  user: {},
+  selectedCategoryId: 0
 }
 
 const mutations = {
@@ -32,6 +33,9 @@ const mutations = {
   UPDATE_USER(state, data) {
     state.user = { ...state.user, ...data }
     uni.setStorageSync('user', JSON.stringify(state.user))
+  },
+  SET_CATEGORY_ID(state, id) {
+    state.selectedCategoryId = id
   }
 }
 

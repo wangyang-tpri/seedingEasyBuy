@@ -94,6 +94,7 @@ export default {
       ],
       menus: [
         { icon: "📍", label: "地址管理", url: "/pages/address/list" },
+        { icon: "🌳", label: "苗木上架", url: "/pages/product/add" },
         { icon: "❤️", label: "我的收藏", url: "/pages/collection/collection" },
         { icon: "🎫", label: "优惠券", url: "/pages/coupon/coupon" },
       ],

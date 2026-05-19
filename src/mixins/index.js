@@ -12,16 +12,34 @@ export default {
       let p = Number(price)
       return '¥' + p.toFixed(2)
     },
-    // Get first image from JSON array
+    // Get base URL for API resources
+    getBaseUrl() {
+      return process.env.VUE_APP_BASE_API
+    },
+    // Get first image from JSON array, convert relative paths to absolute
     getFirstImage(images) {
       if (!images) return '/static/placeholder.png'
       try {
         if (typeof images === 'string' && images.startsWith('[')) {
           const arr = JSON.parse(images)
-          return arr.length > 0 ? arr[0] : '/static/placeholder.png'
+          if (arr.length > 0) {
+            let url = arr[0]
+            if (url && url.startsWith('/api/')) {
+              const base = this.getBaseUrl()
+              url = base ? base + url.substring(4) : url
+            }
+            return url
+            console.log(url)
+          }
+          return '/static/placeholder.png'
         }
-      } catch (e) {}
-      return images || '/static/placeholder.png'
+      } catch (e) { }
+      let url = images
+      if (url && url.startsWith('/api/')) {
+        const base = this.getBaseUrl()
+        url = base ? base + url.substring(4) : url
+      }
+      return url || '/static/placeholder.png'
     },
     // Navigate to page
     goPage(url) {

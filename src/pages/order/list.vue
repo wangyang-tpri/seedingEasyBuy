@@ -1,7 +1,7 @@
 <template>
   <view class="order-page">
     <u-tabs :list="tabs" :current="currentTab" @change="changeTab" :activeStyle="{ color: '#07C160' }"></u-tabs>
-    <z-paging ref="paging" v-model="orderList" @query="loadOrders" :auto="false">
+    <z-paging ref="paging" v-model="orderList" @query="loadOrders" :auto="false" :fixed="false" class="order-paging">
       <view class="order-card" v-for="order in orderList" :key="order.id" @click="goDetail(order.id)">
         <view class="order-header">
           <text class="order-shop">店铺{{ order.shopId }}</text>
@@ -97,7 +97,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.order-card { background: #fff; margin: 20rpx 30rpx; border-radius: 12rpx; padding: 30rpx; }
+.order-page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+  background: #f5f6fa;
+}
+.order-paging {
+  flex: 1;
+}
+.order-card { background: #fff; margin: 16rpx 24rpx 0; border-radius: 14rpx; padding: 24rpx 28rpx; }
+.order-card:last-child { margin-bottom: 16rpx; }
 .order-header { display: flex; justify-content: space-between; font-size: 28rpx; margin-bottom: 16rpx; }
 .order-shop { font-weight: bold; color: #333; }
 .order-body { font-size: 24rpx; color: #666; }

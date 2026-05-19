@@ -1,10 +1,5 @@
 <template>
   <view class="detail-page" v-if="order">
-    <!-- 订单状态 -->
-    <view class="status-bar">
-      <text class="status-text" :style="{ color: getOrderStatusColor(order.status) }">{{ getOrderStatus(order.status) }}</text>
-    </view>
-
     <!-- 收货信息 -->
     <view class="info-card">
       <view class="info-row"><text class="info-label">收货人:</text><text>{{ order.receiverName || '-' }}</text></view>
@@ -66,8 +61,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.status-bar { padding: 30rpx; background: linear-gradient(135deg, #07C160, #06AD56); }
-.status-text { font-size: 36rpx; font-weight: bold; color: #fff; }
 .info-card { background: #fff; margin: 20rpx 30rpx; border-radius: 12rpx; padding: 24rpx 30rpx; }
 .info-row { display: flex; padding: 12rpx 0; font-size: 26rpx; }
 .info-label { color: #999; width: 140rpx; flex-shrink: 0; }

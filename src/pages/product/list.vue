@@ -209,6 +209,7 @@ export default {
   border-radius: 12rpx;
   overflow: hidden;
   margin-bottom: 20rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.08);
 }
 .card-hover {
   transform: scale(0.97);

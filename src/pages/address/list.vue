@@ -2,37 +2,28 @@
   <view class="address-page">
     <view v-if="addressList.length > 0" class="list-wrap">
       <view class="address-card" v-for="addr in addressList" :key="addr.id" @click="selectAddress(addr)">
-        <!-- 第一行：姓名 + 电话 -->
         <view class="addr-row1">
           <text class="addr-name">{{ addr.receiverName }}</text>
           <text class="addr-phone">{{ addr.phone }}</text>
+          <view class="addr-tag" v-if="addr.isDefault === 1">默认</view>
+          <view class="addr-tag" v-else-if="addr.label">{{ addr.label }}</view>
         </view>
-
-        <!-- 第二行：标签 + 完整地址 -->
-        <view class="addr-row2">
-          <text class="addr-tag" v-if="addr.isDefault === 1">默认</text>
-          <text class="addr-tag" v-if="addr.label && addr.isDefault !== 1">{{ addr.label }}</text>
-          <text class="addr-text">{{ addr.fullAddress || (addr.province || '') + (addr.city || '') + (addr.district || '') + (addr.detailAddress || addr.detailAddress || '') }}</text>
-        </view>
-
-        <!-- 第三行：操作 -->
-        <view class="addr-row3">
-          <text class="addr-action" @click.stop="editAddress(addr.id)">编辑</text>
-          <text class="addr-action del" @click.stop="confirmDelete(addr.id)">删除</text>
+        <text class="addr-text">{{ addr.fullAddress || (addr.province || '') + (addr.city || '') + (addr.district || '') + (addr.detailAddress || '') }}</text>
+        <view class="addr-actions">
+          <view class="btn-edit" @click.stop="editAddress(addr.id)">编辑</view>
+          <view class="btn-delete" @click.stop="confirmDelete(addr.id)">删除</view>
         </view>
       </view>
     </view>
 
-    <!-- 空状态 -->
     <view class="empty" v-else>
-      <image src="/static/placeholder.png" mode="widthFix" class="empty-img" />
+      <view class="empty-icon">📍</view>
       <text class="empty-text">还没有收货地址</text>
       <text class="empty-sub">点击下方按钮添加</text>
     </view>
 
-    <!-- 新增按钮 -->
     <view class="bottom-area">
-      <u-button text="新增收货地址" type="success" shape="circle" block @click="editAddress()"></u-button>
+      <view class="btn-add" @click="editAddress()">新增收货地址</view>
     </view>
   </view>
 </template>
@@ -81,100 +72,87 @@ export default {
 .address-page {
   min-height: 100vh;
   background: #f5f6fa;
-  padding-bottom: 160rpx;
+  padding: 20rpx 24rpx 160rpx;
 }
+.list-wrap { }
 
-.list-wrap {
-  padding-top: 16rpx;
-}
-
-/* 卡片 */
 .address-card {
   background: #fff;
-  margin: 16rpx 30rpx;
-  border-radius: 12rpx;
-  padding: 30rpx;
+  border-radius: 14rpx;
+  padding: 24rpx;
+  margin-bottom: 16rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.04);
 }
 
-/* 第一行：姓名 + 电话 */
 .addr-row1 {
   display: flex;
   align-items: center;
-  margin-bottom: 16rpx;
+  margin-bottom: 10rpx;
 }
-
 .addr-name {
-  font-size: 32rpx;
+  font-size: 30rpx;
   font-weight: 600;
-  color: #222;
-  margin-right: 24rpx;
+  color: #333;
+  margin-right: 20rpx;
 }
-
 .addr-phone {
-  font-size: 28rpx;
-  color: #666;
+  font-size: 26rpx;
+  color: #999;
+  flex: 1;
 }
-
-/* 第二行：标签 + 地址 */
-.addr-row2 {
-  display: flex;
-  align-items: flex-start;
-  margin-bottom: 20rpx;
-}
-
 .addr-tag {
   flex-shrink: 0;
   font-size: 20rpx;
   color: #07C160;
   background: #e8f8ee;
-  padding: 4rpx 12rpx;
+  padding: 2rpx 12rpx;
   border-radius: 4rpx;
-  margin-right: 12rpx;
-  margin-top: 4rpx;
 }
 
 .addr-text {
-  flex: 1;
-  font-size: 26rpx;
-  color: #333;
+  font-size: 24rpx;
+  color: #666;
   line-height: 1.5;
+  display: block;
+  margin-bottom: 16rpx;
 }
 
-/* 第三行：操作链接 */
-.addr-row3 {
+.addr-actions {
   display: flex;
-  gap: 48rpx;
-  padding-top: 20rpx;
+  justify-content: flex-end;
+  gap: 16rpx;
+  padding-top: 16rpx;
   border-top: 1rpx solid #f0f0f0;
 }
-
-.addr-action {
-  font-size: 26rpx;
-  color: #666;
+.btn-edit {
+  padding: 10rpx 32rpx;
+  border-radius: 30rpx;
+  border: 1rpx solid #07C160;
+  color: #07C160;
+  font-size: 24rpx;
+}
+.btn-delete {
+  padding: 10rpx 32rpx;
+  border-radius: 30rpx;
+  background: #ee3f3f;
+  color: #fff;
+  font-size: 24rpx;
 }
 
-.addr-action.del {
-  color: #ee3f3f;
-}
-
-/* 空状态 */
 .empty {
   text-align: center;
-  padding-top: 200rpx;
+  padding-top: 240rpx;
 }
-
-.empty-img {
-  width: 200rpx;
-  opacity: 0.2;
-  margin-bottom: 24rpx;
+.empty-icon {
+  font-size: 80rpx;
+  opacity: 0.3;
+  margin-bottom: 20rpx;
 }
-
 .empty-text {
   display: block;
   font-size: 28rpx;
-  color: #999;
+  color: #bbb;
 }
-
 .empty-sub {
   display: block;
   font-size: 24rpx;
@@ -182,16 +160,26 @@ export default {
   margin-top: 8rpx;
 }
 
-/* 底部按钮 */
 .bottom-area {
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
-  padding: 20rpx 30rpx;
-  padding-bottom: calc(20rpx + env(safe-area-inset-bottom));
+  padding: 16rpx 24rpx;
+  padding-bottom: calc(16rpx + env(safe-area-inset-bottom));
   background: #fff;
-  box-shadow: 0 -1rpx 8rpx rgba(0,0,0,0.04);
+  box-shadow: 0 -4rpx 20rpx rgba(0,0,0,0.06);
   z-index: 10;
+}
+.btn-add {
+  text-align: center;
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(135deg, #07C160, #06AD56);
+  border-radius: 40rpx;
+  padding: 18rpx 0;
+  box-shadow: 0 4rpx 16rpx rgba(7, 193, 96, 0.35);
+  &:active { opacity: 0.9; transform: scale(0.97); }
 }
 </style>

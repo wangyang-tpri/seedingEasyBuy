@@ -96,12 +96,6 @@
       }
     },
     {
-      "path": "pages/product/edit",
-      "style": {
-        "navigationBarTitleText": "编辑苗木"
-      }
-    },
-    {
       "path": "pages/collection/collection",
       "style": {
         "navigationBarTitleText": "我的收藏"

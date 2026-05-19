@@ -47,7 +47,7 @@ export default {
       return url
     },
     goEdit(id) {
-      uni.navigateTo({ url: `/pages/product/edit?id=${id}` })
+      uni.navigateTo({ url: `/pages/product/add?id=${id}` })
     },
     async toggleStatus(item) {
       const action = item.status === 1 ? '下架' : '上架'

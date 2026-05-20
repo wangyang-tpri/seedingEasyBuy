@@ -1,6 +1,16 @@
 <template>
   <view class="order-page">
-    <u-tabs :list="tabs" :current="currentTab" @change="changeTab" :activeStyle="{ color: '#07C160' }"></u-tabs>
+    <view class="tab-bar">
+      <view
+        v-for="(tab, i) in tabs"
+        :key="i"
+        :class="['tab-item', { active: currentTab === i }]"
+        @click="changeTab({ index: i })"
+      >
+        <text>{{ tab.name }}</text>
+        <view class="tab-indicator" v-if="currentTab === i"></view>
+      </view>
+    </view>
     <z-paging ref="paging" v-model="orderList" @query="loadOrders" :auto="false" :fixed="false" class="order-paging">
       <view class="order-card" v-for="order in orderList" :key="order.id" @click="goDetail(order.id)">
         <view class="order-header">
@@ -103,6 +113,37 @@ export default {
   height: 100vh;
   overflow: hidden;
   background: #f5f6fa;
+}
+.tab-bar {
+  display: flex;
+  background: #fff;
+  padding: 0 24rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.04);
+}
+.tab-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24rpx 0 20rpx;
+  font-size: 26rpx;
+  color: #888;
+  position: relative;
+}
+.tab-item.active {
+  color: #07C160;
+  font-weight: 600;
+}
+.tab-indicator {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40rpx;
+  height: 4rpx;
+  background: #07C160;
+  border-radius: 2rpx;
 }
 .order-paging {
   flex: 1;

@@ -101,8 +101,8 @@
     </view>
 
     <!-- 删除 -->
-    <view class="delete-btn" v-if="id" @click="confirmDelete">
-      <text>删除地址</text>
+    <view class="delete-btn" v-if="id">
+      <u-button text="删除地址" shape="circle" @click="confirmDelete" customStyle="color: #ee3f3f; border-color: #ee3f3f;"></u-button>
     </view>
   </view>
 </template>
@@ -171,8 +171,16 @@ export default {
       });
     },
     async save() {
-      if (!this.formData.receiverName || !this.formData.phone) {
-        this.showToast("请填写收货人和手机号");
+      if (!this.formData.receiverName) {
+        this.showToast("请填写收货人");
+        return;
+      }
+      if (!this.formData.phone) {
+        this.showToast("请填写手机号");
+        return;
+      }
+      if (!/^1[3-9]\d{9}$/.test(this.formData.phone)) {
+        this.showToast("请输入正确的手机号");
         return;
       }
       if (!this.formData.detailAddress) {
@@ -357,10 +365,7 @@ export default {
 
 /* 删除按钮 */
 .delete-btn {
-  text-align: center;
-  padding: 30rpx;
+  padding: 20rpx 30rpx;
   margin-top: 20rpx;
-  font-size: 28rpx;
-  color: #ff6b35;
 }
 </style>

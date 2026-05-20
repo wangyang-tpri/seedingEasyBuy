@@ -83,17 +83,16 @@
       </view>
     </view>
 
-    <!-- 联系信息 -->
-    <view class="specs-table" v-if="product.contactPhone || product.address">
-      <view class="spec-title">联系信息</view>
-      <view class="spec-row" v-if="product.contactPhone">
-        <text class="spec-key spec-label-bold">联系电话</text>
-        <text class="spec-val spec-phone">{{ product.contactPhone }}</text>
-      </view>
-      <view class="spec-row" v-if="product.address">
-        <text class="spec-key">发货地址</text>
-        <text class="spec-val">{{ product.address }}</text>
-      </view>
+    <!-- 联系电话 -->
+    <view class="specs-table" v-if="product.contactPhone">
+      <view class="spec-title">联系电话</view>
+      <text class="spec-phone">{{ product.contactPhone }}</text>
+    </view>
+
+    <!-- 发货地址 -->
+    <view class="specs-table" v-if="product.address">
+      <view class="spec-title">发货地址</view>
+      <text class="spec-val">{{ product.address }}</text>
     </view>
 
     <!-- 底部操作栏 -->

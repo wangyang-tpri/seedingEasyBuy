@@ -46,6 +46,7 @@
               </view>
               <text class="stock-warn" v-if="item.stock && item.quantity >= item.stock * 0.8">库存紧张，仅剩 {{ item.stock }} 件</text>
             </view>
+            <view class="item-del" @click.stop="deleteItem(item)">✕</view>
           </view>
         </view>
         <view class="scroll-bottom-space"></view>
@@ -75,13 +76,13 @@
     <view v-else class="empty-cart">
       <view class="empty-icon">🛒</view>
       <text class="empty-text">购物车是空的~</text>
-      <u-button text="去逛逛" type="success" shape="circle" size="small" @click="switchTab('/pages/index/index')"></u-button>
+      <view class="go-shop-btn" @click="switchTab('/pages/index/index')">去逛逛</view>
     </view>
   </view>
 </template>
 
 <script>
-import { get, post, put } from '@/utils/request'
+import { get, post, put, del } from '@/utils/request'
 export default {
   data() { return { cartData: [], allSelected: true, loaded: false } },
   computed: {
@@ -145,6 +146,20 @@ export default {
     async changeQty(item, qty) {
       await put('/cart/update', { id: item.id, quantity: qty })
       this.loadCart()
+    },
+    deleteItem(item) {
+      uni.showModal({
+        title: '确认删除',
+        content: '确定要从购物车中删除该商品吗？',
+        success: async (res) => {
+          if (res.confirm) {
+            try {
+              await del('/cart/delete/' + item.id)
+              this.loadCart()
+            } catch (e) {}
+          }
+        }
+      })
     },
     checkout() {
       const selected = []
@@ -281,12 +296,8 @@ export default {
 .qty-wrap {
   flex-shrink: 0;
 }
-.stock-warn {
-  display: block;
-  font-size: 20rpx;
-  color: #FF6B35;
-  margin-top: 6rpx;
-}
+.stock-warn { display: block; font-size: 20rpx; color: #FF6B35; margin-top: 6rpx; }
+.item-del { flex-shrink: 0; width: 44rpx; height: 44rpx; display: flex; align-items: center; justify-content: center; font-size: 32rpx; color: #ee3f3f; font-weight: bold; margin-left: 8rpx; }
 
 /* ========== 底部结算栏 ========== */
 .bottom-bar {
@@ -346,6 +357,7 @@ export default {
 }
 
 /* ========== 空状态 ========== */
+.go-shop-btn { display: inline-block; background: linear-gradient(135deg, #07C160, #06AD56); color: #fff; font-size: 28rpx; font-weight: 600; padding: 14rpx 48rpx; border-radius: 40rpx; box-shadow: 0 4rpx 16rpx rgba(7, 193, 96, 0.35); margin-top: 20rpx; &:active { opacity: 0.9; transform: scale(0.97); } }
 .empty-cart {
   display: flex;
   flex-direction: column;

@@ -87,18 +87,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.search-bar { padding: 20rpx 30rpx; background: #fff; }
+.search-bar { padding: 20rpx 30rpx; background: $bg-white; }
 .history-section { padding: 30rpx; }
 .history-header { display: flex; justify-content: space-between; margin-bottom: 20rpx; }
-.history-title { font-size: 28rpx; color: #333; }
-.history-clear { font-size: 24rpx; color: #999; }
+.history-title { font-size: 28rpx; color: $text-primary; }
+.history-clear { font-size: 24rpx; color: $text-hint; }
 .history-tags { display: flex; flex-wrap: wrap; }
-.history-tag { padding: 12rpx 28rpx; background: #f5f6fa; border-radius: 30rpx; margin: 0 16rpx 16rpx 0; font-size: 24rpx; color: #666; }
+.history-tag { padding: 12rpx 28rpx; background: $bg-page; border-radius: 30rpx; margin: 0 16rpx 16rpx 0; font-size: 24rpx; color: $text-secondary; }
 .result-section { padding: 20rpx 30rpx; }
 .result-grid { display: flex; flex-wrap: wrap; justify-content: space-between; }
-.product-card { width: 48%; background: #fff; border-radius: 12rpx; overflow: hidden; margin-bottom: 20rpx; }
+.product-card { width: 48%; background: $bg-white; border-radius: 12rpx; overflow: hidden; margin-bottom: 20rpx; }
 .product-img { width: 100%; height: 240rpx; }
-.product-name { display: block; font-size: 26rpx; color: #333; padding: 8rpx 12rpx 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.product-price { display: block; font-size: 28rpx; color: #FF6B35; font-weight: bold; padding: 6rpx 12rpx 16rpx; }
-.empty-result { text-align: center; color: #999; padding: 100rpx; font-size: 26rpx; }
+.product-name { display: block; font-size: 26rpx; color: $text-primary; padding: 8rpx 12rpx 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.product-price { display: block; font-size: 28rpx; color: $accent-orange; font-weight: bold; padding: 6rpx 12rpx 16rpx; }
+.empty-result { text-align: center; color: $text-hint; padding: 100rpx; font-size: 26rpx; }
 </style>

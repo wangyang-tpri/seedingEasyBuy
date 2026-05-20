@@ -115,21 +115,21 @@ export default {
 <style lang="scss" scoped>
 .login-page {
   min-height: 100vh;
-  background: #fff;
+  background: $bg-white;
 }
 
 .header-area {
   padding-top: calc(var(--status-bar-height) + 80rpx);
   padding-bottom: 60rpx;
   text-align: center;
-  background: linear-gradient(180deg, #e8f8ee 0%, #fff 100%);
+  background: linear-gradient(180deg, $primary-light 0%, $bg-white 100%);
 }
 
 .logo-circle {
   width: 140rpx;
   height: 140rpx;
   border-radius: 50%;
-  background: linear-gradient(135deg, #07c160, #06ad56);
+  background: linear-gradient(135deg, $primary-color, $primary-dark);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -152,7 +152,7 @@ export default {
 .app-desc {
   display: block;
   font-size: 26rpx;
-  color: #999;
+  color: $text-hint;
   margin-top: 16rpx;
 }
 
@@ -163,8 +163,8 @@ export default {
 .wechat-btn {
   width: 100%;
   height: 96rpx;
-  background: #07c160;
-  color: #fff;
+  background: $primary-color;
+  color: $bg-white;
   border-radius: 48rpx;
   font-size: 30rpx;
   font-weight: 500;
@@ -194,7 +194,7 @@ export default {
 
 .divider-text {
   font-size: 24rpx;
-  color: #bbb;
+  color: $text-placeholder;
   padding: 0 24rpx;
   flex-shrink: 0;
 }
@@ -215,14 +215,14 @@ export default {
 }
 
 .phone-input-wrap:focus-within {
-  border-color: #07c160;
-  background: #fff;
+  border-color: $primary-color;
+  background: $bg-white;
 }
 
 .input-prefix {
   font-size: 30rpx;
   font-weight: 500;
-  color: #333;
+  color: $text-primary;
   padding-right: 20rpx;
   border-right: 1rpx solid #e0e0e0;
   margin-right: 20rpx;
@@ -231,7 +231,7 @@ export default {
 .phone-input {
   flex: 1;
   font-size: 28rpx;
-  color: #333;
+  color: $text-primary;
   height: 100%;
 }
 
@@ -245,7 +245,7 @@ export default {
   width: 32rpx;
   height: 32rpx;
   border-radius: 50%;
-  border: 2rpx solid #ddd;
+  border: 2rpx solid $border-dashed;
   margin-right: 12rpx;
   display: flex;
   align-items: center;
@@ -255,31 +255,31 @@ export default {
 }
 
 .check-box.checked {
-  background: #07c160;
-  border-color: #07c160;
+  background: $primary-color;
+  border-color: $primary-color;
 }
 
 .check-mark {
   font-size: 20rpx;
-  color: #fff;
+  color: $bg-white;
   font-weight: bold;
 }
 
 .agree-text {
   font-size: 22rpx;
-  color: #999;
+  color: $text-hint;
   line-height: 1.5;
 }
 
 .link {
-  color: #07c160;
+  color: $primary-color;
 }
 
 .bottom-tip {
   display: block;
   text-align: center;
   font-size: 22rpx;
-  color: #ccc;
+  color: $text-disabled;
   margin-top: 40rpx;
 }
 </style>

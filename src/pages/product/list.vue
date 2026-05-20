@@ -143,32 +143,32 @@ export default {
 <style lang="scss" scoped>
 .list-page {
   min-height: 100vh;
-  background: #f5f6fa;
+  background: $bg-page;
 }
 
 /* ========== 搜索栏 ========== */
 .search-bar {
   padding: 16rpx 24rpx;
   // padding-top: calc(var(--status-bar-height) + 16rpx);
-  background: #fff;
+  background: $bg-white;
 }
 .search-box {
   display: flex;
   align-items: center;
-  background: #f5f6fa;
+  background: $bg-page;
   border-radius: 36rpx;
   padding: 16rpx 24rpx;
 }
 .search-placeholder {
   font-size: 26rpx;
-  color: #bbb;
+  color: $text-placeholder;
   margin-left: 12rpx;
 }
 
 /* ========== 排序栏 ========== */
 .sort-row {
   display: flex;
-  background: #fff;
+  background: $bg-white;
   padding: 6rpx 24rpx 18rpx;
 }
 .sort-item {
@@ -183,13 +183,13 @@ export default {
   transition: color 0.2s;
 }
 .sort-item.active {
-  color: #07c160;
+  color: $primary-color;
   font-weight: 600;
 }
 .sort-indicator {
   width: 24rpx;
   height: 4rpx;
-  background: #07c160;
+  background: $primary-color;
   border-radius: 2rpx;
   margin-top: 6rpx;
 }
@@ -205,7 +205,7 @@ export default {
 /* ========== 商品卡片 ========== */
 .product-card {
   width: calc(50% - 10rpx);
-  background: #fff;
+  background: $bg-white;
   border-radius: 12rpx;
   overflow: hidden;
   margin-bottom: 20rpx;
@@ -225,7 +225,7 @@ export default {
   width: 100%;
   height: 200rpx;
   display: block;
-  background: #f0f0f0;
+  background: $bg-input;
 }
 
 .img-tag {
@@ -233,13 +233,13 @@ export default {
   top: 10rpx;
   left: 10rpx;
   font-size: 18rpx;
-  color: #fff;
+  color: $bg-white;
   padding: 4rpx 12rpx;
   border-radius: 6rpx;
   font-weight: 600;
   letter-spacing: 1rpx;
-  &.hot { background: linear-gradient(135deg, #ff6b35, #ff5c2a); }
-  &.new { background: linear-gradient(135deg, #07c160, #06ad56); }
+  &.hot { background: linear-gradient(135deg, $accent-orange, $accent-orange); }
+  &.new { background: linear-gradient(135deg, $primary-color, $primary-dark); }
 }
 
 .card-info {
@@ -247,7 +247,7 @@ export default {
 }
 .product-name {
   font-size: 26rpx;
-  color: #333;
+  color: $text-primary;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -265,24 +265,24 @@ export default {
 }
 .product-price {
   font-size: 30rpx;
-  color: #ff6b35;
+  color: $accent-orange;
   font-weight: bold;
 }
 .product-original {
   font-size: 20rpx;
-  color: #bbb;
+  color: $text-placeholder;
   text-decoration: line-through;
 }
 .product-sales {
   font-size: 22rpx;
-  color: #999;
+  color: $text-hint;
   flex-shrink: 0;
 }
 
 /* ========== 骨架屏 ========== */
 .skeleton-card {
   width: calc(50% - 10rpx);
-  background: #fff;
+  background: $bg-white;
   border-radius: 14rpx;
   overflow: hidden;
   margin-bottom: 16rpx;
@@ -329,11 +329,11 @@ export default {
 }
 .empty-text {
   font-size: 28rpx;
-  color: #bbb;
+  color: $text-placeholder;
 }
 .empty-sub {
   font-size: 24rpx;
-  color: #ccc;
+  color: $text-disabled;
   margin-top: 8rpx;
 }
 </style>

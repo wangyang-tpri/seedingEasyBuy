@@ -112,11 +112,11 @@ export default {
   flex-direction: column;
   height: 100vh;
   overflow: hidden;
-  background: #f5f6fa;
+  background: $bg-page;
 }
 .tab-bar {
   display: flex;
-  background: #fff;
+  background: $bg-white;
   padding: 0 24rpx;
   box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.04);
 }
@@ -132,7 +132,7 @@ export default {
   position: relative;
 }
 .tab-item.active {
-  color: #07C160;
+  color: $primary-color;
   font-weight: 600;
 }
 .tab-indicator {
@@ -142,18 +142,18 @@ export default {
   transform: translateX(-50%);
   width: 40rpx;
   height: 4rpx;
-  background: #07C160;
+  background: $primary-color;
   border-radius: 2rpx;
 }
 .order-paging {
   flex: 1;
 }
-.order-card { background: #fff; margin: 16rpx 24rpx 0; border-radius: 14rpx; padding: 24rpx 28rpx; }
+.order-card { background: $bg-white; margin: 16rpx 24rpx 0; border-radius: 14rpx; padding: 24rpx 28rpx; }
 .order-card:last-child { margin-bottom: 16rpx; }
 .order-header { display: flex; justify-content: space-between; font-size: 28rpx; margin-bottom: 16rpx; }
-.order-shop { font-weight: bold; color: #333; }
-.order-body { font-size: 24rpx; color: #666; }
+.order-shop { font-weight: bold; color: $text-primary; }
+.order-body { font-size: 24rpx; color: $text-secondary; }
 .order-no, .order-amount, .order-time { display: block; margin-bottom: 8rpx; }
-.order-amount { font-size: 30rpx; color: #FF6B35; font-weight: bold; }
+.order-amount { font-size: 30rpx; color: $accent-orange; font-weight: bold; }
 .order-actions { display: flex; justify-content: flex-end; gap: 16rpx; margin-top: 20rpx; }
 </style>

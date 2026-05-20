@@ -181,13 +181,13 @@ export default {
   display: flex;
   flex-direction: column;
   height: 100vh;
-  background: #f5f6fa;
+  background: $bg-page;
 }
 
 .search-bar {
   padding: 16rpx 24rpx;
   padding-top: calc(var(--status-bar-height) + 36rpx);
-  background: #fff;
+  background: $bg-white;
 }
 
 .category-body {
@@ -199,7 +199,7 @@ export default {
 /* ========== 左侧 ========== */
 .left-panel {
   width: 180rpx;
-  background: #f5f6fa;
+  background: $bg-page;
   padding-top: 4rpx;
 }
 
@@ -219,7 +219,7 @@ export default {
 }
 
 .left-item.active {
-  background: #fff;
+  background: $bg-white;
 }
 
 .left-item.active::after {
@@ -230,7 +230,7 @@ export default {
   transform: translateY(-50%);
   width: 5rpx;
   height: 40rpx;
-  background: #07C160;
+  background: $primary-color;
   border-radius: 0 3rpx 3rpx 0;
 }
 
@@ -254,13 +254,13 @@ export default {
 }
 
 .left-item.active .left-name {
-  color: #07C160;
+  color: $primary-color;
 }
 
 /* ========== 右侧 ========== */
 .right-panel {
   flex: 1;
-  background: #fff;
+  background: $bg-white;
   border-radius: 24rpx 0 0 0;
   margin-left: -12rpx;
   padding: 0 20rpx 0 16rpx;
@@ -274,7 +274,7 @@ export default {
   display: flex;
   align-items: center;
   padding: 24rpx 28rpx;
-  background: linear-gradient(135deg, #e8f8ee 0%, #f5faf7 100%);
+  background: linear-gradient(135deg, $primary-light 0%, #f5faf7 100%);
   border-radius: 16rpx;
 }
 
@@ -301,8 +301,8 @@ export default {
   margin-right: 12rpx;
   border-radius: 24rpx;
   font-size: 24rpx;
-  color: #666;
-  background: #f5f6fa;
+  color: $text-secondary;
+  background: $bg-page;
   transition: all 0.2s ease;
   line-height: 1.4;
 }
@@ -312,8 +312,8 @@ export default {
 }
 
 .sub-tag.active {
-  background: #07C160;
-  color: #fff;
+  background: $primary-color;
+  color: $bg-white;
   font-weight: 500;
 }
 
@@ -326,7 +326,7 @@ export default {
 
 .product-card {
   width: calc(50% - 6rpx);
-  background: #fff;
+  background: $bg-white;
   border-radius: 14rpx;
   overflow: hidden;
   margin-bottom: 14rpx;
@@ -347,15 +347,15 @@ export default {
   width: 100%;
   height: 220rpx;
   display: block;
-  background: #f0f0f0;
+  background: $bg-input;
 }
 
 .img-tag {
   position: absolute;
   top: 8rpx;
   left: 8rpx;
-  background: linear-gradient(135deg, #FF6B35, #ff5c2a);
-  color: #fff;
+  background: linear-gradient(135deg, $accent-orange, $accent-orange);
+  color: $bg-white;
   font-size: 18rpx;
   padding: 2rpx 10rpx;
   border-radius: 4rpx;
@@ -369,7 +369,7 @@ export default {
 
 .product-name {
   font-size: 26rpx;
-  color: #333;
+  color: $text-primary;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
@@ -394,20 +394,20 @@ export default {
 
 .product-price {
   font-size: 30rpx;
-  color: #FF6B35;
+  color: $accent-orange;
   font-weight: 700;
   letter-spacing: -1rpx;
 }
 
 .product-original {
   font-size: 20rpx;
-  color: #bbb;
+  color: $text-placeholder;
   text-decoration: line-through;
 }
 
 .product-sales {
   font-size: 18rpx;
-  color: #bbb;
+  color: $text-placeholder;
 }
 
 /* 骨架 */
@@ -419,7 +419,7 @@ export default {
 
 .skeleton-card {
   width: calc(50% - 6rpx);
-  background: #fff;
+  background: $bg-white;
   border-radius: 14rpx;
   overflow: hidden;
   margin-bottom: 14rpx;
@@ -428,7 +428,7 @@ export default {
 .sk-img {
   width: 100%;
   height: 220rpx;
-  background: linear-gradient(90deg, #f5f5f5 25%, #efefef 50%, #f5f5f5 75%);
+  background: linear-gradient(90deg, $bg-gray 25%, #efefef 50%, $bg-gray 75%);
   background-size: 200% 100%;
   animation: shimmer 1.6s ease infinite;
 }
@@ -469,7 +469,7 @@ export default {
 
 .empty-text {
   font-size: 26rpx;
-  color: #bbb;
+  color: $text-placeholder;
 }
 
 .safe-bottom {

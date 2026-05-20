@@ -75,7 +75,7 @@
 
     <!-- 退出登录 -->
     <view class="logout-wrap" v-if="isLogin">
-      <u-button text="退出登录" shape="circle" @click="handleLogout" customStyle="color: #ee3f3f; border-color: #ee3f3f;"></u-button>
+      <u-button text="退出登录" shape="circle" @click="handleLogout" customStyle="color: $accent-red; border-color: $accent-red;"></u-button>
     </view>
   </view>
 </template>
@@ -131,7 +131,7 @@ export default {
   padding-bottom: 40rpx;
 }
 .user-card {
-  background: linear-gradient(135deg, #07c160, #06ad56);
+  background: linear-gradient(135deg, $primary-color, $primary-dark);
   padding: 60rpx 40rpx 80rpx;
   padding-top: calc(var(--status-bar-height) + 60rpx);
 }
@@ -145,7 +145,7 @@ export default {
 .user-name {
   font-size: 36rpx;
   font-weight: bold;
-  color: #fff;
+  color: $bg-white;
   display: block;
 }
 .user-phone {
@@ -155,7 +155,7 @@ export default {
 }
 .asset-row {
   display: flex;
-  background: #fff;
+  background: $bg-white;
   margin: -30rpx 30rpx 20rpx;
   border-radius: 12rpx;
   padding: 30rpx 0;
@@ -168,16 +168,16 @@ export default {
   display: block;
   font-size: 36rpx;
   font-weight: bold;
-  color: #07c160;
+  color: $primary-color;
 }
 .asset-label {
   display: block;
   font-size: 22rpx;
-  color: #999;
+  color: $text-hint;
   margin-top: 6rpx;
 }
 .order-section {
-  background: #fff;
+  background: $bg-white;
   margin: 0 30rpx 20rpx;
   border-radius: 12rpx;
   padding: 30rpx;
@@ -190,11 +190,11 @@ export default {
 .section-title {
   font-size: 30rpx;
   font-weight: bold;
-  color: #333;
+  color: $text-primary;
 }
 .section-more {
   font-size: 24rpx;
-  color: #999;
+  color: $text-hint;
 }
 .order-icons {
   display: flex;
@@ -209,11 +209,11 @@ export default {
 }
 .icon-label {
   font-size: 22rpx;
-  color: #666;
+  color: $text-secondary;
   margin-top: 10rpx;
 }
 .menu-section {
-  background: #fff;
+  background: $bg-white;
   margin: 0 30rpx 20rpx;
   border-radius: 12rpx;
 }
@@ -221,14 +221,14 @@ export default {
   display: flex;
   justify-content: space-between;
   padding: 30rpx;
-  border-bottom: 1rpx solid #f0f0f0;
+  border-bottom: 1rpx solid $bg-input;
 }
 .menu-item:last-child {
   border-bottom: none;
 }
 .menu-label {
   font-size: 28rpx;
-  color: #333;
+  color: $text-primary;
 }
 .logout-wrap {
   padding: 30rpx;

@@ -71,13 +71,13 @@ export default {
 <style lang="scss" scoped>
 .address-page {
   min-height: 100vh;
-  background: #f5f6fa;
+  background: $bg-page;
   padding: 20rpx 24rpx 160rpx;
 }
 .list-wrap { }
 
 .address-card {
-  background: #fff;
+  background: $bg-white;
   border-radius: 14rpx;
   padding: 24rpx;
   margin-bottom: 16rpx;
@@ -92,26 +92,26 @@ export default {
 .addr-name {
   font-size: 30rpx;
   font-weight: 600;
-  color: #333;
+  color: $text-primary;
   margin-right: 20rpx;
 }
 .addr-phone {
   font-size: 26rpx;
-  color: #999;
+  color: $text-hint;
   flex: 1;
 }
 .addr-tag {
   flex-shrink: 0;
   font-size: 20rpx;
-  color: #07C160;
-  background: #e8f8ee;
+  color: $primary-color;
+  background: $primary-light;
   padding: 2rpx 12rpx;
   border-radius: 4rpx;
 }
 
 .addr-text {
   font-size: 24rpx;
-  color: #666;
+  color: $text-secondary;
   line-height: 1.5;
   display: block;
   margin-bottom: 16rpx;
@@ -122,20 +122,20 @@ export default {
   justify-content: flex-end;
   gap: 16rpx;
   padding-top: 16rpx;
-  border-top: 1rpx solid #f0f0f0;
+  border-top: 1rpx solid $bg-input;
 }
 .btn-edit {
   padding: 10rpx 32rpx;
   border-radius: 30rpx;
-  border: 1rpx solid #07C160;
-  color: #07C160;
+  border: 1rpx solid $primary-color;
+  color: $primary-color;
   font-size: 24rpx;
 }
 .btn-delete {
   padding: 10rpx 32rpx;
   border-radius: 30rpx;
-  background: #ee3f3f;
-  color: #fff;
+  background: $accent-red;
+  color: $bg-white;
   font-size: 24rpx;
 }
 
@@ -151,12 +151,12 @@ export default {
 .empty-text {
   display: block;
   font-size: 28rpx;
-  color: #bbb;
+  color: $text-placeholder;
 }
 .empty-sub {
   display: block;
   font-size: 24rpx;
-  color: #ccc;
+  color: $text-disabled;
   margin-top: 8rpx;
 }
 
@@ -167,7 +167,7 @@ export default {
   right: 0;
   padding: 16rpx 24rpx;
   padding-bottom: calc(16rpx + env(safe-area-inset-bottom));
-  background: #fff;
+  background: $bg-white;
   box-shadow: 0 -4rpx 20rpx rgba(0,0,0,0.06);
   z-index: 10;
 }
@@ -175,8 +175,8 @@ export default {
   text-align: center;
   font-size: 28rpx;
   font-weight: 600;
-  color: #fff;
-  background: linear-gradient(135deg, #07C160, #06AD56);
+  color: $bg-white;
+  background: linear-gradient(135deg, $primary-color, $primary-dark);
   border-radius: 40rpx;
   padding: 18rpx 0;
   box-shadow: 0 4rpx 16rpx rgba(7, 193, 96, 0.35);

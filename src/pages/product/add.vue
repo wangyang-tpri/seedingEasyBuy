@@ -360,38 +360,38 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.add-page { min-height: 100vh; background: #f5f6fa; padding-bottom: 60rpx; }
-.form-card { background: #fff; margin: 20rpx 24rpx 0; border-radius: 16rpx; padding: 8rpx 28rpx 24rpx; box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.04); }
-.form-title { font-size: 28rpx; font-weight: 600; color: #333; padding: 20rpx 0 12rpx; }
-.form-item { display: flex; align-items: center; justify-content: space-between; padding: 22rpx 0; border-bottom: 1rpx solid #f8f8f8; &:last-child { border-bottom: none; } }
-.form-label { font-size: 27rpx; color: #333; flex-shrink: 0; margin-right: 20rpx; }
-.form-right { display: flex; align-items: center; gap: 8rpx; font-size: 26rpx; color: #333; }
-.placeholder { color: #bbb; }
+.add-page { min-height: 100vh; background: $bg-page; padding-bottom: 60rpx; }
+.form-card { background: $bg-white; margin: 20rpx 24rpx 0; border-radius: 16rpx; padding: 8rpx 28rpx 24rpx; box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.04); }
+.form-title { font-size: 28rpx; font-weight: 600; color: $text-primary; padding: 20rpx 0 12rpx; }
+.form-item { display: flex; align-items: center; justify-content: space-between; padding: 22rpx 0; border-bottom: 1rpx solid $bg-stripe; &:last-child { border-bottom: none; } }
+.form-label { font-size: 27rpx; color: $text-primary; flex-shrink: 0; margin-right: 20rpx; }
+.form-right { display: flex; align-items: center; gap: 8rpx; font-size: 26rpx; color: $text-primary; }
+.placeholder { color: $text-placeholder; }
 .upload-row { display: flex; flex-wrap: wrap; gap: 16rpx; }
 .upload-item { position: relative; }
-.upload-img { width: 160rpx; height: 160rpx; border-radius: 10rpx; background: #f0f0f0; }
-.upload-remove { position: absolute; top: -10rpx; right: -10rpx; width: 36rpx; height: 36rpx; border-radius: 50%; background: #ee3f3f; color: #fff; font-size: 20rpx; display: flex; align-items: center; justify-content: center; }
-.upload-btn { width: 160rpx; height: 160rpx; border: 2rpx dashed #ddd; border-radius: 10rpx; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-.upload-plus { font-size: 48rpx; color: #bbb; }
-.upload-sub { font-size: 20rpx; color: #bbb; margin-top: 4rpx; }
+.upload-img { width: 160rpx; height: 160rpx; border-radius: 10rpx; background: $bg-input; }
+.upload-remove { position: absolute; top: -10rpx; right: -10rpx; width: 36rpx; height: 36rpx; border-radius: 50%; background: $accent-red; color: $bg-white; font-size: 20rpx; display: flex; align-items: center; justify-content: center; }
+.upload-btn { width: 160rpx; height: 160rpx; border: 2rpx dashed $border-dashed; border-radius: 10rpx; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.upload-plus { font-size: 48rpx; color: $text-placeholder; }
+.upload-sub { font-size: 20rpx; color: $text-placeholder; margin-top: 4rpx; }
 .spec-item { display: flex; align-items: center; margin-top: 12rpx; }
-.spec-input { flex: 1; background: #f5f6fa; border-radius: 8rpx; padding: 0 16rpx; height: 64rpx; }
-.spec-del { margin-left: 12rpx; color: #ee3f3f; font-size: 26rpx; }
-.add-spec { color: #07C160; font-size: 26rpx; margin-top: 16rpx; }
+.spec-input { flex: 1; background: $bg-page; border-radius: 8rpx; padding: 0 16rpx; height: 64rpx; }
+.spec-del { margin-left: 12rpx; color: $accent-red; font-size: 26rpx; }
+.add-spec { color: $primary-color; font-size: 26rpx; margin-top: 16rpx; }
 .submit-wrap { padding: 40rpx 24rpx; }
 .cat-popup { padding: 40rpx 0 60rpx; }
 .cat-title { font-size: 32rpx; font-weight: bold; padding: 0 30rpx 24rpx; display: block; }
 .cat-body { display: flex; height: 600rpx; }
-.cat-left { width: 200rpx; background: #f5f6fa; }
-.cat-left-item { padding: 28rpx 20rpx; font-size: 26rpx; color: #666; text-align: center; }
-.cat-left-item.active { background: #fff; color: #07C160; font-weight: 600; }
+.cat-left { width: 200rpx; background: $bg-page; }
+.cat-left-item { padding: 28rpx 20rpx; font-size: 26rpx; color: $text-secondary; text-align: center; }
+.cat-left-item.active { background: $bg-white; color: $primary-color; font-weight: 600; }
 .cat-right { flex: 1; padding: 0 20rpx; }
-.cat-right-item { display: flex; justify-content: space-between; align-items: center; padding: 24rpx 16rpx; border-bottom: 1rpx solid #f8f8f8; font-size: 27rpx; }
-.cat-right-item.active { color: #07C160; }
-.cat-empty { text-align: center; color: #bbb; font-size: 26rpx; padding-top: 80rpx; }
+.cat-right-item { display: flex; justify-content: space-between; align-items: center; padding: 24rpx 16rpx; border-bottom: 1rpx solid $bg-stripe; font-size: 27rpx; }
+.cat-right-item.active { color: $primary-color; }
+.cat-empty { text-align: center; color: $text-placeholder; font-size: 26rpx; padding-top: 80rpx; }
 .picker-popup { padding: 40rpx 30rpx 60rpx; }
 .picker-title { font-size: 32rpx; font-weight: bold; display: block; margin-bottom: 24rpx; }
 .picker-grid { display: flex; flex-wrap: wrap; gap: 16rpx; }
-.picker-item { width: calc(25% - 12rpx); text-align: center; padding: 22rpx 0; background: #f5f6fa; border-radius: 10rpx; font-size: 26rpx; color: #333; }
-.picker-item.active { background: #e8f8ee; color: #07C160; font-weight: 600; }
+.picker-item { width: calc(25% - 12rpx); text-align: center; padding: 22rpx 0; background: $bg-page; border-radius: 10rpx; font-size: 26rpx; color: $text-primary; }
+.picker-item.active { background: $primary-light; color: $primary-color; font-weight: 600; }
 </style>

@@ -152,7 +152,7 @@
 	.zp-main-error-btn {
 		font-size: 26rpx;
 		padding: 8rpx 24rpx;
-		border: solid 1px #dddddd;
+		border: solid 1px $border-dashed;
 		border-radius: 6rpx;
 		color: #aaaaaa;
 		margin-top: 50rpx;

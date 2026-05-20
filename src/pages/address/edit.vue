@@ -11,7 +11,7 @@
           v-model="formData.receiverName"
           placeholder="请输入收货人姓名"
           class="field-input"
-          placeholder-style="color: #ccc"
+          placeholder-style="color: $text-disabled"
         />
       </view>
 
@@ -27,7 +27,7 @@
           maxlength="11"
           placeholder="请输入手机号"
           class="field-input"
-          placeholder-style="color: #ccc"
+          placeholder-style="color: $text-disabled"
         />
       </view>
 
@@ -57,7 +57,7 @@
           v-model="formData.detailAddress"
           placeholder="街道/门牌号/楼层"
           class="field-input"
-          placeholder-style="color: #ccc"
+          placeholder-style="color: $text-disabled"
         />
       </view>
     </view>
@@ -102,7 +102,7 @@
 
     <!-- 删除 -->
     <view class="delete-btn" v-if="id">
-      <u-button text="删除地址" shape="circle" @click="confirmDelete" customStyle="color: #ee3f3f; border-color: #ee3f3f;"></u-button>
+      <u-button text="删除地址" shape="circle" @click="confirmDelete" customStyle="color: $accent-red; border-color: $accent-red;"></u-button>
     </view>
   </view>
 </template>
@@ -224,12 +224,12 @@ export default {
 <style lang="scss" scoped>
 .edit-page {
   min-height: 100vh;
-  background: #f5f6fa;
+  background: $bg-page;
   padding-bottom: 60rpx;
 }
 
 .form-card {
-  background: #fff;
+  background: $bg-white;
   margin: 20rpx 30rpx;
   border-radius: 16rpx;
   overflow: hidden;
@@ -240,7 +240,7 @@ export default {
   align-items: center;
   padding: 0 30rpx;
   height: 100rpx;
-  border-bottom: 1rpx solid #f5f5f5;
+  border-bottom: 1rpx solid $bg-gray;
   transition: background 0.15s;
 }
 
@@ -266,14 +266,14 @@ export default {
 
 .label-text {
   font-size: 28rpx;
-  color: #333;
+  color: $text-primary;
   font-weight: 500;
 }
 
 .field-input {
   flex: 1;
   font-size: 28rpx;
-  color: #333;
+  color: $text-primary;
   text-align: right;
   height: 100%;
 }
@@ -287,16 +287,16 @@ export default {
 
 .field-value {
   font-size: 28rpx;
-  color: #333;
+  color: $text-primary;
 }
 
 .field-value.placeholder {
-  color: #ccc;
+  color: $text-disabled;
 }
 
 /* 地址标签 */
 .tag-section {
-  background: #fff;
+  background: $bg-white;
   margin: 20rpx 30rpx;
   border-radius: 16rpx;
   padding: 30rpx;
@@ -305,7 +305,7 @@ export default {
 .tag-title {
   font-size: 28rpx;
   font-weight: 500;
-  color: #333;
+  color: $text-primary;
   display: block;
   margin-bottom: 24rpx;
 }
@@ -321,18 +321,18 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #f5f6fa;
+  background: $bg-page;
   border-radius: 12rpx;
   font-size: 26rpx;
-  color: #666;
+  color: $text-secondary;
   border: 2rpx solid transparent;
   transition: all 0.2s;
 }
 
 .tag-item.active {
-  background: #e8f8ee;
-  border-color: #07c160;
-  color: #07c160;
+  background: $primary-light;
+  border-color: $primary-color;
+  color: $primary-color;
   font-weight: 500;
 }
 
@@ -346,7 +346,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: #fff;
+  background: $bg-white;
   margin: 20rpx 30rpx;
   border-radius: 16rpx;
   padding: 24rpx 30rpx;
@@ -354,7 +354,7 @@ export default {
 
 .switch-label {
   font-size: 28rpx;
-  color: #333;
+  color: $text-primary;
   font-weight: 500;
 }
 

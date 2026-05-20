@@ -87,7 +87,7 @@
 		margin-right: 8rpx;
 		width: 23rpx;
 		height: 23rpx;
-		border: 3rpx solid #dddddd;
+		border: 3rpx solid $border-dashed;
 		border-radius: 50%;
 		/* #ifndef APP-NVUE */
 		animation: loading-circle 1s linear infinite;
@@ -105,7 +105,7 @@
 
 	.zp-l-line-loading-view-white {
 		border-color: #aaaaaa;
-		border-top-color: #ffffff;
+		border-top-color: $bg-white;
 	}
 
 	.zp-l-text {

@@ -167,7 +167,7 @@
 		/* #ifdef APP-NVUE */
 		transition-duration: .2s;
 		transition-property: transform;
-		color: #666666;
+		color: $text-secondary;
 		/* #endif */
 	}
 	
@@ -178,7 +178,7 @@
 		/* #ifdef APP-NVUE */
 		transition-duration: .2s;
 		transition-property: transform;
-		color: #666666;
+		color: $text-secondary;
 		/* #endif */
 	}
 	

@@ -21,6 +21,6 @@ export default {
 <style lang="scss">
 @import "uview-ui/index.scss";
 page {
-  background: #f5f6fa;
+  background: $bg-page;
 }
 </style>

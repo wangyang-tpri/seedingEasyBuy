@@ -259,7 +259,7 @@ export default {
 .detail-page {
   min-height: 100vh;
   padding-bottom: calc(120rpx + env(safe-area-inset-bottom));
-  background: #f5f6fa;
+  background: $bg-page;
 }
 .swiper-wrap {
   margin: 20rpx 30rpx 12rpx;
@@ -282,89 +282,89 @@ export default {
   align-items: center;
   justify-content: center;
   font-size: 22rpx;
-  color: #fff;
+  color: $bg-white;
   z-index: 10;
 }
 .price-section {
   margin: 0 30rpx;
   border-radius: 12rpx 12rpx 0 0;
   padding: 28rpx 30rpx 20rpx;
-  background: #fff;
+  background: $bg-white;
 }
 .current-price {
   font-size: 44rpx;
-  color: #ff6b35;
+  color: $accent-orange;
   font-weight: bold;
 }
 .original-price {
   font-size: 26rpx;
-  color: #999;
+  color: $text-hint;
   text-decoration: line-through;
   margin-left: 16rpx;
 }
 .sales-text {
   font-size: 24rpx;
-  color: #999;
+  color: $text-hint;
   margin-left: 16rpx;
 }
 .name-section {
   margin: 0 30rpx;
   padding: 0 30rpx 28rpx;
-  background: #fff;
+  background: $bg-white;
   border-radius: 0 0 12rpx 12rpx;
 }
-.product-name { font-size: 32rpx; font-weight: bold; color: #333; }
-.product-subtitle { font-size: 24rpx; color: #999; display: block; margin-top: 10rpx; }
+.product-name { font-size: 32rpx; font-weight: bold; color: $text-primary; }
+.product-subtitle { font-size: 24rpx; color: $text-hint; display: block; margin-top: 10rpx; }
 .sku-section {
   margin: 12rpx 30rpx 0;
   padding: 28rpx 30rpx;
-  background: #fff;
+  background: $bg-white;
   border-radius: 12rpx;
 }
 .sku-header { display: flex; justify-content: space-between; align-items: center; }
-.sku-label { font-size: 28rpx; color: #333; }
+.sku-label { font-size: 28rpx; color: $text-primary; }
 .qty-section {
   margin: 12rpx 30rpx 0;
   padding: 28rpx 30rpx;
-  background: #fff;
+  background: $bg-white;
   border-radius: 12rpx;
   display: flex; justify-content: space-between; align-items: center;
-  font-size: 28rpx; color: #333;
+  font-size: 28rpx; color: $text-primary;
 }
 .section-title {
   font-size: 30rpx; font-weight: bold;
   margin: 12rpx 30rpx 0;
   padding: 30rpx 30rpx 16rpx;
-  background: #fff;
+  background: $bg-white;
   border-radius: 12rpx 12rpx 0 0;
 }
 .desc-content {
   margin: 0 30rpx;
   padding: 0 30rpx 30rpx;
-  background: #fff;
+  background: $bg-white;
   border-radius: 0 0 12rpx 12rpx;
 }
 .specs-table {
   margin: 12rpx 30rpx 0;
   padding: 0 30rpx 30rpx;
-  background: #fff;
+  background: $bg-white;
   border-radius: 12rpx;
 }
 .spec-row {
   display: flex;
   justify-content: space-between;
   padding: 16rpx 0;
-  border-bottom: 1rpx solid #f0f0f0;
+  border-bottom: 1rpx solid $bg-input;
   &:last-child {
     border-bottom: none;
   }
 }
 .spec-key {
-  color: #999;
+  color: $text-hint;
   font-size: 26rpx;
 }
 .spec-val {
-  color: #333;
+  color: $text-primary;
   font-size: 26rpx;
 }
 .bottom-bar {
@@ -372,7 +372,7 @@ export default {
   bottom: 0;
   left: 0;
   right: 0;
-  background: #fff;
+  background: $bg-white;
   padding: 14rpx 24rpx;
   padding-bottom: calc(14rpx + env(safe-area-inset-bottom));
   display: flex;
@@ -395,7 +395,7 @@ export default {
 }
 .bi-label {
   font-size: 20rpx;
-  color: #666;
+  color: $text-secondary;
 }
 .bottom-actions {
   display: flex;
@@ -407,9 +407,9 @@ export default {
   text-align: center;
   font-size: 28rpx;
   font-weight: 600;
-  color: #ff6b35;
-  background: #fff;
-  border: 2rpx solid #ff6b35;
+  color: $accent-orange;
+  background: $bg-white;
+  border: 2rpx solid $accent-orange;
   border-radius: 40rpx;
   padding: 18rpx 0;
   &:active {
@@ -422,8 +422,8 @@ export default {
   text-align: center;
   font-size: 28rpx;
   font-weight: 600;
-  color: #fff;
-  background: linear-gradient(135deg, #07c160, #06ad56);
+  color: $bg-white;
+  background: linear-gradient(135deg, $primary-color, $primary-dark);
   border-radius: 40rpx;
   padding: 18rpx 0;
   box-shadow: 0 4rpx 16rpx rgba(7, 193, 96, 0.35);
@@ -445,17 +445,17 @@ export default {
 .sku-item {
   padding: 24rpx;
   margin-bottom: 16rpx;
-  background: #f5f6fa;
+  background: $bg-page;
   border-radius: 12rpx;
   display: flex;
   justify-content: space-between;
 }
 .sku-item.active {
-  background: #e8f8ee;
-  border: 2rpx solid #07c160;
+  background: $primary-light;
+  border: 2rpx solid $primary-color;
 }
 .sku-price {
   font-weight: bold;
-  color: #ff6b35;
+  color: $accent-orange;
 }
 </style>

@@ -215,7 +215,7 @@ export default {
 <style lang="scss" scoped>
 .confirm-page {
   min-height: 100vh;
-  background: #f5f6fa;
+  background: $bg-page;
   padding-bottom: 160rpx;
 }
 
@@ -226,7 +226,7 @@ export default {
   justify-content: space-between;
   margin: 24rpx 24rpx 0;
   padding: 28rpx 24rpx;
-  background: #fff;
+  background: $bg-white;
   border-radius: 16rpx;
   box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.04);
 }
@@ -254,23 +254,23 @@ export default {
 .addr-name {
   font-size: 30rpx;
   font-weight: 600;
-  color: #333;
+  color: $text-primary;
 }
 .addr-phone {
   font-size: 26rpx;
-  color: #999;
+  color: $text-hint;
 }
 .addr-tag {
   font-size: 20rpx;
-  color: #07c160;
-  background: #e8f8ee;
+  color: $primary-color;
+  background: $primary-light;
   padding: 2rpx 12rpx;
   border-radius: 6rpx;
   flex-shrink: 0;
 }
 .addr-detail {
   font-size: 24rpx;
-  color: #666;
+  color: $text-secondary;
   display: block;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -278,12 +278,12 @@ export default {
 }
 .no-addr {
   font-size: 28rpx;
-  color: #bbb;
+  color: $text-placeholder;
 }
 
 /* ========== 商品卡片 ========== */
 .items-card {
-  background: #fff;
+  background: $bg-white;
   margin: 24rpx 24rpx 0;
   border-radius: 16rpx;
   overflow: hidden;
@@ -293,27 +293,27 @@ export default {
   display: flex;
   align-items: center;
   padding: 20rpx 24rpx;
-  background: #fafbfc;
-  border-bottom: 1rpx solid #f0f0f0;
+  background: $bg-light;
+  border-bottom: 1rpx solid $bg-input;
 }
 .shop-header::before {
   content: "";
   width: 6rpx;
   height: 28rpx;
-  background: #07c160;
+  background: $primary-color;
   border-radius: 3rpx;
   margin-right: 12rpx;
 }
 .shop-name {
   font-size: 26rpx;
   font-weight: 600;
-  color: #333;
+  color: $text-primary;
 }
 .item {
   display: flex;
   align-items: center;
   padding: 20rpx 24rpx;
-  border-bottom: 1rpx solid #f8f8f8;
+  border-bottom: 1rpx solid $bg-stripe;
   &:last-child {
     border-bottom: none;
   }
@@ -324,7 +324,7 @@ export default {
   border-radius: 10rpx;
   margin-right: 16rpx;
   flex-shrink: 0;
-  background: #f5f5f5;
+  background: $bg-gray;
 }
 .item-info {
   flex: 1;
@@ -332,7 +332,7 @@ export default {
 }
 .item-name {
   font-size: 27rpx;
-  color: #333;
+  color: $text-primary;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
@@ -352,13 +352,13 @@ export default {
 }
 .item-price {
   font-size: 28rpx;
-  color: #ff6b35;
+  color: $accent-orange;
   font-weight: 600;
   display: block;
 }
 .item-qty {
   font-size: 24rpx;
-  color: #999;
+  color: $text-hint;
   margin-top: 4rpx;
   display: block;
 }
@@ -370,7 +370,7 @@ export default {
   justify-content: space-between;
   margin: 24rpx 24rpx 0;
   padding: 24rpx;
-  background: #fff;
+  background: $bg-white;
   border-radius: 16rpx;
   box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.04);
 }
@@ -384,7 +384,7 @@ export default {
 }
 .coupon-label {
   font-size: 27rpx;
-  color: #333;
+  color: $text-primary;
   font-weight: 500;
 }
 .coupon-right {
@@ -394,11 +394,11 @@ export default {
 }
 .coupon-placeholder {
   font-size: 24rpx;
-  color: #bbb;
+  color: $text-placeholder;
 }
 .coupon-value {
   font-size: 26rpx;
-  color: #ff6b35;
+  color: $accent-orange;
   font-weight: 600;
 }
 
@@ -406,7 +406,7 @@ export default {
 .msg-card {
   margin: 24rpx 24rpx 0;
   padding: 20rpx 24rpx 12rpx;
-  background: #fff;
+  background: $bg-white;
   border-radius: 16rpx;
   box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.04);
 }
@@ -421,7 +421,7 @@ export default {
 }
 .msg-label {
   font-size: 27rpx;
-  color: #333;
+  color: $text-primary;
   font-weight: 500;
 }
 
@@ -429,17 +429,17 @@ export default {
 .amount-card {
   margin: 24rpx 24rpx 0;
   padding: 24rpx;
-  background: #fff;
+  background: $bg-white;
   border-radius: 16rpx;
   box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.04);
 }
 .amount-title {
   font-size: 27rpx;
   font-weight: 600;
-  color: #333;
+  color: $text-primary;
   margin-bottom: 16rpx;
   padding-bottom: 16rpx;
-  border-bottom: 1rpx solid #f0f0f0;
+  border-bottom: 1rpx solid $bg-input;
 }
 .amount-row {
   display: flex;
@@ -447,27 +447,27 @@ export default {
   align-items: center;
   padding: 10rpx 0;
   font-size: 26rpx;
-  color: #666;
+  color: $text-secondary;
 }
 .amount-divider {
   height: 1rpx;
-  background: #f0f0f0;
+  background: $bg-input;
   margin: 12rpx 0 16rpx;
 }
 .amount-row.total {
   font-size: 28rpx;
-  color: #333;
+  color: $text-primary;
   font-weight: 500;
 }
 .freight-free {
-  color: #07c160;
+  color: $primary-color;
 }
 .discount {
-  color: #ff6b35;
+  color: $accent-orange;
 }
 .total-price {
   font-size: 36rpx;
-  color: #ff6b35;
+  color: $accent-orange;
   font-weight: 700;
 }
 
@@ -482,7 +482,7 @@ export default {
   bottom: 0;
   left: 0;
   right: 0;
-  background: #fff;
+  background: $bg-white;
   padding: 16rpx 24rpx;
   padding-bottom: calc(16rpx + env(safe-area-inset-bottom));
   display: flex;
@@ -497,17 +497,17 @@ export default {
 }
 .submit-label {
   font-size: 24rpx;
-  color: #666;
+  color: $text-secondary;
 }
 .submit-price {
   font-size: 40rpx;
-  color: #ff6b35;
+  color: $accent-orange;
   font-weight: 700;
   margin-left: 8rpx;
 }
 .submit-btn {
-  background: linear-gradient(135deg, #07c160, #06ad56);
-  color: #fff;
+  background: linear-gradient(135deg, $primary-color, $primary-dark);
+  color: $bg-white;
   font-size: 30rpx;
   font-weight: 600;
   padding: 18rpx 56rpx;

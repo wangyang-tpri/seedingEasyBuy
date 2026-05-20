@@ -61,19 +61,19 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.info-card { background: #fff; margin: 20rpx 30rpx; border-radius: 12rpx; padding: 24rpx 30rpx; }
+.info-card { background: $bg-white; margin: 20rpx 30rpx; border-radius: 12rpx; padding: 24rpx 30rpx; }
 .info-row { display: flex; padding: 12rpx 0; font-size: 26rpx; }
-.info-label { color: #999; width: 140rpx; flex-shrink: 0; }
-.items-card { background: #fff; margin: 20rpx 30rpx; border-radius: 12rpx; padding: 20rpx 30rpx; }
-.order-item { display: flex; padding: 16rpx 0; border-bottom: 1rpx solid #f0f0f0; }
+.info-label { color: $text-hint; width: 140rpx; flex-shrink: 0; }
+.items-card { background: $bg-white; margin: 20rpx 30rpx; border-radius: 12rpx; padding: 20rpx 30rpx; }
+.order-item { display: flex; padding: 16rpx 0; border-bottom: 1rpx solid $bg-input; }
 .order-item:last-child { border-bottom: none; }
 .item-img { width: 120rpx; height: 120rpx; border-radius: 8rpx; margin-right: 20rpx; }
 .item-info { flex: 1; }
-.item-name { font-size: 26rpx; color: #333; display: block; }
-.item-sku { font-size: 22rpx; color: #999; }
-.item-price { font-size: 26rpx; color: #FF6B35; font-weight: bold; }
-.amount-card { background: #fff; margin: 20rpx 30rpx; border-radius: 12rpx; padding: 24rpx 30rpx; }
-.amount-row { display: flex; justify-content: space-between; padding: 12rpx 0; font-size: 26rpx; color: #666; }
-.amount-row.total { border-top: 1rpx solid #f0f0f0; padding-top: 20rpx; margin-top: 10rpx; }
-.total-price { color: #FF6B35; font-size: 32rpx; font-weight: bold; }
+.item-name { font-size: 26rpx; color: $text-primary; display: block; }
+.item-sku { font-size: 22rpx; color: $text-hint; }
+.item-price { font-size: 26rpx; color: $accent-orange; font-weight: bold; }
+.amount-card { background: $bg-white; margin: 20rpx 30rpx; border-radius: 12rpx; padding: 24rpx 30rpx; }
+.amount-row { display: flex; justify-content: space-between; padding: 12rpx 0; font-size: 26rpx; color: $text-secondary; }
+.amount-row.total { border-top: 1rpx solid $bg-input; padding-top: 20rpx; margin-top: 10rpx; }
+.total-price { color: $accent-orange; font-size: 32rpx; font-weight: bold; }
 </style>

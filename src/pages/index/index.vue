@@ -211,11 +211,11 @@ export default {
       const colors = {
         1: { bg: '#FFF0F5', text: '#E85D75' },
         2: { bg: '#FFF7E6', text: '#E8A44C' },
-        3: { bg: '#E8F8EE', text: '#07C160' },
+        3: { bg: '#E8F8EE', text: '$primary-color' },
         4: { bg: '#EDF4FF', text: '#4A90D9' },
         5: { bg: '#FFF3E0', text: '#E67E22' },
       }
-      return colors[id] || { bg: '#f5f6fa', text: '#999' }
+      return colors[id] || { bg: '$bg-page', text: '$text-hint' }
     },
     goCategory(cat) {
       this.$store.commit("SET_CATEGORY_ID", cat.id);
@@ -235,7 +235,7 @@ export default {
 .search-bar {
   padding: 20rpx 30rpx;
   padding-top: calc(var(--status-bar-height) + 40rpx);
-  background: #fff;
+  background: $bg-white;
 }
 .banner-wrap {
   margin: 20rpx 30rpx;
@@ -245,7 +245,7 @@ export default {
 .placeholder-banner {
   height: 340rpx;
   border-radius: 12rpx;
-  background: #f0f0f0;
+  background: $bg-input;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -257,7 +257,7 @@ export default {
 }
 .placeholder-text {
   font-size: 24rpx;
-  color: #bbb;
+  color: $text-placeholder;
 }
 
 /* 分类 */
@@ -266,7 +266,7 @@ export default {
   flex-wrap: wrap;
   align-items: center;
   padding: 30rpx 30rpx 10rpx;
-  background: #fff;
+  background: $bg-white;
   margin: 0 30rpx 20rpx;
   border-radius: 12rpx;
   min-height: 160rpx;
@@ -293,7 +293,7 @@ export default {
 }
 .category-name {
   font-size: 22rpx;
-  color: #333;
+  color: $text-primary;
 }
 
 /* 区块 */
@@ -309,7 +309,7 @@ export default {
 .section-title {
   font-size: 32rpx;
   font-weight: bold;
-  color: #333;
+  color: $text-primary;
   padding-left: 16rpx;
   position: relative;
 }
@@ -320,12 +320,12 @@ export default {
   top: 6rpx;
   bottom: 6rpx;
   width: 6rpx;
-  background: #07c160;
+  background: $primary-color;
   border-radius: 3rpx;
 }
 .section-more {
   font-size: 24rpx;
-  color: #999;
+  color: $text-hint;
 }
 
 /* 商品卡片 - 网格 */
@@ -336,7 +336,7 @@ export default {
 }
 .product-card {
   width: calc(50% - 10rpx);
-  background: #fff;
+  background: $bg-white;
   border-radius: 12rpx;
   overflow: hidden;
   margin-bottom: 20rpx;
@@ -350,7 +350,7 @@ export default {
 .product-name {
   display: block;
   font-size: 26rpx;
-  color: #333;
+  color: $text-primary;
   padding: 10rpx 16rpx 0;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -359,21 +359,21 @@ export default {
 .product-price {
   display: block;
   font-size: 30rpx;
-  color: #ff6b35;
+  color: $accent-orange;
   font-weight: bold;
   padding: 6rpx 16rpx 0;
 }
 .product-sales {
   display: block;
   font-size: 22rpx;
-  color: #999;
+  color: $text-hint;
   padding: 4rpx 16rpx 16rpx;
 }
 
 /* 骨架占位 */
 .placeholder-card {
   width: calc(50% - 10rpx);
-  background: #fff;
+  background: $bg-white;
   border-radius: 12rpx;
   overflow: hidden;
   margin-bottom: 20rpx;
@@ -381,11 +381,11 @@ export default {
 .placeholder-img {
   width: 100%;
   height: 200rpx;
-  background: #f0f0f0;
+  background: $bg-input;
 }
 .placeholder-line {
   height: 20rpx;
-  background: #f0f0f0;
+  background: $bg-input;
   border-radius: 4rpx;
   margin: 16rpx 16rpx 0;
 }

@@ -189,7 +189,7 @@ export default {
   display: flex;
   flex-direction: column;
   height: 100vh;
-  background: #f5f6fa;
+  background: $bg-page;
   overflow: hidden;
 }
 
@@ -209,22 +209,22 @@ export default {
   justify-content: space-between;
   padding: 24rpx 28rpx 16rpx;
   padding-top: calc(var(--status-bar-height) + 24rpx);
-  background: #fff;
+  background: $bg-white;
 }
 .page-title {
   font-size: 36rpx;
   font-weight: 700;
-  color: #333;
+  color: $text-primary;
 }
 .page-sub {
   font-size: 24rpx;
-  color: #999;
+  color: $text-hint;
 }
 
 /* ========== 店铺分组 ========== */
 .shop-group {
   margin: 20rpx 24rpx 0;
-  background: #fff;
+  background: $bg-white;
   border-radius: 16rpx;
   overflow: hidden;
   box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.04);
@@ -233,8 +233,8 @@ export default {
   display: flex;
   align-items: center;
   padding: 20rpx 24rpx;
-  background: #fafbfc;
-  border-bottom: 1rpx solid #f0f0f0;
+  background: $bg-light;
+  border-bottom: 1rpx solid $bg-input;
 }
 .shop-icon {
   font-size: 28rpx;
@@ -244,7 +244,7 @@ export default {
 .shop-name {
   font-size: 27rpx;
   font-weight: 600;
-  color: #333;
+  color: $text-primary;
 }
 
 /* ========== 购物车条目 ========== */
@@ -252,7 +252,7 @@ export default {
   display: flex;
   align-items: flex-start;
   padding: 20rpx 24rpx;
-  border-bottom: 1rpx solid #f8f8f8;
+  border-bottom: 1rpx solid $bg-stripe;
   &:last-child { border-bottom: none; }
 }
 .item-img {
@@ -261,7 +261,7 @@ export default {
   border-radius: 10rpx;
   margin: 0 16rpx;
   flex-shrink: 0;
-  background: #f5f5f5;
+  background: $bg-gray;
 }
 .item-info {
   flex: 1;
@@ -269,7 +269,7 @@ export default {
 }
 .item-name {
   font-size: 27rpx;
-  color: #333;
+  color: $text-primary;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
@@ -290,14 +290,14 @@ export default {
 }
 .item-price {
   font-size: 30rpx;
-  color: #FF6B35;
+  color: $accent-orange;
   font-weight: 700;
 }
 .qty-wrap {
   flex-shrink: 0;
 }
-.stock-warn { display: block; font-size: 20rpx; color: #FF6B35; margin-top: 6rpx; }
-.item-del { flex-shrink: 0; width: 44rpx; height: 44rpx; display: flex; align-items: center; justify-content: center; font-size: 32rpx; color: #ee3f3f; font-weight: bold; margin-left: 8rpx; }
+.stock-warn { display: block; font-size: 20rpx; color: $accent-orange; margin-top: 6rpx; }
+.item-del { flex-shrink: 0; width: 44rpx; height: 44rpx; display: flex; align-items: center; justify-content: center; font-size: 32rpx; color: $accent-red; font-weight: bold; margin-left: 8rpx; }
 
 /* ========== 底部结算栏 ========== */
 .bottom-bar {
@@ -305,7 +305,7 @@ export default {
   bottom: 0;
   left: 0;
   right: 0;
-  background: #fff;
+  background: $bg-white;
   padding: 14rpx 24rpx;
   padding-bottom: calc(14rpx + env(safe-area-inset-bottom));
   display: flex;
@@ -319,7 +319,7 @@ export default {
 }
 .select-all-text {
   font-size: 26rpx;
-  color: #333;
+  color: $text-primary;
   margin-left: 8rpx;
 }
 .bottom-right {
@@ -333,17 +333,17 @@ export default {
 }
 .total-label {
   font-size: 24rpx;
-  color: #666;
+  color: $text-secondary;
 }
 .total-price {
   font-size: 36rpx;
-  color: #FF6B35;
+  color: $accent-orange;
   font-weight: 700;
   margin-left: 6rpx;
 }
 .checkout-btn {
-  background: linear-gradient(135deg, #07C160, #06AD56);
-  color: #fff;
+  background: linear-gradient(135deg, $primary-color, $primary-dark);
+  color: $bg-white;
   font-size: 28rpx;
   font-weight: 600;
   padding: 16rpx 40rpx;
@@ -357,7 +357,7 @@ export default {
 }
 
 /* ========== 空状态 ========== */
-.go-shop-btn { display: inline-block; background: linear-gradient(135deg, #07C160, #06AD56); color: #fff; font-size: 28rpx; font-weight: 600; padding: 14rpx 48rpx; border-radius: 40rpx; box-shadow: 0 4rpx 16rpx rgba(7, 193, 96, 0.35); margin-top: 20rpx; &:active { opacity: 0.9; transform: scale(0.97); } }
+.go-shop-btn { display: inline-block; background: linear-gradient(135deg, $primary-color, $primary-dark); color: $bg-white; font-size: 28rpx; font-weight: 600; padding: 14rpx 48rpx; border-radius: 40rpx; box-shadow: 0 4rpx 16rpx rgba(7, 193, 96, 0.35); margin-top: 20rpx; &:active { opacity: 0.9; transform: scale(0.97); } }
 .empty-cart {
   display: flex;
   flex-direction: column;
@@ -370,7 +370,7 @@ export default {
 }
 .empty-text {
   font-size: 28rpx;
-  color: #999;
+  color: $text-hint;
   margin-bottom: 40rpx;
 }
 </style>

@@ -13,5 +13,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.empty { text-align: center; padding: 200rpx 0; color: #999; font-size: 28rpx; }
+.empty { text-align: center; padding: 200rpx 0; color: $text-hint; font-size: 28rpx; }
 </style>

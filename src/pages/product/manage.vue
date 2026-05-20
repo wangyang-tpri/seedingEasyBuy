@@ -70,23 +70,23 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.manage-page { min-height: 100vh; background: #f5f6fa; padding: 20rpx 24rpx; }
-.product-card { background: #fff; border-radius: 14rpx; padding: 24rpx; margin-bottom: 16rpx; box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.04); }
+.manage-page { min-height: 100vh; background: $bg-page; padding: 20rpx 24rpx; }
+.product-card { background: $bg-white; border-radius: 14rpx; padding: 24rpx; margin-bottom: 16rpx; box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.04); }
 .card-top { display: flex; }
-.card-img { width: 140rpx; height: 140rpx; border-radius: 10rpx; margin-right: 20rpx; flex-shrink: 0; background: #f0f0f0; }
+.card-img { width: 140rpx; height: 140rpx; border-radius: 10rpx; margin-right: 20rpx; flex-shrink: 0; background: $bg-input; }
 .card-info { flex: 1; min-width: 0; }
-.card-name { font-size: 28rpx; font-weight: 600; color: #333; display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.card-price { font-size: 30rpx; color: #FF6B35; font-weight: bold; margin-top: 6rpx; display: block; }
-.card-meta { display: flex; gap: 20rpx; margin-top: 6rpx; font-size: 22rpx; color: #999; }
+.card-name { font-size: 28rpx; font-weight: 600; color: $text-primary; display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.card-price { font-size: 30rpx; color: $accent-orange; font-weight: bold; margin-top: 6rpx; display: block; }
+.card-meta { display: flex; gap: 20rpx; margin-top: 6rpx; font-size: 22rpx; color: $text-hint; }
 .status-tag { display: inline-block; font-size: 20rpx; padding: 2rpx 12rpx; border-radius: 4rpx; margin-top: 6rpx; }
-.status-tag.on { background: #e8f8ee; color: #07C160; }
-.status-tag.off { background: #f5f5f5; color: #999; }
-.card-actions { display: flex; justify-content: flex-end; gap: 16rpx; margin-top: 20rpx; padding-top: 20rpx; border-top: 1rpx solid #f0f0f0; }
-.btn-edit { padding: 12rpx 36rpx; border-radius: 30rpx; border: 1rpx solid #07C160; color: #07C160; font-size: 24rpx; }
-.btn-toggle { padding: 12rpx 36rpx; border-radius: 30rpx; font-size: 24rpx; color: #fff; }
-.btn-toggle.off { background: #ee3f3f; }
-.btn-toggle.on { background: #07C160; }
+.status-tag.on { background: $primary-light; color: $primary-color; }
+.status-tag.off { background: $bg-gray; color: $text-hint; }
+.card-actions { display: flex; justify-content: flex-end; gap: 16rpx; margin-top: 20rpx; padding-top: 20rpx; border-top: 1rpx solid $bg-input; }
+.btn-edit { padding: 12rpx 36rpx; border-radius: 30rpx; border: 1rpx solid $primary-color; color: $primary-color; font-size: 24rpx; }
+.btn-toggle { padding: 12rpx 36rpx; border-radius: 30rpx; font-size: 24rpx; color: $bg-white; }
+.btn-toggle.off { background: $accent-red; }
+.btn-toggle.on { background: $primary-color; }
 .empty-box { text-align: center; padding-top: 200rpx; }
 .empty-icon { font-size: 80rpx; opacity: 0.3; margin-bottom: 20rpx; }
-.empty-text { font-size: 28rpx; color: #bbb; display: block; }
+.empty-text { font-size: 28rpx; color: $text-placeholder; display: block; }
 </style>

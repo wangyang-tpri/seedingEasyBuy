@@ -20,6 +20,7 @@
         <view class="wechat-icon">💬</view>
         <text>微信手机号一键登录</text>
       </button>
+      <text class="wechat-hint">需微信认证小程序，开发时请用下方手机号登录</text>
 
       <!-- 分割线 -->
       <view class="divider">
@@ -49,14 +50,9 @@
             <text class="link">《隐私政策》</text></text
           >
         </view>
-        <u-button
-          text="登 录"
-          type="success"
-          shape="circle"
-          block
-          :disabled="!phone"
-          @click="loginByPhone"
-        ></u-button>
+        <view :class="['login-btn', phone ? '' : 'disabled']" @click="phone && loginByPhone()">
+          <text>登 录</text>
+        </view>
       </view>
 
       <text class="bottom-tip">首次登录即自动注册账号</text>
@@ -71,7 +67,10 @@ export default {
   },
   methods: {
     async onGetPhoneNumber(e) {
-      if (e.detail.errMsg !== "getPhoneNumber:ok") return;
+      if (e.detail.errMsg !== "getPhoneNumber:ok") {
+        uni.showToast({ title: "获取手机号需要微信认证的小程序", icon: "none" });
+        return;
+      }
       uni.showLoading({ title: "登录中" });
       try {
         let code = "";
@@ -79,14 +78,15 @@ export default {
           const res = await uni.login({ provider: "weixin" });
           code = res.code;
         } catch (e) {}
-        // 开发模式：code为空时用时间戳模拟
         if (!code) code = "dev_" + Date.now();
-        await this.$store.dispatch("login", { code, phone: "13609257752" });
+        // Use WeChat returned phone if available
+        const phone = e.detail.phoneNumber || this.phone || "";
+        await this.$store.dispatch("login", { code, phone });
         uni.hideLoading();
         uni.switchTab({ url: "/pages/index/index" });
       } catch (err) {
         uni.hideLoading();
-        this.showToast("登录失败，请重试");
+        uni.showToast({ title: "登录失败，请重试", icon: "none" });
       }
     },
     async loginByPhone() {
@@ -178,6 +178,13 @@ export default {
 .wechat-icon {
   font-size: 36rpx;
   margin-right: 12rpx;
+}
+.wechat-hint {
+  display: block;
+  text-align: center;
+  font-size: 20rpx;
+  color: $text-hint;
+  margin-top: 12rpx;
 }
 
 .divider {
@@ -275,6 +282,21 @@ export default {
   color: $primary-color;
 }
 
+.login-btn {
+  width: 100%;
+  height: 96rpx;
+  background: $gradient-green;
+  border-radius: 48rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32rpx;
+  font-weight: 600;
+  color: $bg-white;
+  box-shadow: $shadow-green;
+  &:active { opacity: 0.9; transform: scale(0.98); }
+  &.disabled { opacity: 0.4; pointer-events: none; }
+}
 .bottom-tip {
   display: block;
   text-align: center;

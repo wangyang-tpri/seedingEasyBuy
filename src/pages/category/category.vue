@@ -1,14 +1,14 @@
 <template>
   <view class="category-page">
     <!-- 搜索栏 -->
-    <view class="search-bar" @click="goPage('/pages/search/search')">
-      <u-search placeholder="搜索苗木名称" :disabled="true" searchIconColor="#07C160" bgColor="#f5f6fa" shape="round"></u-search>
+    <view class="search-bar">
+      <u-search placeholder="搜索苗木名称" :disabled="true" searchIconColor="#07C160" bgColor="#f5f6fa" shape="round" @click="goPage('/pages/search/search')"></u-search>
     </view>
 
     <!-- 主体 -->
     <view class="category-body">
       <!-- 左侧 -->
-      <scroll-view scroll-y class="left-panel" :scroll-into-view="'c' + activeCategory" scroll-with-animation>
+      <scroll-view scroll-y class="left-panel" :scroll-into-view="'c' + activeCategory" >
         <view v-for="cat in categories" :key="cat.id" :id="'c' + cat.id"
               :class="['left-item', { active: activeCategory === cat.id }]"
               hover-class="left-item-hover" @click="onCategoryClick(cat)">
@@ -18,12 +18,12 @@
       </scroll-view>
 
       <!-- 右侧 -->
-      <scroll-view scroll-y class="right-panel" :scroll-top="rightScrollTop" scroll-with-animation>
+      <scroll-view scroll-y class="right-panel" :scroll-top="rightScrollTop" >
         <!-- 分类横幅 -->
         <view class="cat-banner" v-if="activeCatName">
           <view class="cat-banner-inner">
             <text class="banner-emoji">{{ activeCatIcon }}</text>
-            <text class="banner-title">{{ activeCatName }}</text>
+            <text class="banner-title">{{ activeCatName }} · {{ productList.length }}件</text>
           </view>
         </view>
 
@@ -147,6 +147,7 @@ export default {
       if (this.activeCategory === cat.id) return
       this.activeCategory = cat.id
       this.rightScrollTop = 0
+      this.loadingProduct = true
       const found = this.categories.find(c => c.id === cat.id)
       this.subCategories = (found && found.children) || []
       this.activeSub = this.subCategories.length > 0 ? this.subCategories[0].id : 0
@@ -190,8 +191,8 @@ export default {
   background: $bg-white;
 }
 
-.category-body {
-  display: flex;
+.search-count { font-size: 22rpx; color: #999; text-align: center; display: block; margin-top: 8rpx; }
+.category-body { display: flex;
   flex: 1;
   overflow: hidden;
 }
@@ -276,6 +277,11 @@ export default {
   padding: 24rpx 28rpx;
   background: linear-gradient(135deg, $primary-light 0%, #f5faf7 100%);
   border-radius: 16rpx;
+  width: 100%;
+  box-sizing: border-box;
+}
+.banner-title {
+  flex: 1;
 }
 
 .banner-emoji {

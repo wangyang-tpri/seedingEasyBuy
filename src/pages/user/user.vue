@@ -5,7 +5,7 @@
       <view
         v-if="isLogin"
         class="user-info"
-        @click="goPage('/pages/user/login')"
+        @click="showToast('已登录，可在设置中修改资料')"
       >
         <u-avatar :src="user.avatar" size="120rpx"></u-avatar>
         <view class="user-text">

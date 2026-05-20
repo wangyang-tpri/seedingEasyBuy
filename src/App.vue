@@ -1,13 +1,45 @@
 <script>
+const PUBLIC_PAGES = [
+  'pages/index/index',
+  'pages/category/category',
+  'pages/product/list',
+  'pages/product/detail',
+  'pages/search/search',
+  'pages/user/login'
+]
+
 export default {
   onLaunch() {
     this.$store.dispatch('restoreLogin')
+    this.setupAuthGuard()
   },
   onShow() {
-    // Update cart badge on tabBar when app shows
     this.updateCartBadge()
   },
   methods: {
+    setupAuthGuard() {
+      const checkLogin = () => {
+        const token = uni.getStorageSync('token')
+        return !!token
+      }
+      uni.addInterceptor('navigateTo', {
+        invoke(args) {
+          if (!checkLogin() && !PUBLIC_PAGES.some(p => args.url.startsWith('/' + p))) {
+            uni.reLaunch({ url: '/pages/user/login' })
+            return false
+          }
+        }
+      })
+      uni.addInterceptor('switchTab', {
+        invoke(args) {
+          const requiresAuth = ['pages/cart/cart', 'pages/user/user']
+          if (!checkLogin() && requiresAuth.some(p => args.url.startsWith('/' + p))) {
+            uni.reLaunch({ url: '/pages/user/login' })
+            return false
+          }
+        }
+      })
+    },
     updateCartBadge(count) {
       if (count > 0) {
         uni.setTabBarBadge({ index: 2, text: String(count) })

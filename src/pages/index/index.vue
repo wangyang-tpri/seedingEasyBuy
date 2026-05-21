@@ -13,12 +13,13 @@
     <!-- 轮播图 -->
     <view class="banner-wrap">
       <u-swiper
-        v-if="banners.length > 0"
-        :list="banners"
+        v-if="bannerList.length > 0"
+        :list="bannerList"
         height="340rpx"
         radius="12"
         :autoplay="true"
-        keyName="imageUrl"
+        keyName="image"
+        circular
       ></u-swiper>
       <view v-else class="placeholder-banner">
         <text class="placeholder-icon">📷</text>
@@ -34,7 +35,14 @@
         :key="cat.id"
         @click="goCategory(cat)"
       >
-        <view class="category-icon" :style="{ background: getCatColor(cat.id).bg, color: getCatColor(cat.id).text }">{{ cat.name.charAt(0) }}</view>
+        <view
+          class="category-icon"
+          :style="{
+            background: getCatColor(cat.id).bg,
+            color: getCatColor(cat.id).text,
+          }"
+          >{{ cat.name.charAt(0) }}</view
+        >
         <text class="category-name">{{ cat.name }}</text>
       </view>
       <view v-if="categories.length === 0" class="empty-full">
@@ -165,6 +173,18 @@ export default {
       loaded: false,
     };
   },
+  computed: {
+    bannerList() {
+      const base = this.getBaseUrl();
+      return this.banners.map((item) => {
+        let url = item.imageUrl;
+        if (url && url.startsWith("/api/") && base) {
+          url = base + url.substring(4);
+        }
+        return { image: url };
+      });
+    },
+  },
   onShow() {
     this.loadData(!this.loaded);
   },
@@ -209,13 +229,13 @@ export default {
     },
     getCatColor(id) {
       const colors = {
-        1: { bg: '#FFF0F5', text: '#E85D75' },
-        2: { bg: '#FFF7E6', text: '#E8A44C' },
-        3: { bg: '#E8F8EE', text: '$primary-color' },
-        4: { bg: '#EDF4FF', text: '#4A90D9' },
-        5: { bg: '#FFF3E0', text: '#E67E22' },
-      }
-      return colors[id] || { bg: '$bg-page', text: '$text-hint' }
+        1: { bg: "#FFF0F5", text: "#E85D75" },
+        2: { bg: "#FFF7E6", text: "#E8A44C" },
+        3: { bg: "#E8F8EE", text: "$primary-color" },
+        4: { bg: "#EDF4FF", text: "#4A90D9" },
+        5: { bg: "#FFF3E0", text: "#E67E22" },
+      };
+      return colors[id] || { bg: "$bg-page", text: "$text-hint" };
     },
     goCategory(cat) {
       this.$store.commit("SET_CATEGORY_ID", cat.id);
@@ -340,7 +360,7 @@ export default {
   border-radius: 12rpx;
   overflow: hidden;
   margin-bottom: 20rpx;
-  box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.08);
+  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.08);
 }
 .product-img {
   width: 100%;

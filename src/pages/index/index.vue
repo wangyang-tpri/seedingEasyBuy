@@ -1,17 +1,18 @@
 <template>
   <view class="home-page">
-    <!-- 标题 -->
-    <view class="nav-bar">
-      <text class="nav-title">苗木易购</text>
-    </view>
-    <!-- 搜索栏 -->
-    <view class="search-bar" @click="goPage('/pages/search/search')">
-      <u-search
-        placeholder="搜索苗木"
-        :disabled="true"
-        searchIconColor="#07C160"
-        bgColor="#f5f6fa"
-      ></u-search>
+    <!-- 固定头部 -->
+    <view class="header-fixed">
+      <view class="nav-bar">
+        <text class="nav-title">苗木易购</text>
+      </view>
+      <view class="search-bar" @click="goPage('/pages/search/search')">
+        <u-search
+          placeholder="搜索苗木"
+          :disabled="true"
+          searchIconColor="#07C160"
+          bgColor="#f5f6fa"
+        ></u-search>
+      </view>
     </view>
 
     <!-- 轮播图 -->
@@ -54,35 +55,28 @@
       </view>
     </view>
 
-    <!-- 限时特惠 -->
+    <!-- 限时特惠 - 横向滚动大卡片 -->
     <view class="section">
       <view class="section-header">
         <text class="section-title">限时特惠</text>
-        <text
-          class="section-more"
-          @click="switchTab('/pages/category/category')"
-          >更多 ></text
-        >
+        <text class="section-more" @click="switchTab('/pages/category/category')">更多 ></text>
       </view>
-      <view v-if="recommendList.length > 0" class="product-grid">
-        <view
-          class="product-card"
-          v-for="item in recommendList.slice(0, 4)"
-          :key="item.id"
-          @click="goDetail(item.id)"
-        >
-          <image
-            :src="getFirstImage(item.images)"
-            mode="aspectFill"
-            class="product-img"
-          />
-          <text class="product-name">{{ item.name }}</text>
-          <text class="product-price">{{ formatPrice(item.price) }}</text>
-          <text class="product-sales">已售 {{ item.sales || 0 }}</text>
+      <scroll-view v-if="recommendList.length > 0" scroll-x class="flash-scroll">
+        <view class="flash-card" v-for="item in recommendList.slice(0, 4)" :key="item.id" @click="goDetail(item.id)">
+          <image :src="getFirstImage(item.images)" mode="aspectFill" class="flash-img" />
+          <view class="flash-tag">特惠</view>
+          <view class="flash-info">
+            <text class="flash-name">{{ item.name }}</text>
+            <view class="flash-bottom">
+              <text class="flash-price">{{ formatPrice(item.price) }}</text>
+              <text class="flash-original" v-if="item.originalPrice">¥{{ item.originalPrice }}</text>
+            </view>
+            <text class="flash-sales">已售 {{ item.sales || 0 }}</text>
+          </view>
         </view>
-      </view>
-      <view v-else class="product-grid">
-        <view class="placeholder-card" v-for="i in 4" :key="'p' + i">
+      </scroll-view>
+      <view v-else class="placeholder-row">
+        <view class="placeholder-card" v-for="i in 3" :key="'p'+i">
           <view class="placeholder-img"></view>
           <view class="placeholder-line"></view>
           <view class="placeholder-line short"></view>
@@ -90,32 +84,24 @@
       </view>
     </view>
 
-    <!-- 新品上架 -->
+    <!-- 新品上架 - 2列网格 -->
     <view class="section">
       <view class="section-header">
         <text class="section-title">新品上架</text>
-        <text class="section-more" @click="goPage('/pages/product/list')"
-          >更多 ></text
-        >
+        <text class="section-more" @click="goPage('/pages/product/list')">更多 ></text>
       </view>
-      <view v-if="newList.length > 0" class="product-grid">
-        <view
-          class="product-card"
-          v-for="item in newList.slice(0, 4)"
-          :key="item.id"
-          @click="goDetail(item.id)"
-        >
-          <image
-            :src="getFirstImage(item.images)"
-            mode="aspectFill"
-            class="product-img"
-          />
-          <text class="product-name">{{ item.name }}</text>
-          <text class="product-price">{{ formatPrice(item.price) }}</text>
+      <view v-if="newList.length > 0" class="new-grid">
+        <view class="new-card" v-for="item in newList.slice(0, 4)" :key="item.id" @click="goDetail(item.id)">
+          <view class="new-img-wrap">
+            <image :src="getFirstImage(item.images)" mode="aspectFill" class="new-img" />
+            <view class="new-tag">新品</view>
+          </view>
+          <text class="new-name">{{ item.name }}</text>
+          <text class="new-price">{{ formatPrice(item.price) }}</text>
         </view>
       </view>
-      <view v-else class="product-grid">
-        <view class="placeholder-card" v-for="i in 4" :key="'n' + i">
+      <view v-else class="new-grid">
+        <view class="placeholder-card" v-for="i in 4" :key="'n'+i">
           <view class="placeholder-img"></view>
           <view class="placeholder-line"></view>
           <view class="placeholder-line short"></view>
@@ -123,35 +109,26 @@
       </view>
     </view>
 
-    <!-- 热门推荐 -->
+    <!-- 热门推荐 - 纵向列表 -->
     <view class="section">
       <view class="section-header">
         <text class="section-title">热门推荐</text>
-        <text
-          class="section-more"
-          @click="switchTab('/pages/category/category')"
-          >更多 ></text
-        >
+        <text class="section-more" @click="switchTab('/pages/category/category')">更多 ></text>
       </view>
-      <view v-if="hotList.length > 0" class="product-grid">
-        <view
-          class="product-card"
-          v-for="item in hotList"
-          :key="item.id"
-          @click="goDetail(item.id)"
-        >
-          <image
-            :src="getFirstImage(item.images)"
-            mode="aspectFill"
-            class="product-img"
-          />
-          <text class="product-name">{{ item.name }}</text>
-          <text class="product-price">{{ formatPrice(item.price) }}</text>
-          <text class="product-sales">已售 {{ item.sales || 0 }}</text>
+      <view v-if="hotList.length > 0" class="hot-list">
+        <view class="hot-card" v-for="item in hotList" :key="item.id" @click="goDetail(item.id)">
+          <image :src="getFirstImage(item.images)" mode="aspectFill" class="hot-img" />
+          <view class="hot-info">
+            <text class="hot-name">{{ item.name }}</text>
+            <view class="hot-meta">
+              <text class="hot-price">{{ formatPrice(item.price) }}</text>
+              <text class="hot-sales">已售 {{ item.sales || 0 }}</text>
+            </view>
+          </view>
         </view>
       </view>
-      <view v-else class="product-grid">
-        <view class="placeholder-card" v-for="i in 4" :key="'h' + i">
+      <view v-else class="placeholder-row">
+        <view class="placeholder-card" v-for="i in 3" :key="'h'+i">
           <view class="placeholder-img"></view>
           <view class="placeholder-line"></view>
           <view class="placeholder-line short"></view>
@@ -255,6 +232,12 @@ export default {
 <style lang="scss" scoped>
 .home-page {
   padding-bottom: 20rpx;
+}
+.header-fixed {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: $bg-white;
 }
 .nav-bar {
   padding: calc(var(--status-bar-height) + 50rpx) 30rpx 16rpx;
@@ -362,72 +345,59 @@ export default {
 }
 
 /* 商品卡片 - 网格 */
-.product-grid {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-}
-.product-card {
-  width: calc(50% - 10rpx);
+.flash-scroll { white-space: nowrap; }
+.flash-card {
+  display: inline-block;
+  width: 300rpx;
+  margin-right: 16rpx;
   background: $bg-white;
-  border-radius: 12rpx;
+  border-radius: 14rpx;
   overflow: hidden;
-  margin-bottom: 20rpx;
-  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.08);
+  box-shadow: $shadow-md;
+  position: relative;
+  &:last-child { margin-right: 0; }
 }
-.product-img {
-  width: 100%;
-  height: 200rpx;
-  display: block;
+.flash-img { width: 300rpx; height: 220rpx; display: block; background: $bg-input; }
+.flash-tag {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: $gradient-orange;
+  color: $bg-white;
+  font-size: 20rpx;
+  font-weight: 600;
+  padding: 6rpx 16rpx;
+  border-radius: 0 0 10rpx 0;
 }
-.product-name {
-  display: block;
-  font-size: 26rpx;
-  color: $text-primary;
-  padding: 10rpx 16rpx 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-.product-price {
-  display: block;
-  font-size: 30rpx;
-  color: $accent-orange;
-  font-weight: bold;
-  padding: 6rpx 16rpx 0;
-}
-.product-sales {
-  display: block;
-  font-size: 22rpx;
-  color: $text-hint;
-  padding: 4rpx 16rpx 16rpx;
-}
+.flash-info { padding: 16rpx 18rpx; }
+.flash-name { font-size: 26rpx; color: $text-primary; font-weight: 500; display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.flash-bottom { display: flex; align-items: baseline; gap: 10rpx; margin-top: 8rpx; }
+.flash-price { font-size: 32rpx; color: $accent-orange; font-weight: 700; }
+.flash-original { font-size: 22rpx; color: $text-placeholder; text-decoration: line-through; }
+.flash-sales { font-size: 20rpx; color: $text-hint; margin-top: 4rpx; display: block; }
 
-/* 骨架占位 */
-.placeholder-card {
-  width: calc(50% - 10rpx);
-  background: $bg-white;
-  border-radius: 12rpx;
-  overflow: hidden;
-  margin-bottom: 20rpx;
-}
-.placeholder-img {
-  width: 100%;
-  height: 200rpx;
-  background: $bg-input;
-}
-.placeholder-line {
-  height: 20rpx;
-  background: $bg-input;
-  border-radius: 4rpx;
-  margin: 16rpx 16rpx 0;
-}
-.placeholder-line.short {
-  width: 60%;
-  margin-top: 12rpx;
-  margin-bottom: 16rpx;
-}
+.new-grid { display: flex; flex-wrap: wrap; justify-content: space-between; }
+.new-card { width: calc(50% - 10rpx); background: $bg-white; border-radius: 12rpx; overflow: hidden; margin-bottom: 20rpx; box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.06); }
+.new-img-wrap { position: relative; width: 100%; overflow: hidden; }
+.new-img { width: 100%; height: 200rpx; display: block; background: $bg-input; }
+.new-tag { position: absolute; top: 8rpx; left: 8rpx; background: $gradient-green; color: $bg-white; font-size: 18rpx; font-weight: 600; padding: 4rpx 10rpx; border-radius: 4rpx; }
+.new-name { display: block; font-size: 26rpx; color: $text-primary; padding: 10rpx 16rpx 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.new-price { display: block; font-size: 28rpx; color: $accent-orange; font-weight: bold; padding: 4rpx 16rpx 14rpx; }
 
+.hot-list { }
+.hot-card { display: flex; background: $bg-white; border-radius: 12rpx; overflow: hidden; margin-bottom: 16rpx; box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.06); padding: 16rpx; }
+.hot-img { width: 160rpx; height: 160rpx; border-radius: 10rpx; flex-shrink: 0; background: $bg-input; margin-right: 20rpx; }
+.hot-info { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+.hot-name { font-size: 28rpx; color: $text-primary; font-weight: 500; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; line-height: 1.4; }
+.hot-meta { display: flex; justify-content: space-between; align-items: baseline; margin-top: 12rpx; }
+.hot-price { font-size: 30rpx; color: $accent-orange; font-weight: 700; }
+.hot-sales { font-size: 22rpx; color: $text-hint; }
+
+.placeholder-row { display: flex; gap: 16rpx; }
+.placeholder-card { width: calc(50% - 10rpx); background: $bg-white; border-radius: 12rpx; overflow: hidden; margin-bottom: 20rpx; }
+.placeholder-img { width: 100%; height: 200rpx; background: $bg-input; }
+.placeholder-line { height: 20rpx; background: $bg-input; border-radius: 4rpx; margin: 16rpx 16rpx 0; }
+.placeholder-line.short { width: 60%; margin-top: 12rpx; margin-bottom: 16rpx; }
 .empty-full {
   width: 100%;
   text-align: center;

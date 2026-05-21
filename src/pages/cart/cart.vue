@@ -9,13 +9,7 @@
     <view v-if="!isLogin" class="empty-cart">
       <view class="empty-icon">🛒</view>
       <text class="empty-text">登录后可查看购物车</text>
-      <u-button
-        text="去登录"
-        type="success"
-        shape="circle"
-        size="small"
-        @click="goPage('/pages/user/login')"
-      ></u-button>
+      <view class="login-btn" @click="goPage('/pages/user/login')">去登录</view>
     </view>
 
     <!-- 已登录，有商品 -->

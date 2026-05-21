@@ -149,7 +149,6 @@ export default {
 /* ========== 搜索栏 ========== */
 .search-bar {
   padding: 16rpx 24rpx;
-  // padding-top: calc(var(--status-bar-height) + 16rpx);
   background: $bg-white;
 }
 .search-box {
@@ -199,8 +198,8 @@ export default {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  padding: 12rpx 24rpx;
-}
+  padding: 24rpx 24rpx 12rpx;
+} /* reuse .product-grid-2 */
 
 /* ========== 商品卡片 ========== */
 .product-card {

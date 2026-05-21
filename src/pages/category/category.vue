@@ -2,36 +2,63 @@
   <view class="category-page">
     <!-- 搜索栏 -->
     <view class="search-bar">
-      <u-search placeholder="搜索苗木名称" :disabled="true" searchIconColor="#07C160" bgColor="#f5f6fa" shape="round" @click="goPage('/pages/search/search')"></u-search>
+      <u-search
+        placeholder="搜索苗木名称"
+        :disabled="true"
+        searchIconColor="#07C160"
+        bgColor="#f5f6fa"
+        shape="round"
+        @click="goPage('/pages/search/search')"
+      ></u-search>
     </view>
 
     <!-- 主体 -->
     <view class="category-body">
       <!-- 左侧 -->
-      <scroll-view scroll-y class="left-panel" :scroll-into-view="'c' + activeCategory" >
-        <view v-for="cat in categories" :key="cat.id" :id="'c' + cat.id"
-              :class="['left-item', { active: activeCategory === cat.id }]"
-              hover-class="left-item-hover" @click="onCategoryClick(cat)">
+      <scroll-view
+        scroll-y
+        class="left-panel"
+        :scroll-into-view="'c' + activeCategory"
+      >
+        <view
+          v-for="cat in categories"
+          :key="cat.id"
+          :id="'c' + cat.id"
+          :class="['left-item', { active: activeCategory === cat.id }]"
+          hover-class="left-item-hover"
+          @click="onCategoryClick(cat)"
+        >
           <text class="left-icon">{{ getCatIcon(cat.name) }}</text>
           <text class="left-name">{{ cat.name }}</text>
         </view>
       </scroll-view>
 
       <!-- 右侧 -->
-      <scroll-view scroll-y class="right-panel" :scroll-top="rightScrollTop" >
+      <scroll-view scroll-y class="right-panel" :scroll-top="rightScrollTop">
         <!-- 分类横幅 -->
         <view class="cat-banner" v-if="activeCatName">
           <view class="cat-banner-inner">
             <text class="banner-emoji">{{ activeCatIcon }}</text>
-            <text class="banner-title">{{ activeCatName }} · {{ productList.length }}件</text>
+            <text class="banner-title"
+              >{{ activeCatName }} · {{ productList.length }}件</text
+            >
           </view>
         </view>
 
         <!-- 子分类 -->
-        <scroll-view v-if="subCategories.length > 0" scroll-x class="sub-tags" :show-scrollbar="false">
-          <view v-for="sub in subCategories" :key="sub.id"
-                :class="['sub-tag', { active: activeSub === sub.id }]"
-                hover-class="sub-tag-hover" @click="onSubClick(sub)">
+        <scroll-view
+          v-if="subCategories.length > 0"
+          scroll-x
+          class="sub-tags"
+          :show-scrollbar="false"
+        >
+          <view
+            v-for="sub in subCategories"
+            :key="sub.id"
+            :class="['sub-tag', { active: activeSub === sub.id }]"
+            hover-class="sub-tag-hover"
+            @click="onSubClick(sub)"
+          >
             {{ sub.name }}
           </view>
         </scroll-view>
@@ -49,18 +76,32 @@
 
         <!-- 商品列表 -->
         <view class="product-grid" v-else-if="productList.length > 0">
-          <view class="product-card" v-for="item in productList" :key="item.id"
-                hover-class="product-card-hover" @click="goDetail(item.id)">
+          <view
+            class="product-card"
+            v-for="item in productList"
+            :key="item.id"
+            hover-class="product-card-hover"
+            @click="goDetail(item.id)"
+          >
             <view class="img-wrap">
-              <image :src="getFirstImage(item.images)" mode="aspectFill" class="product-img" lazy-load />
+              <image
+                :src="getFirstImage(item.images)"
+                mode="aspectFill"
+                class="product-img"
+                lazy-load
+              />
               <view class="img-tag" v-if="item.sales > 100">热销</view>
             </view>
             <view class="card-info">
               <text class="product-name">{{ item.name }}</text>
               <view class="card-bottom">
                 <view class="price-col">
-                  <text class="product-price">{{ formatPrice(item.price) }}</text>
-                  <text class="product-original" v-if="item.originalPrice">¥{{ item.originalPrice }}</text>
+                  <text class="product-price">{{
+                    formatPrice(item.price)
+                  }}</text>
+                  <text class="product-original" v-if="item.originalPrice"
+                    >¥{{ item.originalPrice }}</text
+                  >
                 </view>
                 <text class="product-sales">{{ item.sales || 0 }}人付款</text>
               </view>
@@ -81,9 +122,15 @@
 </template>
 
 <script>
-import { get } from '@/utils/request'
+import { get } from "@/utils/request";
 
-const CAT_ICONS = { '观赏植物': '🌸', '果树苗木': '🍎', '绿化苗木': '🌳', '多肉盆栽': '🌵', '种子种苗': '🌱' }
+const CAT_ICONS = {
+  观赏植物: "🌸",
+  果树苗木: "🍎",
+  绿化苗木: "🌳",
+  多肉盆栽: "🌵",
+  种子种苗: "🌱",
+};
 
 export default {
   data() {
@@ -94,86 +141,103 @@ export default {
       subCategories: [],
       productList: [],
       loadingProduct: false,
-      rightScrollTop: 0
-    }
+      rightScrollTop: 0,
+    };
   },
   computed: {
     activeCatName() {
-      const found = this.categories.find(c => c.id === this.activeCategory)
-      return found ? found.name : ''
+      const found = this.categories.find((c) => c.id === this.activeCategory);
+      return found ? found.name : "";
     },
     activeCatIcon() {
-      return CAT_ICONS[this.activeCatName] || '🌿'
-    }
+      return CAT_ICONS[this.activeCatName] || "🌿";
+    },
   },
   onLoad(options) {
-    if (options.categoryId) this.activeCategory = Number(options.categoryId)
-    this.loadCategories()
+    if (options.categoryId) this.activeCategory = Number(options.categoryId);
+    this.loadCategories();
   },
   onShow() {
-    const id = this.$store.state.selectedCategoryId
+    const id = this.$store.state.selectedCategoryId;
     if (id && id !== this.activeCategory && this.categories.length > 0) {
-      this.$store.commit('SET_CATEGORY_ID', 0)
-      const cat = this.categories.find(c => c.id === id)
-      if (cat) this.onCategoryClick(cat)
+      this.$store.commit("SET_CATEGORY_ID", 0);
+      const cat = this.categories.find((c) => c.id === id);
+      if (cat) this.onCategoryClick(cat);
     }
   },
   methods: {
-    getCatIcon(name) { return CAT_ICONS[name] || '🌿' },
+    getCatIcon(name) {
+      return CAT_ICONS[name] || "🌿";
+    },
 
     async loadCategories() {
       try {
-        this.categories = await get('/category/list') || []
+        this.categories = (await get("/category/list")) || [];
         if (this.categories.length > 0) {
-          const pendingId = this.$store.state.selectedCategoryId
-          if (pendingId && !this.activeCategory && this.categories.find(c => c.id === pendingId)) {
-            this.activeCategory = pendingId
-            this.$store.commit('SET_CATEGORY_ID', 0)
+          const pendingId = this.$store.state.selectedCategoryId;
+          if (
+            pendingId &&
+            !this.activeCategory &&
+            this.categories.find((c) => c.id === pendingId)
+          ) {
+            this.activeCategory = pendingId;
+            this.$store.commit("SET_CATEGORY_ID", 0);
           }
-          if (!this.activeCategory || !this.categories.find(c => c.id === this.activeCategory)) {
-            this.activeCategory = this.categories[0].id
+          if (
+            !this.activeCategory ||
+            !this.categories.find((c) => c.id === this.activeCategory)
+          ) {
+            this.activeCategory = this.categories[0].id;
           }
-          const found = this.categories.find(c => c.id === this.activeCategory)
+          const found = this.categories.find(
+            (c) => c.id === this.activeCategory
+          );
           if (found) {
-            this.subCategories = found.children || []
-            this.activeSub = this.subCategories.length > 0 ? this.subCategories[0].id : 0
+            this.subCategories = found.children || [];
+            this.activeSub =
+              this.subCategories.length > 0 ? this.subCategories[0].id : 0;
           }
-          this.loadProducts(this.activeSub || this.activeCategory)
+          this.loadProducts(this.activeSub || this.activeCategory);
         }
       } catch (e) {}
     },
 
     onCategoryClick(cat) {
-      if (this.activeCategory === cat.id) return
-      this.activeCategory = cat.id
-      this.rightScrollTop = 0
-      this.loadingProduct = true
-      const found = this.categories.find(c => c.id === cat.id)
-      this.subCategories = (found && found.children) || []
-      this.activeSub = this.subCategories.length > 0 ? this.subCategories[0].id : 0
-      this.productList = []
-      this.loadProducts(this.activeSub || cat.id)
+      if (this.activeCategory === cat.id) return;
+      this.activeCategory = cat.id;
+      this.rightScrollTop = 0;
+      this.loadingProduct = true;
+      const found = this.categories.find((c) => c.id === cat.id);
+      this.subCategories = (found && found.children) || [];
+      this.activeSub =
+        this.subCategories.length > 0 ? this.subCategories[0].id : 0;
+      this.productList = [];
+      this.loadProducts(this.activeSub || cat.id);
     },
 
     onSubClick(sub) {
-      if (this.activeSub === sub.id) return
-      this.activeSub = sub.id
-      this.productList = []
-      this.loadProducts(sub.id)
+      if (this.activeSub === sub.id) return;
+      this.activeSub = sub.id;
+      this.productList = [];
+      this.loadProducts(sub.id);
     },
 
     async loadProducts(categoryId) {
-      this.loadingProduct = true
+      this.loadingProduct = true;
       try {
-        const result = await get(`/product/page?categoryId=${categoryId}&size=20`)
-        this.productList = (result && result.records) || []
+        const result = await get(
+          `/product/page?categoryId=${categoryId}&size=20`
+        );
+        this.productList = (result && result.records) || [];
       } catch (e) {}
-      this.loadingProduct = false
+      this.loadingProduct = false;
     },
 
-    goDetail(id) { uni.navigateTo({ url: `/pages/product/detail?id=${id}` }) }
-  }
-}
+    goDetail(id) {
+      uni.navigateTo({ url: `/pages/product/detail?id=${id}` });
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
@@ -191,8 +255,15 @@ export default {
   background: $bg-white;
 }
 
-.search-count { font-size: 22rpx; color: #999; text-align: center; display: block; margin-top: 8rpx; }
-.category-body { display: flex;
+.search-count {
+  font-size: 22rpx;
+  color: #999;
+  text-align: center;
+  display: block;
+  margin-top: 8rpx;
+}
+.category-body {
+  display: flex;
   flex: 1;
   overflow: hidden;
 }
@@ -224,7 +295,7 @@ export default {
 }
 
 .left-item.active::after {
-  content: '';
+  content: "";
   position: absolute;
   left: 0;
   top: 50%;
@@ -328,30 +399,32 @@ export default {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  padding-top: 16rpx;
 }
 
 .product-card {
-  width: calc(50% - 6rpx);
+  width: calc(50% - 10rpx);
   background: $bg-white;
-  border-radius: 14rpx;
+  border-radius: $radius-lg;
   overflow: hidden;
-  margin-bottom: 14rpx;
-  box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.08);
-  transition: all 0.18s ease;
+  margin-bottom: $spacing-md;
+  box-shadow: $shadow-md;
 }
 
 .product-card-hover {
   transform: scale(0.97);
-  box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.08);
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.12);
 }
 
 .img-wrap {
   position: relative;
+  width: 100%;
+  overflow: hidden;
 }
 
 .product-img {
   width: 100%;
-  height: 220rpx;
+  height: 200rpx;
   display: block;
   background: $bg-input;
 }
@@ -360,36 +433,33 @@ export default {
   position: absolute;
   top: 8rpx;
   left: 8rpx;
-  background: linear-gradient(135deg, $accent-orange, $accent-orange);
+  background: $gradient-orange;
   color: $bg-white;
   font-size: 18rpx;
-  padding: 2rpx 10rpx;
-  border-radius: 4rpx;
-  font-weight: 500;
-  letter-spacing: 1rpx;
+  padding: 4rpx 10rpx;
+  border-radius: $radius-sm;
+  font-weight: 600;
 }
 
 .card-info {
-  padding: 14rpx 14rpx 16rpx;
+  padding: 12rpx 16rpx $spacing-md;
 }
 
 .product-name {
   font-size: 26rpx;
   color: $text-primary;
+  line-height: 1.4;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
   overflow: hidden;
-  line-height: 1.45;
-  min-height: 74rpx;
-  font-weight: 500;
 }
 
 .card-bottom {
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
-  margin-top: 10rpx;
+  align-items: center;
+  margin-top: $spacing-xs;
 }
 
 .price-col {
@@ -399,10 +469,20 @@ export default {
 }
 
 .product-price {
-  font-size: 30rpx;
+  font-size: $font-xl;
   color: $accent-orange;
   font-weight: 700;
-  letter-spacing: -1rpx;
+}
+
+.product-original {
+  font-size: 20rpx;
+  color: $text-placeholder;
+  text-decoration: line-through;
+}
+
+.product-sales {
+  font-size: $font-xs;
+  color: $text-placeholder;
 }
 
 .product-original {
@@ -424,23 +504,23 @@ export default {
 }
 
 .skeleton-card {
-  width: calc(50% - 6rpx);
+  width: calc(50% - 10rpx);
   background: $bg-white;
-  border-radius: 14rpx;
+  border-radius: $radius-lg;
   overflow: hidden;
-  margin-bottom: 14rpx;
+  margin-bottom: $spacing-md;
 }
 
 .sk-img {
   width: 100%;
-  height: 220rpx;
+  height: 200rpx;
   background: linear-gradient(90deg, $bg-gray 25%, #efefef 50%, $bg-gray 75%);
   background-size: 200% 100%;
   animation: shimmer 1.6s ease infinite;
 }
 
 .sk-info {
-  padding: 14rpx 14rpx 16rpx;
+  padding: 12rpx 16rpx $spacing-md;
 }
 
 .sk-line {
@@ -455,8 +535,12 @@ export default {
 }
 
 @keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
 }
 
 /* 空状态 */

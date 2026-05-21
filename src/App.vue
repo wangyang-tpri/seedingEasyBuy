@@ -52,6 +52,7 @@ export default {
 </script>
 <style lang="scss">
 @import "uview-ui/index.scss";
+@import "@/common/atomic.scss";
 page {
   background: $bg-page;
 }

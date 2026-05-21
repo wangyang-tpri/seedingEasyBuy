@@ -1,0 +1,363 @@
+/* ========== 页面布局 ========== */
+.page-full {
+  min-height: 100vh;
+  background: $bg-page;
+}
+.page-flex {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+  background: $bg-page;
+}
+
+/* ========== 卡片 ========== */
+.card {
+  background: $bg-white;
+  border-radius: $radius-xl;
+  box-shadow: $shadow-card;
+  overflow: hidden;
+}
+.card-margin {
+  margin: $spacing-lg $spacing-xl 0;
+}
+.card-padding {
+  padding: $spacing-xl;
+}
+
+/* ========== 表单卡片 ========== */
+.form-card {
+  background: $bg-white;
+  margin: $spacing-lg $spacing-xl 0;
+  border-radius: $radius-xxl;
+  padding: $spacing-xs $spacing-lg + 4rpx $spacing-xl;
+  box-shadow: $shadow-card;
+}
+.form-title {
+  font-size: $font-lg;
+  font-weight: 600;
+  color: $text-primary;
+  padding: $spacing-lg 0 $spacing-sm;
+}
+.form-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22rpx 0;
+  border-bottom: 1rpx solid $bg-stripe;
+  &:last-child { border-bottom: none; }
+}
+.form-label {
+  font-size: 27rpx;
+  color: $text-primary;
+  flex-shrink: 0;
+  margin-right: $spacing-lg;
+}
+.form-right {
+  display: flex;
+  align-items: center;
+  gap: $spacing-xs;
+  font-size: $font-md;
+  color: $text-primary;
+}
+.form-placeholder {
+  color: $text-placeholder;
+}
+
+/* ========== 商品网格(2列) ========== */
+.product-grid-2 {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: $spacing-sm $spacing-xl;
+}
+.product-card-2 {
+  width: calc(50% - 10rpx);
+  background: $bg-white;
+  border-radius: $radius-lg;
+  overflow: hidden;
+  margin-bottom: $spacing-lg;
+  box-shadow: $shadow-md;
+}
+.product-card-img {
+  width: 100%;
+  height: 200rpx;
+  display: block;
+  background: $bg-input;
+}
+.product-card-name {
+  font-size: $font-md;
+  color: $text-primary;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.product-card-price {
+  font-size: $font-xl;
+  color: $accent-orange;
+  font-weight: bold;
+}
+.product-card-sales {
+  font-size: $font-sm;
+  color: $text-hint;
+}
+
+/* ========== 区块标题 ========== */
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: $spacing-lg;
+}
+.section-title {
+  font-size: $font-xxl;
+  font-weight: bold;
+  color: $text-primary;
+  padding-left: $spacing-md;
+  position: relative;
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 6rpx;
+    bottom: 6rpx;
+    width: 6rpx;
+    background: $primary-color;
+    border-radius: 3rpx;
+  }
+}
+.section-more {
+  font-size: $font-base;
+  color: $text-hint;
+}
+
+/* ========== 按钮 ========== */
+.btn-primary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: $gradient-green;
+  color: $bg-white;
+  font-size: $font-lg;
+  font-weight: 600;
+  border-radius: $radius-round;
+  box-shadow: $shadow-green;
+  &:active { opacity: 0.9; transform: scale(0.97); }
+}
+.btn-outline-green {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1rpx solid $primary-color;
+  color: $primary-color;
+  font-size: $font-base;
+  border-radius: $spacing-xxl;
+}
+.btn-outline-red {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2rpx solid $accent-red;
+  color: $accent-red;
+  font-size: $font-lg;
+  font-weight: 600;
+  border-radius: $radius-round;
+  &:active { opacity: 0.8; }
+}
+.btn-fill-red {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: $accent-red;
+  color: $bg-white;
+  font-size: $font-base;
+  border-radius: $spacing-xxl;
+}
+.btn-action {
+  padding: 10rpx 32rpx;
+  border-radius: $spacing-xxl;
+  font-size: $font-base;
+}
+
+/* ========== 底部固定栏 ========== */
+.bottom-bar-fixed {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: $bg-white;
+  padding: $spacing-md $spacing-xl;
+  padding-bottom: calc($spacing-md + env(safe-area-inset-bottom));
+  box-shadow: $shadow-bottom;
+  z-index: 100;
+}
+
+/* ========== 空状态 ========== */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 240rpx;
+}
+.empty-icon {
+  font-size: 80rpx;
+  opacity: 0.3;
+  margin-bottom: $spacing-lg;
+}
+.empty-text {
+  font-size: $font-lg;
+  color: $text-placeholder;
+  display: block;
+}
+.empty-sub {
+  font-size: $font-base;
+  color: $text-disabled;
+  margin-top: $spacing-xs;
+}
+
+/* ========== 骨架屏 ========== */
+.skeleton-card-2 {
+  width: calc(50% - 10rpx);
+  background: $bg-white;
+  border-radius: $radius-xl;
+  overflow: hidden;
+  margin-bottom: $spacing-md;
+}
+.skeleton-img {
+  width: 100%;
+  height: 200rpx;
+  background: linear-gradient(90deg, #f3f3f3 25%, #e8e8e8 50%, #f3f3f3 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.6s ease infinite;
+}
+.skeleton-line {
+  height: 18rpx;
+  background: #f3f3f3;
+  border-radius: 4rpx;
+  margin-bottom: 12rpx;
+}
+.skeleton-line-w60 { width: 60%; }
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* ========== 标签 ========== */
+.tag-hot {
+  background: $gradient-orange;
+  color: $bg-white;
+  font-size: 18rpx;
+  padding: 4rpx 12rpx;
+  border-radius: $radius-sm;
+  font-weight: 600;
+}
+.tag-new {
+  background: $gradient-green;
+  color: $bg-white;
+  font-size: 18rpx;
+  padding: 4rpx 12rpx;
+  border-radius: $radius-sm;
+  font-weight: 600;
+}
+.tag-status-on {
+  background: $primary-light;
+  color: $primary-color;
+  font-size: $font-xs;
+  padding: 2rpx 12rpx;
+  border-radius: 4rpx;
+}
+.tag-status-off {
+  background: $bg-gray;
+  color: $text-hint;
+  font-size: $font-xs;
+  padding: 2rpx 12rpx;
+  border-radius: 4rpx;
+}
+
+/* ========== 上传 ========== */
+.upload-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-md;
+}
+.upload-item {
+  position: relative;
+}
+.upload-img {
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: $radius-md;
+  background: $bg-input;
+}
+.upload-remove {
+  position: absolute;
+  top: -10rpx;
+  right: -10rpx;
+  width: 36rpx;
+  height: 36rpx;
+  border-radius: 50%;
+  background: $accent-red;
+  color: $bg-white;
+  font-size: $font-xs;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.upload-btn {
+  width: 160rpx;
+  height: 160rpx;
+  border: 2rpx dashed $border-dashed;
+  border-radius: $radius-md;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  .upload-plus { font-size: 48rpx; color: $text-placeholder; }
+  .upload-sub { font-size: $font-xs; color: $text-placeholder; margin-top: 4rpx; }
+}
+
+/* ========== 规格参数 ========== */
+.specs-table {
+  margin: $spacing-sm $spacing-xxl 0;
+  padding: 0 $spacing-xxl $spacing-xxl;
+  background: $bg-white;
+  border-radius: $radius-lg;
+}
+.specs-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: $spacing-md 0;
+  border-bottom: 1rpx solid $bg-stripe;
+  &:last-child { border-bottom: none; }
+}
+.specs-key { font-size: $font-md; color: $text-hint; flex-shrink: 0; }
+.specs-val { font-size: $font-md; color: $text-primary; }
+
+/* ========== Flex工具 ========== */
+.flex-between { display: flex; justify-content: space-between; align-items: center; }
+.flex-center { display: flex; align-items: center; justify-content: center; }
+.flex-col { display: flex; flex-direction: column; }
+.flex-1 { flex: 1; }
+
+/* ========== 文字 ========== */
+.text-primary { color: $text-primary; }
+.text-secondary { color: $text-secondary; }
+.text-hint { color: $text-hint; }
+.text-placeholder { color: $text-placeholder; }
+.text-price { color: $accent-orange; font-weight: bold; }
+.text-green { color: $primary-color; }
+.text-red { color: $accent-red; }
+.text-bold { font-weight: bold; }
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+.text-ellipsis { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* ========== 间距 ========== */
+.mt-sm { margin-top: $spacing-sm; }
+.mt-md { margin-top: $spacing-md; }
+.mt-lg { margin-top: $spacing-lg; }
+.mb-md { margin-bottom: $spacing-md; }
+.p-sm { padding: $spacing-sm; }
+.p-md { padding: $spacing-md; }

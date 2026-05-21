@@ -9,13 +9,6 @@ module.exports = {
           '/api': ''
         }
       },
-      '/server-zp': {
-        target: 'http://10.218.72.73:8081',
-        changeOrigin: true,
-        pathRewrite: {
-          '^/server-zp': '/'
-        }
-      }
     }
   },
 

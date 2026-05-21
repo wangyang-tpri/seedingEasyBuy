@@ -337,6 +337,7 @@ export default {
   padding: 30rpx 30rpx 16rpx;
   background: $bg-white;
   border-radius: 12rpx 12rpx 0 0;
+  &::before { display: none; }
 }
 .desc-content {
   margin: 0 30rpx;

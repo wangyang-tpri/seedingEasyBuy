@@ -3,14 +3,22 @@
     <!-- 页面标题 -->
     <view class="page-header">
       <text class="page-title">购物车</text>
-      <text class="page-sub" v-if="cartData.length > 0">共 {{ totalCount }} 件商品</text>
+      <text class="page-sub" v-if="cartData.length > 0"
+        >共 {{ totalCount }} 件商品</text
+      >
     </view>
 
     <!-- 未登录 -->
     <view v-if="!isLogin" class="empty-cart">
       <view class="empty-icon">🛒</view>
       <text class="empty-text">登录后可查看购物车</text>
-      <u-button text="去登录" type="success" shape="circle" size="small" @click="goPage('/pages/user/login')"></u-button>
+      <u-button
+        text="去登录"
+        type="success"
+        shape="circle"
+        size="small"
+        @click="goPage('/pages/user/login')"
+      ></u-button>
     </view>
 
     <!-- 已登录，有商品 -->
@@ -18,12 +26,20 @@
       <scroll-view scroll-y class="cart-scroll">
         <view class="shop-group" v-for="(shop, idx) in cartData" :key="idx">
           <view class="shop-header">
-            <u-checkbox :checked="isShopAllSelected(shop)" @change="toggleShop(shop)" shape="circle"></u-checkbox>
+            <u-checkbox
+              :checked="isShopAllSelected(shop)"
+              @change="toggleShop(shop)"
+              shape="circle"
+            ></u-checkbox>
             <view class="shop-icon">🏪</view>
             <text class="shop-name">{{ shop.shopName }}</text>
           </view>
           <view class="cart-item" v-for="item in shop.items" :key="item.id">
-            <u-checkbox :checked="item.selected === 1" @change="toggleItem(item)" shape="circle"></u-checkbox>
+            <u-checkbox
+              :checked="item.selected === 1"
+              @change="toggleItem(item)"
+              shape="circle"
+            ></u-checkbox>
             <image
               :src="fixImageUrl(item.productImage)"
               mode="aspectFill"
@@ -32,7 +48,9 @@
             />
             <view class="item-info">
               <text class="item-name">{{ item.productName }}</text>
-              <text class="item-sku" v-if="item.skuName">{{ item.skuName }}</text>
+              <text class="item-sku" v-if="item.skuName">{{
+                item.skuName
+              }}</text>
               <view class="item-bottom">
                 <text class="item-price">{{ formatPrice(item.price) }}</text>
                 <view class="qty-wrap">
@@ -44,7 +62,11 @@
                   />
                 </view>
               </view>
-              <text class="stock-warn" v-if="item.stock && item.quantity >= item.stock * 0.8">库存紧张，仅剩 {{ item.stock }} 件</text>
+              <text
+                class="stock-warn"
+                v-if="item.stock && item.quantity >= item.stock * 0.8"
+                >库存紧张，仅剩 {{ item.stock }} 件</text
+              >
             </view>
             <view class="item-del" @click.stop="deleteItem(item)">✕</view>
           </view>
@@ -55,7 +77,11 @@
       <!-- 底部结算栏 -->
       <view class="bottom-bar">
         <view class="bottom-left">
-          <u-checkbox :checked="isAllSelected" @change="toggleAll" shape="circle">
+          <u-checkbox
+            :checked="isAllSelected"
+            @change="toggleAll"
+            shape="circle"
+          >
             <text class="select-all-text">全选</text>
           </u-checkbox>
         </view>
@@ -76,112 +102,130 @@
     <view v-else class="empty-cart">
       <view class="empty-icon">🛒</view>
       <text class="empty-text">购物车是空的~</text>
-      <view class="go-shop-btn" @click="switchTab('/pages/index/index')">去逛逛</view>
+      <view class="go-shop-btn" @click="switchTab('/pages/index/index')"
+        >去逛逛</view
+      >
     </view>
   </view>
 </template>
 
 <script>
-import { get, post, put, del } from '@/utils/request'
+import { get, post, put, del } from "@/utils/request";
 export default {
-  data() { return { cartData: [], allSelected: true, loaded: false } },
+  data() {
+    return { cartData: [], allSelected: true, loaded: false };
+  },
   computed: {
     totalCount() {
-      let count = 0
-      this.cartData.forEach(shop => shop.items.forEach(() => count++))
-      return count
+      let count = 0;
+      this.cartData.forEach((shop) => shop.items.forEach(() => count++));
+      return count;
     },
     selectedCount() {
-      let count = 0
-      this.cartData.forEach(shop => {
-        shop.items.forEach(item => { if (item.selected === 1) count++ })
-      })
-      return count
+      let count = 0;
+      this.cartData.forEach((shop) => {
+        shop.items.forEach((item) => {
+          if (item.selected === 1) count++;
+        });
+      });
+      return count;
     },
     isAllSelected() {
-      if (this.cartData.length === 0) return false
-      return this.cartData.every(shop => shop.items.every(item => item.selected === 1))
+      if (this.cartData.length === 0) return false;
+      return this.cartData.every((shop) =>
+        shop.items.every((item) => item.selected === 1)
+      );
     },
     totalPrice() {
-      let total = 0
-      this.cartData.forEach(shop => {
-        shop.items.forEach(item => {
-          if (item.selected === 1) total += Number(item.price) * item.quantity
-        })
-      })
-      return total
-    }
+      let total = 0;
+      this.cartData.forEach((shop) => {
+        shop.items.forEach((item) => {
+          if (item.selected === 1) total += Number(item.price) * item.quantity;
+        });
+      });
+      return total;
+    },
   },
   onShow() {
-    if (!this.isLogin) return
-    this.loadCart()
+    if (!this.isLogin) return;
+    this.loadCart();
   },
   methods: {
     async loadCart() {
-      try { this.cartData = await get('/cart/list') || [] } catch (e) {}
+      try {
+        this.cartData = (await get("/cart/list")) || [];
+      } catch (e) {}
     },
     isShopAllSelected(shop) {
-      return shop.items.every(item => item.selected === 1)
+      return shop.items.every((item) => item.selected === 1);
     },
     async toggleShop(shop) {
-      const sel = this.isShopAllSelected(shop) ? 0 : 1
+      const sel = this.isShopAllSelected(shop) ? 0 : 1;
       for (const item of shop.items) {
-        await put('/cart/update', { id: item.id, selected: sel })
+        await put("/cart/update", { id: item.id, selected: sel });
       }
-      this.loadCart()
+      this.loadCart();
     },
     async toggleItem(item) {
-      await put('/cart/update', { id: item.id, selected: item.selected === 1 ? 0 : 1 })
-      this.loadCart()
+      await put("/cart/update", {
+        id: item.id,
+        selected: item.selected === 1 ? 0 : 1,
+      });
+      this.loadCart();
     },
     async toggleAll() {
-      const sel = this.isAllSelected ? 0 : 1
+      const sel = this.isAllSelected ? 0 : 1;
       for (const shop of this.cartData) {
         for (const item of shop.items) {
-          await put('/cart/update', { id: item.id, selected: sel })
+          await put("/cart/update", { id: item.id, selected: sel });
         }
       }
-      this.loadCart()
+      this.loadCart();
     },
     async changeQty(item, qty) {
-      await put('/cart/update', { id: item.id, quantity: qty })
-      this.loadCart()
+      await put("/cart/update", { id: item.id, quantity: qty });
+      this.loadCart();
     },
     deleteItem(item) {
       uni.showModal({
-        title: '确认删除',
-        content: '确定要从购物车中删除该商品吗？',
+        title: "确认删除",
+        content: "确定要从购物车中删除该商品吗？",
         success: async (res) => {
           if (res.confirm) {
             try {
-              await del('/cart/delete/' + item.id)
-              this.loadCart()
+              await del("/cart/delete/" + item.id);
+              this.loadCart();
             } catch (e) {}
           }
-        }
-      })
+        },
+      });
     },
     checkout() {
-      const selected = []
-      this.cartData.forEach(shop => {
-        shop.items.forEach(item => {
-          if (item.selected === 1) selected.push(item)
-        })
-      })
-      if (selected.length === 0) { this.showToast('请选择商品'); return }
-      uni.navigateTo({ url: '/pages/order/confirm' })
+      const selected = [];
+      this.cartData.forEach((shop) => {
+        shop.items.forEach((item) => {
+          if (item.selected === 1) selected.push(item);
+        });
+      });
+      if (selected.length === 0) {
+        this.showToast("请选择商品");
+        return;
+      }
+      uni.navigateTo({ url: "/pages/order/confirm" });
     },
     fixImageUrl(url) {
-      if (!url) return '/static/placeholder.png'
-      if (url && url.startsWith('/api/')) {
-        const base = this.getBaseUrl()
-        return base ? base + url.substring(4) : url
+      if (!url) return "/static/placeholder.png";
+      if (url && url.startsWith("/api/")) {
+        const base = this.getBaseUrl();
+        return base ? base + url.substring(4) : url;
       }
-      return url
+      return url;
     },
-    goDetail(id) { uni.navigateTo({ url: `/pages/product/detail?id=${id}` }) }
-  }
-}
+    goDetail(id) {
+      uni.navigateTo({ url: `/pages/product/detail?id=${id}` });
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
@@ -253,7 +297,9 @@ export default {
   align-items: flex-start;
   padding: 20rpx 24rpx;
   border-bottom: 1rpx solid $bg-stripe;
-  &:last-child { border-bottom: none; }
+  &:last-child {
+    border-bottom: none;
+  }
 }
 .item-img {
   width: 150rpx;
@@ -296,8 +342,24 @@ export default {
 .qty-wrap {
   flex-shrink: 0;
 }
-.stock-warn { display: block; font-size: 20rpx; color: $accent-orange; margin-top: 6rpx; }
-.item-del { flex-shrink: 0; width: 44rpx; height: 44rpx; display: flex; align-items: center; justify-content: center; font-size: 32rpx; color: $accent-red; font-weight: bold; margin-left: 8rpx; }
+.stock-warn {
+  display: block;
+  font-size: 20rpx;
+  color: $accent-orange;
+  margin-top: 6rpx;
+}
+.item-del {
+  flex-shrink: 0;
+  width: 44rpx;
+  height: 44rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32rpx;
+  color: $accent-red;
+  font-weight: bold;
+  margin-left: 8rpx;
+}
 
 /* ========== 底部结算栏 ========== */
 .bottom-bar {
@@ -357,7 +419,21 @@ export default {
 }
 
 /* ========== 空状态 ========== */
-.go-shop-btn { display: inline-block; background: linear-gradient(135deg, $primary-color, $primary-dark); color: $bg-white; font-size: 28rpx; font-weight: 600; padding: 14rpx 48rpx; border-radius: 40rpx; box-shadow: 0 4rpx 16rpx rgba(7, 193, 96, 0.35); margin-top: 20rpx; &:active { opacity: 0.9; transform: scale(0.97); } }
+.go-shop-btn {
+  display: inline-block;
+  background: linear-gradient(135deg, $primary-color, $primary-dark);
+  color: $bg-white;
+  font-size: 28rpx;
+  font-weight: 600;
+  padding: 14rpx 48rpx;
+  border-radius: 40rpx;
+  box-shadow: 0 4rpx 16rpx rgba(7, 193, 96, 0.35);
+  margin-top: 20rpx;
+  &:active {
+    opacity: 0.9;
+    transform: scale(0.97);
+  }
+}
 .empty-cart {
   display: flex;
   flex-direction: column;

@@ -148,7 +148,8 @@ export default {
 
 /* ========== 搜索栏 ========== */
 .search-bar {
-  padding: 16rpx 24rpx;
+  padding: 20rpx 30rpx;
+  padding-top: calc(var(--status-bar-height) + 120rpx);
   background: $bg-white;
 }
 .search-box {

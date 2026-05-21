@@ -3,9 +3,6 @@
     <!-- 页面标题 -->
     <view class="page-header">
       <text class="page-title">购物车</text>
-      <text class="page-sub" v-if="cartData.length > 0"
-        >共 {{ totalCount }} 件商品</text
-      >
     </view>
 
     <!-- 未登录 -->
@@ -86,6 +83,7 @@
           </u-checkbox>
         </view>
         <view class="bottom-right">
+          <text class="count-hint" v-if="totalCount > 0">共{{ totalCount }}件</text>
           <view class="total-block">
             <text class="total-label">合计</text>
             <text class="total-price">{{ formatPrice(totalPrice) }}</text>
@@ -248,12 +246,9 @@ export default {
 }
 
 .page-header {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  padding: 24rpx 28rpx 16rpx;
-  padding-top: calc(var(--status-bar-height) + 24rpx);
+  padding: calc(var(--status-bar-height) + 50rpx) 30rpx 16rpx;
   background: $bg-white;
+  text-align: center;
 }
 .page-title {
   font-size: 36rpx;

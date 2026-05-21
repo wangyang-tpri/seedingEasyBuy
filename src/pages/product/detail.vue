@@ -5,7 +5,7 @@
       <u-swiper
         v-if="!showVideo"
         :list="imageList"
-        height="600rpx"
+        height="340rpx"
         :autoplay="true"
         keyName="image"
         circular
@@ -84,15 +84,15 @@
     </view>
 
     <!-- 联系电话 -->
-    <view class="specs-table" v-if="product.contactPhone">
-      <view class="spec-title">联系电话</view>
-      <text class="spec-phone">{{ product.contactPhone }}</text>
+    <view class="info-row-card" v-if="product.contactPhone">
+      <text class="info-label">联系电话</text>
+      <text class="info-value info-phone">{{ product.contactPhone }}</text>
     </view>
 
     <!-- 发货地址 -->
-    <view class="specs-table" v-if="product.address">
-      <view class="spec-title">发货地址</view>
-      <text class="spec-val">{{ product.address }}</text>
+    <view class="info-row-card" v-if="product.address">
+      <text class="info-label">发货地址</text>
+      <text class="info-value">{{ product.address }}</text>
     </view>
 
     <!-- 底部操作栏 -->
@@ -269,7 +269,7 @@ export default {
 }
 .swiper-video {
   width: 100%;
-  height: 600rpx;
+  height: 340rpx;
 }
 .media-toggle {
   position: absolute;
@@ -367,6 +367,33 @@ export default {
 .spec-val {
   color: $text-primary;
   font-size: 26rpx;
+}
+
+/* 联系信息行 */
+.info-row-card {
+  display: flex;
+  align-items: center;
+  margin: 12rpx 30rpx 0;
+  padding: 28rpx 30rpx;
+  background: $bg-white;
+  border-radius: 12rpx;
+}
+.info-label {
+  font-size: 26rpx;
+  color: $text-primary;
+  font-weight: bold;
+  flex-shrink: 0;
+  margin-right: 20rpx;
+}
+.info-value {
+  font-size: 26rpx;
+  color: $text-primary;
+  flex: 1;
+  text-align: right;
+}
+.info-phone {
+  font-weight: 600;
+  font-size: 28rpx;
 }
 .bottom-bar {
   position: fixed;

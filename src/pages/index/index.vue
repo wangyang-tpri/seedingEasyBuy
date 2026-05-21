@@ -1,5 +1,9 @@
 <template>
   <view class="home-page">
+    <!-- 标题 -->
+    <view class="nav-bar">
+      <text class="nav-title">苗木易购</text>
+    </view>
     <!-- 搜索栏 -->
     <view class="search-bar" @click="goPage('/pages/search/search')">
       <u-search
@@ -252,9 +256,18 @@ export default {
 .home-page {
   padding-bottom: 20rpx;
 }
+.nav-bar {
+  padding: calc(var(--status-bar-height) + 50rpx) 30rpx 16rpx;
+  background: $bg-white;
+  text-align: center;
+}
+.nav-title {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: $text-primary;
+}
 .search-bar {
-  padding: 20rpx 30rpx;
-  padding-top: calc(var(--status-bar-height) + 40rpx);
+  padding: 12rpx 30rpx 20rpx;
   background: $bg-white;
 }
 .banner-wrap {

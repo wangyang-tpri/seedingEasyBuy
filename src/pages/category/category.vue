@@ -1,5 +1,9 @@
 <template>
   <view class="category-page">
+    <!-- 标题 -->
+    <view class="nav-bar">
+      <text class="nav-title">苗木分类</text>
+    </view>
     <!-- 搜索栏 -->
     <view class="search-bar">
       <u-search
@@ -37,11 +41,10 @@
       <scroll-view scroll-y class="right-panel" :scroll-top="rightScrollTop">
         <!-- 分类横幅 -->
         <view class="cat-banner" v-if="activeCatName">
-          <view class="cat-banner-inner">
-            <text class="banner-emoji">{{ activeCatIcon }}</text>
-            <text class="banner-title"
-              >{{ activeCatName }} · {{ productList.length }}件</text
-            >
+          <text class="banner-emoji">{{ activeCatIcon }}</text>
+          <view class="banner-info">
+            <text class="banner-title">{{ activeCatName }}</text>
+            <text class="banner-count">共 {{ productList.length }} 件商品</text>
           </view>
         </view>
 
@@ -96,12 +99,8 @@
               <text class="product-name">{{ item.name }}</text>
               <view class="card-bottom">
                 <view class="price-col">
-                  <text class="product-price">{{
-                    formatPrice(item.price)
-                  }}</text>
-                  <text class="product-original" v-if="item.originalPrice"
-                    >¥{{ item.originalPrice }}</text
-                  >
+                  <text class="product-price">{{ formatPrice(item.price) }}</text>
+                  <text class="product-original" v-if="item.originalPrice">¥{{ item.originalPrice }}</text>
                 </view>
                 <text class="product-sales">{{ item.sales || 0 }}人付款</text>
               </view>
@@ -166,42 +165,28 @@ export default {
     }
   },
   methods: {
-    getCatIcon(name) {
-      return CAT_ICONS[name] || "🌿";
-    },
-
+    getCatIcon(name) { return CAT_ICONS[name] || "🌿"; },
     async loadCategories() {
       try {
         this.categories = (await get("/category/list")) || [];
         if (this.categories.length > 0) {
           const pendingId = this.$store.state.selectedCategoryId;
-          if (
-            pendingId &&
-            !this.activeCategory &&
-            this.categories.find((c) => c.id === pendingId)
-          ) {
+          if (pendingId && !this.activeCategory && this.categories.find((c) => c.id === pendingId)) {
             this.activeCategory = pendingId;
             this.$store.commit("SET_CATEGORY_ID", 0);
           }
-          if (
-            !this.activeCategory ||
-            !this.categories.find((c) => c.id === this.activeCategory)
-          ) {
+          if (!this.activeCategory || !this.categories.find((c) => c.id === this.activeCategory)) {
             this.activeCategory = this.categories[0].id;
           }
-          const found = this.categories.find(
-            (c) => c.id === this.activeCategory
-          );
+          const found = this.categories.find((c) => c.id === this.activeCategory);
           if (found) {
             this.subCategories = found.children || [];
-            this.activeSub =
-              this.subCategories.length > 0 ? this.subCategories[0].id : 0;
+            this.activeSub = this.subCategories.length > 0 ? this.subCategories[0].id : 0;
           }
           this.loadProducts(this.activeSub || this.activeCategory);
         }
       } catch (e) {}
     },
-
     onCategoryClick(cat) {
       if (this.activeCategory === cat.id) return;
       this.activeCategory = cat.id;
@@ -209,59 +194,54 @@ export default {
       this.loadingProduct = true;
       const found = this.categories.find((c) => c.id === cat.id);
       this.subCategories = (found && found.children) || [];
-      this.activeSub =
-        this.subCategories.length > 0 ? this.subCategories[0].id : 0;
+      this.activeSub = this.subCategories.length > 0 ? this.subCategories[0].id : 0;
       this.productList = [];
       this.loadProducts(this.activeSub || cat.id);
     },
-
     onSubClick(sub) {
       if (this.activeSub === sub.id) return;
       this.activeSub = sub.id;
       this.productList = [];
       this.loadProducts(sub.id);
     },
-
     async loadProducts(categoryId) {
       this.loadingProduct = true;
       try {
-        const result = await get(
-          `/product/page?categoryId=${categoryId}&size=20`
-        );
+        const result = await get(`/product/page?categoryId=${categoryId}&size=20`);
         this.productList = (result && result.records) || [];
       } catch (e) {}
       this.loadingProduct = false;
     },
-
-    goDetail(id) {
-      uni.navigateTo({ url: `/pages/product/detail?id=${id}` });
-    },
+    goDetail(id) { uni.navigateTo({ url: `/pages/product/detail?id=${id}` }); },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-/* ========== 整体 ========== */
 .category-page {
   display: flex;
   flex-direction: column;
   height: 100vh;
-  background: $bg-page;
-}
-
-.search-bar {
-  padding: 16rpx 24rpx;
-  padding-top: calc(var(--status-bar-height) + 36rpx);
   background: $bg-white;
 }
 
-.search-count {
-  font-size: 22rpx;
-  color: #999;
+.nav-bar {
+  padding: calc(var(--status-bar-height) + 50rpx) 30rpx 16rpx;
+  background: $bg-white;
   text-align: center;
-  display: block;
-  margin-top: 8rpx;
 }
+.nav-title {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: $text-primary;
+}
+.search-bar {
+  padding: 12rpx 30rpx 20rpx;
+  background: $bg-white;
+  box-shadow: 0 1rpx 0 rgba(0,0,0,0.04);
+  z-index: 10;
+}
+
 .category-body {
   display: flex;
   flex: 1;
@@ -270,124 +250,104 @@ export default {
 
 /* ========== 左侧 ========== */
 .left-panel {
-  width: 180rpx;
-  background: $bg-page;
-  padding-top: 4rpx;
+  width: 170rpx;
+  background: #f7f8fa;
+  flex-shrink: 0;
 }
-
 .left-item {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 28rpx 8rpx;
+  padding: 24rpx 4rpx;
   position: relative;
-  min-height: 108rpx;
-  transition: background 0.2s ease;
+  min-height: 100rpx;
 }
-
-.left-item-hover {
-  opacity: 0.7;
-}
-
+.left-item-hover { opacity: 0.7; }
 .left-item.active {
   background: $bg-white;
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20rpx;
+    bottom: 20rpx;
+    width: 4rpx;
+    background: $primary-color;
+    border-radius: 0 2rpx 2rpx 0;
+  }
 }
-
-.left-item.active::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 5rpx;
-  height: 40rpx;
-  background: $primary-color;
-  border-radius: 0 3rpx 3rpx 0;
-}
-
 .left-icon {
-  font-size: 34rpx;
-  margin-bottom: 10rpx;
-  transition: transform 0.2s ease;
+  font-size: 32rpx;
+  margin-bottom: 8rpx;
+  transition: transform 0.2s;
 }
-
 .left-item.active .left-icon {
-  transform: scale(1.15);
+  transform: scale(1.12);
 }
-
 .left-name {
-  font-size: 24rpx;
-  color: #888;
-  text-align: center;
+  font-size: 22rpx;
+  color: $text-hint;
   font-weight: 500;
   line-height: 1.3;
-  transition: color 0.2s ease;
 }
-
 .left-item.active .left-name {
   color: $primary-color;
+  font-weight: 600;
 }
 
 /* ========== 右侧 ========== */
 .right-panel {
   flex: 1;
   background: $bg-white;
-  border-radius: 24rpx 0 0 0;
-  margin-left: -12rpx;
-  padding: 0 20rpx 0 16rpx;
+  padding: 0 16rpx;
 }
 
+/* 分类横幅 */
 .cat-banner {
-  margin: 20rpx 0 8rpx;
-}
-
-.cat-banner-inner {
   display: flex;
   align-items: center;
-  padding: 24rpx 28rpx;
-  background: linear-gradient(135deg, $primary-light 0%, #f5faf7 100%);
-  border-radius: 16rpx;
-  width: 100%;
-  box-sizing: border-box;
+  margin: 16rpx 0 4rpx;
+  padding: 20rpx 24rpx;
+  background: linear-gradient(135deg, #f0faf2 0%, #f8fdf9 100%);
+  border-radius: 14rpx;
 }
-.banner-title {
+.banner-emoji {
+  font-size: 44rpx;
+  margin-right: 18rpx;
+}
+.banner-info {
   flex: 1;
 }
-
-.banner-emoji {
-  font-size: 48rpx;
-  margin-right: 20rpx;
-}
-
 .banner-title {
-  font-size: 30rpx;
+  font-size: 28rpx;
   font-weight: 600;
   color: #1a1a1a;
+  display: block;
+}
+.banner-count {
+  font-size: 22rpx;
+  color: $text-hint;
+  margin-top: 4rpx;
 }
 
 /* 子分类 */
 .sub-tags {
   white-space: nowrap;
-  padding: 12rpx 0 8rpx;
+  padding: 12rpx 0 4rpx;
 }
-
 .sub-tag {
   display: inline-block;
-  padding: 12rpx 28rpx;
-  margin-right: 12rpx;
-  border-radius: 24rpx;
-  font-size: 24rpx;
+  padding: 10rpx 24rpx;
+  margin-right: 10rpx;
+  border-radius: 20rpx;
+  font-size: 23rpx;
   color: $text-secondary;
-  background: $bg-page;
-  transition: all 0.2s ease;
+  background: #f5f6fa;
+  transition: all 0.2s;
   line-height: 1.4;
 }
-
-.sub-tag-hover {
-  opacity: 0.75;
-}
-
+.sub-tag-hover { opacity: 0.75; }
 .sub-tag.active {
   background: $primary-color;
   color: $bg-white;
@@ -399,21 +359,19 @@ export default {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  padding-top: 16rpx;
+  padding: 12rpx 4rpx 0;
 }
-
 .product-card {
-  width: calc(50% - 10rpx);
+  width: calc(50% - 8rpx);
   background: $bg-white;
   border-radius: $radius-lg;
   overflow: hidden;
-  margin-bottom: $spacing-md;
+  margin-bottom: 12rpx;
   box-shadow: $shadow-md;
 }
-
 .product-card-hover {
-  transform: scale(0.97);
-  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.12);
+  transform: scale(0.98);
+  box-shadow: 0 4rpx 16rpx rgba(0,0,0,0.1);
 }
 
 .img-wrap {
@@ -421,32 +379,29 @@ export default {
   width: 100%;
   overflow: hidden;
 }
-
 .product-img {
   width: 100%;
   height: 200rpx;
   display: block;
   background: $bg-input;
 }
-
 .img-tag {
   position: absolute;
-  top: 8rpx;
-  left: 8rpx;
+  top: 6rpx;
+  left: 6rpx;
   background: $gradient-orange;
   color: $bg-white;
   font-size: 18rpx;
-  padding: 4rpx 10rpx;
+  padding: 3rpx 8rpx;
   border-radius: $radius-sm;
   font-weight: 600;
 }
 
 .card-info {
-  padding: 12rpx 16rpx $spacing-md;
+  padding: 10rpx 14rpx 14rpx;
 }
-
 .product-name {
-  font-size: 26rpx;
+  font-size: 25rpx;
   color: $text-primary;
   line-height: 1.4;
   display: -webkit-box;
@@ -454,43 +409,27 @@ export default {
   -webkit-line-clamp: 2;
   overflow: hidden;
 }
-
 .card-bottom {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: $spacing-xs;
+  margin-top: 6rpx;
 }
-
 .price-col {
   display: flex;
   align-items: baseline;
   gap: 6rpx;
 }
-
 .product-price {
-  font-size: $font-xl;
+  font-size: 28rpx;
   color: $accent-orange;
   font-weight: 700;
 }
-
 .product-original {
-  font-size: 20rpx;
+  font-size: 18rpx;
   color: $text-placeholder;
   text-decoration: line-through;
 }
-
-.product-sales {
-  font-size: $font-xs;
-  color: $text-placeholder;
-}
-
-.product-original {
-  font-size: 20rpx;
-  color: $text-placeholder;
-  text-decoration: line-through;
-}
-
 .product-sales {
   font-size: 18rpx;
   color: $text-placeholder;
@@ -501,46 +440,29 @@ export default {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  padding: 12rpx 4rpx 0;
 }
-
 .skeleton-card {
-  width: calc(50% - 10rpx);
+  width: calc(50% - 8rpx);
   background: $bg-white;
   border-radius: $radius-lg;
   overflow: hidden;
-  margin-bottom: $spacing-md;
+  margin-bottom: 12rpx;
 }
-
 .sk-img {
   width: 100%;
   height: 200rpx;
-  background: linear-gradient(90deg, $bg-gray 25%, #efefef 50%, $bg-gray 75%);
+  background: linear-gradient(90deg, #f5f5f5 25%, #eee 50%, #f5f5f5 75%);
   background-size: 200% 100%;
   animation: shimmer 1.6s ease infinite;
 }
-
-.sk-info {
-  padding: 12rpx 16rpx $spacing-md;
-}
-
-.sk-line {
-  height: 18rpx;
-  background: #f3f3f3;
-  border-radius: 4rpx;
-  margin-bottom: 12rpx;
-}
-
-.sk-line.w60 {
-  width: 60%;
-}
+.sk-info { padding: 10rpx 14rpx 14rpx; }
+.sk-line { height: 16rpx; background: #f3f3f3; border-radius: 3rpx; margin-bottom: 10rpx; }
+.sk-line.w60 { width: 60%; }
 
 @keyframes shimmer {
-  0% {
-    background-position: -200% 0;
-  }
-  100% {
-    background-position: 200% 0;
-  }
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
 }
 
 /* 空状态 */
@@ -548,21 +470,10 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 200rpx;
+  padding-top: 180rpx;
 }
+.empty-icon { font-size: 72rpx; opacity: 0.2; margin-bottom: 16rpx; }
+.empty-text { font-size: 26rpx; color: $text-placeholder; }
 
-.empty-icon {
-  font-size: 80rpx;
-  margin-bottom: 20rpx;
-  opacity: 0.3;
-}
-
-.empty-text {
-  font-size: 26rpx;
-  color: $text-placeholder;
-}
-
-.safe-bottom {
-  height: 40rpx;
-}
+.safe-bottom { height: 40rpx; }
 </style>

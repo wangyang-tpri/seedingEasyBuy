@@ -3,53 +3,108 @@
     <view class="form-card">
       <view class="form-item">
         <text class="form-label">商品名称</text>
-        <u-input v-model="form.name" placeholder="请输入苗木名称" placeholderStyle="font-size:24rpx;color:#bbbbbb" border="none" inputAlign="right" clearable></u-input>
+        <u-input
+          v-model="form.name"
+          placeholder="请输入苗木名称"
+          placeholderStyle="font-size:24rpx;color:#bbbbbb"
+          border="none"
+          inputAlign="right"
+          clearable
+        ></u-input>
       </view>
       <view class="form-item">
         <text class="form-label">副标题</text>
-        <u-input v-model="form.subtitle" placeholder="简短描述" placeholderStyle="font-size:24rpx;color:#bbbbbb" border="none" inputAlign="right" clearable></u-input>
+        <u-input
+          v-model="form.subtitle"
+          placeholder="简短描述"
+          placeholderStyle="font-size:24rpx;color:#bbbbbb"
+          border="none"
+          inputAlign="right"
+          clearable
+        ></u-input>
       </view>
       <view class="form-item" @click="showCat = true">
         <text class="form-label">分类</text>
         <view class="form-right">
-          <text :class="{ placeholder: !selectedCatName }">{{ selectedCatName || '请选择分类' }}</text>
+          <text :class="{ placeholder: !selectedCatName }">{{
+            selectedCatName || "请选择分类"
+          }}</text>
           <u-icon name="arrow-right" color="#bbb" size="14"></u-icon>
         </view>
       </view>
       <view class="form-item">
         <text class="form-label">价格</text>
-        <u-input v-model="form.price" type="digit" placeholder="¥0.00" placeholderStyle="font-size:24rpx;color:#bbbbbb" border="none" inputAlign="right" clearable></u-input>
+        <u-input
+          v-model="form.price"
+          type="digit"
+          placeholder="¥0.00"
+          placeholderStyle="font-size:24rpx;color:#bbbbbb"
+          border="none"
+          inputAlign="right"
+          clearable
+        ></u-input>
       </view>
       <view class="form-item">
         <text class="form-label">原价</text>
-        <u-input v-model="form.originalPrice" type="digit" placeholder="¥0.00" placeholderStyle="font-size:24rpx;color:#bbbbbb" border="none" inputAlign="right" clearable></u-input>
+        <u-input
+          v-model="form.originalPrice"
+          type="digit"
+          placeholder="¥0.00"
+          placeholderStyle="font-size:24rpx;color:#bbbbbb"
+          border="none"
+          inputAlign="right"
+          clearable
+        ></u-input>
       </view>
       <view class="form-item">
         <text class="form-label">库存</text>
-        <u-input v-model="form.stock" type="number" placeholder="0" placeholderStyle="font-size:24rpx;color:#bbbbbb" border="none" inputAlign="right" clearable></u-input>
+        <u-input
+          v-model="form.stock"
+          type="number"
+          placeholder="0"
+          placeholderStyle="font-size:24rpx;color:#bbbbbb"
+          border="none"
+          inputAlign="right"
+          clearable
+        ></u-input>
       </view>
       <view class="form-item" @click="showUnit = true">
         <text class="form-label">单位</text>
         <view class="form-right">
-          <text :class="{ placeholder: !form.unit }">{{ form.unit || '请选择单位' }}</text>
+          <text :class="{ placeholder: !form.unit }">{{
+            form.unit || "请选择单位"
+          }}</text>
           <u-icon name="arrow-right" color="#bbb" size="14"></u-icon>
         </view>
       </view>
       <view class="form-item" @click="showTag = true">
         <text class="form-label">商品标签</text>
         <view class="form-right">
-          <text :class="{ placeholder: !selectedTagName }">{{ selectedTagName || '请选择标签' }}</text>
+          <text :class="{ placeholder: !selectedTagName }">{{
+            selectedTagName || "请选择标签"
+          }}</text>
           <u-icon name="arrow-right" color="#bbb" size="14"></u-icon>
         </view>
       </view>
       <view class="form-item">
         <text class="form-label">联系电话</text>
-        <u-input v-model="form.phone" type="number" placeholder="请输入联系电话" placeholderStyle="font-size:24rpx;color:#bbbbbb" border="none" inputAlign="right" clearable maxlength="11"></u-input>
+        <u-input
+          v-model="form.phone"
+          type="number"
+          placeholder="请输入联系电话"
+          placeholderStyle="font-size:24rpx;color:#bbbbbb"
+          border="none"
+          inputAlign="right"
+          clearable
+          maxlength="11"
+        ></u-input>
       </view>
       <view class="form-item" @click="chooseLocation">
         <text class="form-label">发货地址</text>
         <view class="form-right">
-          <text :class="{ placeholder: !form.address }">{{ form.address || '请选择地址' }}</text>
+          <text :class="{ placeholder: !form.address }">{{
+            form.address || "请选择地址"
+          }}</text>
           <u-icon name="map" color="#bbb" size="14"></u-icon>
         </view>
       </view>
@@ -86,20 +141,44 @@
     <view class="form-card">
       <view class="form-title">规格参数</view>
       <view class="spec-item" v-for="(spec, i) in specs" :key="i">
-        <u-input v-model="spec.key" placeholder="参数名" border="none" class="spec-input"></u-input>
-        <u-input v-model="spec.value" placeholder="参数值" border="none" class="spec-input" inputAlign="right"></u-input>
+        <u-input
+          v-model="spec.key"
+          placeholder="参数名"
+          border="none"
+          class="spec-input"
+        ></u-input>
+        <u-input
+          v-model="spec.value"
+          placeholder="参数值"
+          border="none"
+          class="spec-input"
+          inputAlign="right"
+        ></u-input>
         <text class="spec-del" @click="specs.splice(i, 1)">✕</text>
       </view>
-      <view class="add-spec" @click="specs.push({ key: '', value: '' })">+ 添加规格参数</view>
+      <view class="add-spec" @click="specs.push({ key: '', value: '' })"
+        >+ 添加规格参数</view
+      >
     </view>
 
     <view class="form-card">
       <view class="form-title">商品详情</view>
-      <u--textarea v-model="form.description" placeholder="请输入商品描述" height="200" border="none"></u--textarea>
+      <u--textarea
+        v-model="form.description"
+        placeholder="请输入商品描述"
+        height="200"
+        border="none"
+      ></u--textarea>
     </view>
 
     <view class="submit-wrap">
-      <u-button :text="isEdit ? '保存修改' : '提交上架'" type="success" shape="circle" block @click="onSubmit"></u-button>
+      <u-button
+        :text="isEdit ? '保存修改' : '提交上架'"
+        type="success"
+        shape="circle"
+        block
+        @click="onSubmit"
+      ></u-button>
     </view>
 
     <!-- 分类选择 -->
@@ -108,18 +187,35 @@
         <text class="cat-title">选择分类</text>
         <view class="cat-body">
           <scroll-view scroll-y class="cat-left">
-            <view v-for="cat in cats" :key="cat.id"
+            <view
+              v-for="cat in cats"
+              :key="cat.id"
               :class="['cat-left-item', { active: activeParent === cat.id }]"
-              @click="onCatParentClick(cat)"><text>{{ cat.name }}</text></view>
+              @click="onCatParentClick(cat)"
+              ><text>{{ cat.name }}</text></view
+            >
           </scroll-view>
           <scroll-view scroll-y class="cat-right">
-            <view v-for="sub in activeSubCats" :key="sub.id"
-              :class="['cat-right-item', { active: form.categoryId === sub.id }]"
-              @click="selectCat(sub)">
+            <view
+              v-for="sub in activeSubCats"
+              :key="sub.id"
+              :class="[
+                'cat-right-item',
+                { active: form.categoryId === sub.id },
+              ]"
+              @click="selectCat(sub)"
+            >
               <text>{{ sub.name }}</text>
-              <u-icon v-if="form.categoryId === sub.id" name="checkbox-mark" color="#07C160" size="18"></u-icon>
+              <u-icon
+                v-if="form.categoryId === sub.id"
+                name="checkbox-mark"
+                color="#07C160"
+                size="18"
+              ></u-icon>
             </view>
-            <view v-if="activeSubCats.length === 0" class="cat-empty">该分类暂无子分类</view>
+            <view v-if="activeSubCats.length === 0" class="cat-empty"
+              >该分类暂无子分类</view
+            >
           </scroll-view>
         </view>
       </view>
@@ -130,9 +226,13 @@
       <view class="picker-popup">
         <text class="picker-title">选择标签</text>
         <view class="picker-grid">
-          <view v-for="t in tagOptions" :key="t.value"
+          <view
+            v-for="t in tagOptions"
+            :key="t.value"
             :class="['picker-item', { active: form.tag === t.value }]"
-            @click="selectTag(t)">{{ t.name }}</view>
+            @click="selectTag(t)"
+            >{{ t.name }}</view
+          >
         </view>
       </view>
     </u-popup>
@@ -142,9 +242,13 @@
       <view class="picker-popup">
         <text class="picker-title">选择单位</text>
         <view class="picker-grid">
-          <view v-for="u in unitOptions" :key="u"
+          <view
+            v-for="u in unitOptions"
+            :key="u"
             :class="['picker-item', { active: form.unit === u }]"
-            @click="selectUnit(u)">{{ u }}</view>
+            @click="selectUnit(u)"
+            >{{ u }}</view
+          >
         </view>
       </view>
     </u-popup>
@@ -152,7 +256,7 @@
 </template>
 
 <script>
-import { get, post, put } from '@/utils/request'
+import { get, post, put } from "@/utils/request";
 
 export default {
   data() {
@@ -160,188 +264,263 @@ export default {
       isEdit: false,
       productId: 0,
       form: {
-        name: '', subtitle: '', categoryId: 0, price: '', originalPrice: '',
-        stock: '', unit: '', address: '', phone: '', tag: 0, description: ''
+        name: "",
+        subtitle: "",
+        categoryId: 0,
+        price: "",
+        originalPrice: "",
+        stock: "",
+        unit: "",
+        address: "",
+        phone: "",
+        tag: 0,
+        description: "",
       },
       images: [],
-      videoPath: '',
+      videoPath: "",
       specs: [],
       cats: [],
       activeParent: 0,
-      selectedCatName: '',
+      selectedCatName: "",
       showCat: false,
-      unitOptions: ['株', '盆', '棵', '袋', '包', '斤', '公斤', '捆', '平方米'],
+      unitOptions: ["株", "盆", "棵", "袋", "包", "斤", "公斤", "捆", "平方米"],
       showUnit: false,
       tagOptions: [
-        { name: '普通', value: 0 },
-        { name: '特惠', value: 1 },
-        { name: '新品', value: 2 }
+        { name: "普通", value: 0 },
+        { name: "特惠", value: 1 },
+        { name: "新品", value: 2 },
       ],
       showTag: false,
-      selectedTagName: ''
-    }
+      selectedTagName: "",
+    };
   },
   computed: {
     activeSubCats() {
-      const found = this.cats.find(c => c.id === this.activeParent)
-      return (found && found.children) || []
-    }
+      const found = this.cats.find((c) => c.id === this.activeParent);
+      return (found && found.children) || [];
+    },
   },
   onLoad(options) {
-    this.loadCats()
+    this.loadCats();
     if (options.id) {
-      this.isEdit = true
-      this.productId = options.id
-      this.loadProduct()
+      this.isEdit = true;
+      this.productId = options.id;
+      this.loadProduct();
     }
   },
   methods: {
     async loadCats() {
       try {
-        this.cats = await get('/category/list') || []
-        if (this.cats.length > 0) this.activeParent = this.cats[0].id
+        this.cats = (await get("/category/list")) || [];
+        if (this.cats.length > 0) this.activeParent = this.cats[0].id;
       } catch (e) {}
     },
     async loadProduct() {
       try {
-        const result = await get(`/product/detail/${this.productId}`)
-        const p = result.product
-        this.form.name = p.name || ''
-        this.form.subtitle = p.subtitle || ''
-        this.form.categoryId = p.categoryId || 0
-        this.form.price = p.price ? String(p.price) : ''
-        this.form.originalPrice = p.originalPrice ? String(p.originalPrice) : ''
-        this.form.stock = p.stock ? String(p.stock) : ''
-        this.form.unit = p.unit || ''
-        this.form.phone = p.contactPhone || ''
-        this.form.description = p.description || ''
-        this.form.address = p.address || ''
-        this.form.tag = p.tag || 0
-        const tagMap = { 0: '', 1: '特惠', 2: '新品' }
-        this.selectedTagName = tagMap[p.tag] || ''
+        const result = await get(`/product/detail/${this.productId}`);
+        const p = result.product;
+        this.form.name = p.name || "";
+        this.form.subtitle = p.subtitle || "";
+        this.form.categoryId = p.categoryId || 0;
+        this.form.price = p.price ? String(p.price) : "";
+        this.form.originalPrice = p.originalPrice
+          ? String(p.originalPrice)
+          : "";
+        this.form.stock = p.stock ? String(p.stock) : "";
+        this.form.unit = p.unit || "";
+        this.form.phone = p.contactPhone || "";
+        this.form.description = p.description || "";
+        this.form.address = p.address || "";
+        this.form.tag = p.tag || 0;
+        const tagMap = { 0: "", 1: "特惠", 2: "新品" };
+        this.selectedTagName = tagMap[p.tag] || "";
         // Images
-        const imgs = result.images && result.images.length > 0
-          ? result.images.map(img => img.imageUrl)
-          : this.parseImages(p.images)
-        this.images = imgs.map(url => {
-          if (url && url.startsWith('/api/')) {
-            const base = this.getBaseUrl()
-            return base ? base + url.substring(4) : url
+        const imgs =
+          result.images && result.images.length > 0
+            ? result.images.map((img) => img.imageUrl)
+            : this.parseImages(p.images);
+        this.images = imgs.map((url) => {
+          if (url && url.startsWith("/api/")) {
+            const base = this.getBaseUrl();
+            return base ? base + url.substring(4) : url;
           }
-          return url
-        })
+          return url;
+        });
         // Video
-        let videoUrl = p.video || ''
-        if (videoUrl && videoUrl.startsWith('/api/')) {
-          const base = this.getBaseUrl()
-          if (base) videoUrl = base + videoUrl.substring(4)
+        let videoUrl = p.video || "";
+        if (videoUrl && videoUrl.startsWith("/api/")) {
+          const base = this.getBaseUrl();
+          if (base) videoUrl = base + videoUrl.substring(4);
         }
-        this.videoPath = videoUrl
+        this.videoPath = videoUrl;
         // Specs
         if (p.specs) {
           try {
-            const obj = typeof p.specs === 'string' ? JSON.parse(p.specs) : p.specs
-            this.specs = Object.entries(obj).map(([key, value]) => ({ key, value }))
+            const obj =
+              typeof p.specs === "string" ? JSON.parse(p.specs) : p.specs;
+            this.specs = Object.entries(obj).map(([key, value]) => ({
+              key,
+              value,
+            }));
           } catch (e) {}
         }
         // Category
         if (p.categoryId) {
           for (const c of this.cats) {
-            const sub = (c.children || []).find(s => s.id === p.categoryId)
-            if (sub) { this.activeParent = c.id; this.selectedCatName = c.name + ' > ' + sub.name; break }
+            const sub = (c.children || []).find((s) => s.id === p.categoryId);
+            if (sub) {
+              this.activeParent = c.id;
+              this.selectedCatName = c.name + " > " + sub.name;
+              break;
+            }
           }
         }
       } catch (e) {}
     },
     parseImages(images) {
-      if (!images) return []
-      try { return typeof images === 'string' && images.startsWith('[') ? JSON.parse(images) : [images] }
-      catch (e) { return [] }
+      if (!images) return [];
+      try {
+        return typeof images === "string" && images.startsWith("[")
+          ? JSON.parse(images)
+          : [images];
+      } catch (e) {
+        return [];
+      }
     },
-    onCatParentClick(cat) { this.activeParent = cat.id },
+    onCatParentClick(cat) {
+      this.activeParent = cat.id;
+    },
     selectCat(cat) {
-      this.form.categoryId = cat.id
-      const parent = this.cats.find(c => c.id === this.activeParent)
-      this.selectedCatName = (parent ? parent.name + ' > ' : '') + cat.name
+      this.form.categoryId = cat.id;
+      const parent = this.cats.find((c) => c.id === this.activeParent);
+      this.selectedCatName = (parent ? parent.name + " > " : "") + cat.name;
     },
-    selectTag(t) { this.form.tag = t.value; this.selectedTagName = t.name; this.showTag = false },
-    selectUnit(u) { this.form.unit = u; this.showUnit = false },
+    selectTag(t) {
+      this.form.tag = t.value;
+      this.selectedTagName = t.name;
+      this.showTag = false;
+    },
+    selectUnit(u) {
+      this.form.unit = u;
+      this.showUnit = false;
+    },
     chooseLocation() {
       uni.authorize({
-        scope: 'scope.userLocation',
+        scope: "scope.userLocation",
         success: () => {
           uni.chooseLocation({
-            success: (res) => { this.form.address = res.address || res.name },
-            fail: () => { uni.showToast({ title: '选择地址失败', icon: 'none' }) }
-          })
+            success: (res) => {
+              this.form.address = res.address || res.name;
+            },
+            fail: () => {
+              uni.showToast({ title: "选择地址失败", icon: "none" });
+            },
+          });
         },
         fail: () => {
           uni.showModal({
-            title: '需要位置权限', content: '请授权位置权限后选择发货地址',
-            confirmText: '去设置',
-            success: (r) => { if (r.confirm) uni.openSetting({}) }
-          })
-        }
-      })
+            title: "需要位置权限",
+            content: "请授权位置权限后选择发货地址",
+            confirmText: "去设置",
+            success: (r) => {
+              if (r.confirm) uni.openSetting({});
+            },
+          });
+        },
+      });
     },
     chooseImg() {
       uni.chooseImage({
         count: 9 - this.images.length,
-        sizeType: ['compressed'],
+        sizeType: ["compressed"],
         success: (res) => {
-          this.images.push(...res.tempFilePaths)
-        }
-      })
+          this.images.push(...res.tempFilePaths);
+        },
+      });
     },
-    removeImg(i) { this.images.splice(i, 1) },
+    removeImg(i) {
+      this.images.splice(i, 1);
+    },
     chooseVideo() {
       uni.chooseVideo({
-        sourceType: ['album', 'camera'], maxDuration: 30,
-        success: (res) => { this.videoPath = res.tempFilePath }
-      })
+        sourceType: ["album", "camera"],
+        maxDuration: 30,
+        success: (res) => {
+          this.videoPath = res.tempFilePath;
+        },
+      });
     },
-    removeVideo() { this.videoPath = '' },
+    removeVideo() {
+      this.videoPath = "";
+    },
     isNewFile(path) {
-      if (path.startsWith('http://tmp/') || path.startsWith('wxfile://')) return true
-      return !path.startsWith('http') && !path.startsWith('/api/') && !path.startsWith('data:')
+      if (path.startsWith("http://tmp/") || path.startsWith("wxfile://"))
+        return true;
+      return (
+        !path.startsWith("http") &&
+        !path.startsWith("/api/") &&
+        !path.startsWith("data:")
+      );
     },
     async onSubmit() {
-      if (!this.form.name) { this.showToast('请输入商品名称'); return }
-      if (!this.form.categoryId) { this.showToast('请选择分类'); return }
-      if (!this.form.price) { this.showToast('请输入价格'); return }
-      if (!this.isEdit && this.images.length === 0) { this.showToast('请上传商品图片'); return }
-      if (this.specs.length === 0 || !this.specs.some(s => s.key)) { this.showToast('请填写规格参数'); return }
-      if (!this.form.description || !this.form.description.trim()) { this.showToast('请输入商品详情'); return }
+      if (!this.form.name) {
+        this.showToast("请输入商品名称");
+        return;
+      }
+      if (!this.form.categoryId) {
+        this.showToast("请选择分类");
+        return;
+      }
+      if (!this.form.price) {
+        this.showToast("请输入价格");
+        return;
+      }
+      if (!this.isEdit && this.images.length === 0) {
+        this.showToast("请上传商品图片");
+        return;
+      }
+      if (this.specs.length === 0 || !this.specs.some((s) => s.key)) {
+        this.showToast("请填写规格参数");
+        return;
+      }
+      if (!this.form.description || !this.form.description.trim()) {
+        this.showToast("请输入商品详情");
+        return;
+      }
 
-      uni.showLoading({ title: '上传中', mask: true })
+      uni.showLoading({ title: "上传中", mask: true });
       try {
-        const finalImages = []
+        const finalImages = [];
         for (const img of this.images) {
           if (this.isNewFile(img)) {
-            finalImages.push(await this.uploadFile(img))
+            finalImages.push(await this.uploadFile(img));
           } else {
-            const idx = img.indexOf('/api/')
-            finalImages.push(idx !== -1 ? img.substring(idx) : img)
+            const idx = img.indexOf("/api/");
+            finalImages.push(idx !== -1 ? img.substring(idx) : img);
           }
         }
-        let videoUrl = this.videoPath
+        let videoUrl = this.videoPath;
         if (this.videoPath) {
           if (this.isNewFile(this.videoPath)) {
-            videoUrl = await this.uploadFile(this.videoPath)
+            videoUrl = await this.uploadFile(this.videoPath);
           } else {
-            const idx = videoUrl.indexOf('/api/')
-            videoUrl = idx !== -1 ? videoUrl.substring(idx) : videoUrl
+            const idx = videoUrl.indexOf("/api/");
+            videoUrl = idx !== -1 ? videoUrl.substring(idx) : videoUrl;
           }
         }
-        const specObj = {}
-        this.specs.forEach(s => { if (s.key) specObj[s.key] = s.value })
+        const specObj = {};
+        this.specs.forEach((s) => {
+          if (s.key) specObj[s.key] = s.value;
+        });
 
         const payload = {
           name: this.form.name,
           subtitle: this.form.subtitle,
           categoryId: this.form.categoryId,
           price: Number(this.form.price),
-          originalPrice: this.form.originalPrice ? Number(this.form.originalPrice) : undefined,
+          originalPrice: this.form.originalPrice
+            ? Number(this.form.originalPrice)
+            : undefined,
           stock: Number(this.form.stock) || 0,
           tag: this.form.tag,
           unit: this.form.unit,
@@ -350,81 +529,250 @@ export default {
           address: this.form.address,
           video: videoUrl || undefined,
           images: JSON.stringify(finalImages),
-          specs: JSON.stringify(specObj)
-        }
+          specs: JSON.stringify(specObj),
+        };
 
-        uni.showLoading({ title: '保存中', mask: true })
+        uni.showLoading({ title: "保存中", mask: true });
         if (this.isEdit) {
-          await put(`/product/update/${this.productId}`, payload)
+          await put(`/product/update/${this.productId}`, payload);
         } else {
-          await post('/product/add', payload)
+          await post("/product/add", payload);
         }
-        uni.hideLoading()
-        this.showToast(this.isEdit ? '保存成功' : '上架成功')
-        setTimeout(() => uni.navigateBack(), 1200)
+        uni.hideLoading();
+        this.showToast(this.isEdit ? "保存成功" : "上架成功");
+        setTimeout(() => uni.navigateBack(), 1200);
       } catch (e) {
-        uni.hideLoading()
-        this.showToast(this.isEdit ? '保存失败' : '上架失败')
+        uni.hideLoading();
+        this.showToast(this.isEdit ? "保存失败" : "上架失败");
       }
     },
     uploadFile(filePath) {
-      const baseUrl = process.env.VUE_APP_BASE_API || process.env.VUE_APP_BASE_PATH_ZP + '/api'
-      const token = uni.getStorageSync('token')
+      const baseUrl =
+        process.env.VUE_APP_BASE_API ||
+        process.env.VUE_APP_BASE_PATH_ZP + "/api";
+      const token = uni.getStorageSync("token");
       return new Promise((resolve, reject) => {
         uni.uploadFile({
-          url: baseUrl + '/file/upload',
-          filePath, name: 'file', timeout: 30000,
-          header: token ? { Authorization: 'Bearer ' + token } : {},
+          url: baseUrl + "/file/upload",
+          filePath,
+          name: "file",
+          timeout: 30000,
+          header: token ? { Authorization: "Bearer " + token } : {},
           success: (res) => {
             try {
-              const data = JSON.parse(res.data)
-              if (data.code === 200 && data.data) resolve(data.data.url)
-              else reject(new Error(data.message || '上传失败'))
-            } catch (e) { reject(e) }
+              const data = JSON.parse(res.data);
+              if (data.code === 200 && data.data) resolve(data.data.url);
+              else reject(new Error(data.message || "上传失败"));
+            } catch (e) {
+              reject(e);
+            }
           },
-          fail: (err) => reject(new Error(err.errMsg || '上传请求失败'))
-        })
-      })
-    }
-  }
-}
+          fail: (err) => reject(new Error(err.errMsg || "上传请求失败")),
+        });
+      });
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
-.add-page { min-height: 100vh; background: $bg-page; padding-bottom: 60rpx; }
-.form-card { background: $bg-white; margin: 20rpx 24rpx 0; border-radius: 16rpx; padding: 8rpx 28rpx 24rpx; box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.04); }
-.form-title { font-size: 28rpx; font-weight: 600; color: $text-primary; padding: 20rpx 0 12rpx; }
-.form-item { display: flex; align-items: center; justify-content: space-between; padding: 22rpx 0; border-bottom: 1rpx solid $bg-stripe; &:last-child { border-bottom: none; } }
-.form-label { font-size: 27rpx; color: $text-primary; flex-shrink: 0; margin-right: 20rpx; }
-.form-right { display: flex; align-items: center; gap: 8rpx; font-size: 26rpx; color: $text-primary; }
-.placeholder { color: $text-placeholder; }
-::v-deep .u-input__input { font-size: 26rpx; }
-::v-deep .u-textarea__textarea { font-size: 26rpx; }
-.upload-row { display: flex; flex-wrap: wrap; gap: 16rpx; }
-.upload-item { position: relative; }
-.upload-img { width: 160rpx; height: 160rpx; border-radius: 10rpx; background: $bg-input; }
-.upload-remove { position: absolute; top: -10rpx; right: -10rpx; width: 36rpx; height: 36rpx; border-radius: 50%; background: $accent-red; color: $bg-white; font-size: 20rpx; display: flex; align-items: center; justify-content: center; }
-.upload-btn { width: 160rpx; height: 160rpx; border: 2rpx dashed $border-dashed; border-radius: 10rpx; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-.upload-plus { font-size: 48rpx; color: $text-placeholder; }
-.upload-sub { font-size: 20rpx; color: $text-placeholder; margin-top: 4rpx; }
-.spec-item { display: flex; align-items: center; margin-top: 12rpx; }
-.spec-input { flex: 1; background: $bg-page; border-radius: 8rpx; padding: 0 16rpx; height: 64rpx; }
-.spec-del { margin-left: 12rpx; color: $accent-red; font-size: 26rpx; }
-.add-spec { color: $primary-color; font-size: 26rpx; margin-top: 16rpx; }
-.submit-wrap { padding: 40rpx 24rpx; }
-.cat-popup { padding: 40rpx 0 60rpx; }
-.cat-title { font-size: 32rpx; font-weight: bold; padding: 0 30rpx 24rpx; display: block; }
-.cat-body { display: flex; height: 600rpx; }
-.cat-left { width: 200rpx; background: $bg-page; }
-.cat-left-item { padding: 28rpx 20rpx; font-size: 26rpx; color: $text-secondary; text-align: center; }
-.cat-left-item.active { background: $bg-white; color: $primary-color; font-weight: 600; }
-.cat-right { flex: 1; padding: 0 20rpx; }
-.cat-right-item { display: flex; justify-content: space-between; align-items: center; padding: 24rpx 16rpx; border-bottom: 1rpx solid $bg-stripe; font-size: 27rpx; }
-.cat-right-item.active { color: $primary-color; }
-.cat-empty { text-align: center; color: $text-placeholder; font-size: 26rpx; padding-top: 80rpx; }
-.picker-popup { padding: 40rpx 30rpx 60rpx; }
-.picker-title { font-size: 32rpx; font-weight: bold; display: block; margin-bottom: 24rpx; }
-.picker-grid { display: flex; flex-wrap: wrap; gap: 16rpx; }
-.picker-item { width: calc(25% - 12rpx); text-align: center; padding: 22rpx 0; background: $bg-page; border-radius: 10rpx; font-size: 26rpx; color: $text-primary; }
-.picker-item.active { background: $primary-light; color: $primary-color; font-weight: 600; }
+.add-page {
+  min-height: 100vh;
+  background: $bg-page;
+  padding-bottom: 60rpx;
+}
+.form-card {
+  background: $bg-white;
+  margin: 20rpx 24rpx 0;
+  border-radius: 16rpx;
+  padding: 8rpx 28rpx 24rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.04);
+}
+.form-title {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: $text-primary;
+  padding: 20rpx 0 12rpx;
+}
+.form-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22rpx 0;
+  border-bottom: 1rpx solid $bg-stripe;
+  &:last-child {
+    border-bottom: none;
+  }
+}
+.form-label {
+  font-size: 27rpx;
+  color: $text-primary;
+  flex-shrink: 0;
+  margin-right: 20rpx;
+}
+.form-right {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  font-size: 26rpx;
+  color: $text-primary;
+}
+.placeholder {
+  color: $text-placeholder;
+}
+::v-deep .u-input__input {
+  font-size: 26rpx;
+}
+::v-deep .u-textarea__textarea {
+  font-size: 26rpx;
+}
+.upload-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+}
+.upload-item {
+  position: relative;
+}
+.upload-img {
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 10rpx;
+  background: $bg-input;
+}
+.upload-remove {
+  position: absolute;
+  top: -10rpx;
+  right: -10rpx;
+  width: 36rpx;
+  height: 36rpx;
+  border-radius: 50%;
+  background: $accent-red;
+  color: $bg-white;
+  font-size: 20rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.upload-btn {
+  width: 160rpx;
+  height: 160rpx;
+  border: 2rpx dashed $border-dashed;
+  border-radius: 10rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.upload-plus {
+  font-size: 48rpx;
+  color: $text-placeholder;
+}
+.upload-sub {
+  font-size: 20rpx;
+  color: $text-placeholder;
+  margin-top: 4rpx;
+}
+.spec-item {
+  display: flex;
+  align-items: center;
+  margin-top: 12rpx;
+}
+.spec-input {
+  flex: 1;
+  background: $bg-page;
+  border-radius: 8rpx;
+  padding: 0 16rpx;
+  height: 64rpx;
+}
+.spec-del {
+  margin-left: 12rpx;
+  color: $accent-red;
+  font-size: 26rpx;
+}
+.add-spec {
+  color: $primary-color;
+  font-size: 26rpx;
+  margin-top: 16rpx;
+}
+.submit-wrap {
+  padding: 40rpx 24rpx;
+}
+.cat-popup {
+  padding: 40rpx 0 60rpx;
+}
+.cat-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  padding: 0 30rpx 24rpx;
+  display: block;
+}
+.cat-body {
+  display: flex;
+  height: 600rpx;
+}
+.cat-left {
+  width: 200rpx;
+  background: $bg-page;
+}
+.cat-left-item {
+  padding: 28rpx 20rpx;
+  font-size: 26rpx;
+  color: $text-secondary;
+  text-align: center;
+}
+.cat-left-item.active {
+  background: $bg-white;
+  color: $primary-color;
+  font-weight: 600;
+}
+.cat-right {
+  flex: 1;
+  padding: 0 20rpx;
+}
+.cat-right-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24rpx 16rpx;
+  border-bottom: 1rpx solid $bg-stripe;
+  font-size: 27rpx;
+}
+.cat-right-item.active {
+  color: $primary-color;
+}
+.cat-empty {
+  text-align: center;
+  color: $text-placeholder;
+  font-size: 26rpx;
+  padding-top: 80rpx;
+}
+.picker-popup {
+  padding: 40rpx 30rpx 60rpx;
+}
+.picker-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  display: block;
+  margin-bottom: 24rpx;
+}
+.picker-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+}
+.picker-item {
+  width: calc(25% - 14rpx);
+  text-align: center;
+  padding: 22rpx 0;
+  background: $bg-page;
+  border-radius: 10rpx;
+  font-size: 26rpx;
+  color: $text-primary;
+}
+.picker-item.active {
+  background: $primary-light;
+  color: $primary-color;
+  font-weight: 600;
+}
 </style>

@@ -3,11 +3,11 @@
     <view class="form-card">
       <view class="form-item">
         <text class="form-label">商品名称</text>
-        <u-input v-model="form.name" placeholder="请输入苗木名称" border="none" inputAlign="right" clearable></u-input>
+        <u-input v-model="form.name" placeholder="请输入苗木名称" placeholderStyle="font-size:24rpx;color:#bbbbbb" border="none" inputAlign="right" clearable></u-input>
       </view>
       <view class="form-item">
         <text class="form-label">副标题</text>
-        <u-input v-model="form.subtitle" placeholder="简短描述" border="none" inputAlign="right" clearable></u-input>
+        <u-input v-model="form.subtitle" placeholder="简短描述" placeholderStyle="font-size:24rpx;color:#bbbbbb" border="none" inputAlign="right" clearable></u-input>
       </view>
       <view class="form-item" @click="showCat = true">
         <text class="form-label">分类</text>
@@ -18,15 +18,15 @@
       </view>
       <view class="form-item">
         <text class="form-label">价格</text>
-        <u-input v-model="form.price" type="digit" placeholder="¥0.00" border="none" inputAlign="right" clearable></u-input>
+        <u-input v-model="form.price" type="digit" placeholder="¥0.00" placeholderStyle="font-size:24rpx;color:#bbbbbb" border="none" inputAlign="right" clearable></u-input>
       </view>
       <view class="form-item">
         <text class="form-label">原价</text>
-        <u-input v-model="form.originalPrice" type="digit" placeholder="¥0.00" border="none" inputAlign="right" clearable></u-input>
+        <u-input v-model="form.originalPrice" type="digit" placeholder="¥0.00" placeholderStyle="font-size:24rpx;color:#bbbbbb" border="none" inputAlign="right" clearable></u-input>
       </view>
       <view class="form-item">
         <text class="form-label">库存</text>
-        <u-input v-model="form.stock" type="number" placeholder="0" border="none" inputAlign="right" clearable></u-input>
+        <u-input v-model="form.stock" type="number" placeholder="0" placeholderStyle="font-size:24rpx;color:#bbbbbb" border="none" inputAlign="right" clearable></u-input>
       </view>
       <view class="form-item" @click="showUnit = true">
         <text class="form-label">单位</text>
@@ -35,9 +35,16 @@
           <u-icon name="arrow-right" color="#bbb" size="14"></u-icon>
         </view>
       </view>
+      <view class="form-item" @click="showTag = true">
+        <text class="form-label">商品标签</text>
+        <view class="form-right">
+          <text :class="{ placeholder: !selectedTagName }">{{ selectedTagName || '请选择标签' }}</text>
+          <u-icon name="arrow-right" color="#bbb" size="14"></u-icon>
+        </view>
+      </view>
       <view class="form-item">
         <text class="form-label">联系电话</text>
-        <u-input v-model="form.phone" type="number" placeholder="请输入联系电话" border="none" inputAlign="right" clearable maxlength="11"></u-input>
+        <u-input v-model="form.phone" type="number" placeholder="请输入联系电话" placeholderStyle="font-size:24rpx;color:#bbbbbb" border="none" inputAlign="right" clearable maxlength="11"></u-input>
       </view>
       <view class="form-item" @click="chooseLocation">
         <text class="form-label">发货地址</text>
@@ -118,6 +125,18 @@
       </view>
     </u-popup>
 
+    <!-- 商品标签选择 -->
+    <u-popup :show="showTag" mode="bottom" round @close="showTag = false">
+      <view class="picker-popup">
+        <text class="picker-title">选择标签</text>
+        <view class="picker-grid">
+          <view v-for="t in tagOptions" :key="t.value"
+            :class="['picker-item', { active: form.tag === t.value }]"
+            @click="selectTag(t)">{{ t.name }}</view>
+        </view>
+      </view>
+    </u-popup>
+
     <!-- 单位选择 -->
     <u-popup :show="showUnit" mode="bottom" round @close="showUnit = false">
       <view class="picker-popup">
@@ -142,7 +161,7 @@ export default {
       productId: 0,
       form: {
         name: '', subtitle: '', categoryId: 0, price: '', originalPrice: '',
-        stock: '', unit: '', address: '', phone: '', description: ''
+        stock: '', unit: '', address: '', phone: '', tag: 0, description: ''
       },
       images: [],
       videoPath: '',
@@ -152,7 +171,14 @@ export default {
       selectedCatName: '',
       showCat: false,
       unitOptions: ['株', '盆', '棵', '袋', '包', '斤', '公斤', '捆', '平方米'],
-      showUnit: false
+      showUnit: false,
+      tagOptions: [
+        { name: '普通', value: 0 },
+        { name: '特惠', value: 1 },
+        { name: '新品', value: 2 }
+      ],
+      showTag: false,
+      selectedTagName: ''
     }
   },
   computed: {
@@ -190,6 +216,9 @@ export default {
         this.form.phone = p.contactPhone || ''
         this.form.description = p.description || ''
         this.form.address = p.address || ''
+        this.form.tag = p.tag || 0
+        const tagMap = { 0: '', 1: '特惠', 2: '新品' }
+        this.selectedTagName = tagMap[p.tag] || ''
         // Images
         const imgs = result.images && result.images.length > 0
           ? result.images.map(img => img.imageUrl)
@@ -235,6 +264,7 @@ export default {
       const parent = this.cats.find(c => c.id === this.activeParent)
       this.selectedCatName = (parent ? parent.name + ' > ' : '') + cat.name
     },
+    selectTag(t) { this.form.tag = t.value; this.selectedTagName = t.name; this.showTag = false },
     selectUnit(u) { this.form.unit = u; this.showUnit = false },
     chooseLocation() {
       uni.authorize({
@@ -313,6 +343,7 @@ export default {
           price: Number(this.form.price),
           originalPrice: this.form.originalPrice ? Number(this.form.originalPrice) : undefined,
           stock: Number(this.form.stock) || 0,
+          tag: this.form.tag,
           unit: this.form.unit,
           phone: this.form.phone,
           description: this.form.description,
@@ -367,6 +398,8 @@ export default {
 .form-label { font-size: 27rpx; color: $text-primary; flex-shrink: 0; margin-right: 20rpx; }
 .form-right { display: flex; align-items: center; gap: 8rpx; font-size: 26rpx; color: $text-primary; }
 .placeholder { color: $text-placeholder; }
+::v-deep .u-input__input { font-size: 26rpx; }
+::v-deep .u-textarea__textarea { font-size: 26rpx; }
 .upload-row { display: flex; flex-wrap: wrap; gap: 16rpx; }
 .upload-item { position: relative; }
 .upload-img { width: 160rpx; height: 160rpx; border-radius: 10rpx; background: $bg-input; }

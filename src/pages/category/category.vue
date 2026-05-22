@@ -93,7 +93,9 @@
                 class="product-img"
                 lazy-load
               />
-              <view class="img-tag" v-if="item.sales > 100">热销</view>
+              <view class="img-tag hot" v-if="item.tag === 1">特惠</view>
+              <view class="img-tag new" v-else-if="item.tag === 2">新品</view>
+              <view class="img-tag hot" v-else-if="item.sales > 100">热销</view>
             </view>
             <view class="card-info">
               <text class="product-name">{{ item.name }}</text>
@@ -395,6 +397,8 @@ export default {
   padding: 3rpx 8rpx;
   border-radius: $radius-sm;
   font-weight: 600;
+  &.hot { background: $gradient-orange; }
+  &.new { background: $gradient-green; }
 }
 
 .card-info {

@@ -2,7 +2,7 @@
   <view class="search-page">
     <!-- 搜索框 -->
     <view class="search-bar">
-      <u-search v-model="keyword" placeholder="搜索苗木名称" @search="onSearch" @clear="onClear" searchIconColor="#07C160"></u-search>
+      <u-search :focus="true" v-model="keyword" placeholder="搜索苗木名称" @search="onSearch" @clear="onClear" searchIconColor="#07C160"></u-search>
     </view>
 
     <!-- 搜索历史 -->
@@ -63,7 +63,7 @@ export default {
       this.saveHistory(val)
       this.searched = true
       try {
-        const result = await get(`/product/search?keyword=${val}&size=20`)
+        const result = await get(`/product/search?keyword=${encodeURIComponent(val)}&size=20`)
         this.searchList = (result && result.records) || []
       } catch (e) {}
     },

@@ -347,26 +347,36 @@ export default {
 }
 .specs-table {
   margin: 12rpx 30rpx 0;
-  padding: 0 30rpx 30rpx;
+  padding: 24rpx 30rpx 20rpx;
   background: $bg-white;
   border-radius: 12rpx;
+}
+.spec-title {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: $text-primary;
+  padding-bottom: 16rpx;
+  border-bottom: 1rpx solid $bg-stripe;
+  margin-bottom: 4rpx;
 }
 .spec-row {
   display: flex;
   justify-content: space-between;
-  padding: 16rpx 0;
-  border-bottom: 1rpx solid $bg-input;
-  &:last-child {
-    border-bottom: none;
-  }
+  align-items: center;
+  padding: 18rpx 0;
+  border-bottom: 1rpx solid $bg-stripe;
+  &:last-child { border-bottom: none; }
 }
 .spec-key {
-  color: $text-hint;
+  color: $text-secondary;
   font-size: 26rpx;
+  min-width: 120rpx;
 }
 .spec-val {
   color: $text-primary;
   font-size: 26rpx;
+  text-align: right;
+  word-break: break-all;
 }
 
 /* 联系信息行 */

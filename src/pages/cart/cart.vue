@@ -408,6 +408,16 @@ export default {
 }
 
 /* ========== 空状态 ========== */
+.login-btn {
+  display: inline-block;
+  border: 2rpx solid $accent-red;
+  color: $accent-red;
+  font-size: 28rpx;
+  font-weight: 600;
+  padding: 14rpx 48rpx;
+  border-radius: 40rpx;
+  margin-top: 20rpx;
+}
 .go-shop-btn {
   display: inline-block;
   background: linear-gradient(135deg, $primary-color, $primary-dark);

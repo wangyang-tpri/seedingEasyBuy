@@ -5,13 +5,18 @@
       <view class="nav-bar">
         <text class="nav-title">苗木易购</text>
       </view>
-      <view class="search-bar" @click="goPage('/pages/search/search')">
-        <u-search
-          placeholder="搜索苗木"
-          :disabled="true"
-          searchIconColor="#07C160"
-          bgColor="#f5f6fa"
-        ></u-search>
+      <view class="search-bar">
+        <view class="search-box" @click="goPage('/pages/search/search')">
+          <u-search
+            placeholder="搜索苗木"
+            :disabled="true"
+            searchIconColor="#07C160"
+            bgColor="#f5f6fa"
+          ></u-search>
+        </view>
+        <view class="add-btn" @click="onAddClick">
+          <text class="add-icon">+</text>
+        </view>
       </view>
     </view>
 
@@ -27,7 +32,6 @@
         circular
       ></u-swiper>
       <view v-else class="placeholder-banner">
-        <text class="placeholder-icon">📷</text>
         <text class="placeholder-text">暂无轮播图</text>
       </view>
     </view>
@@ -59,24 +63,43 @@
     <view class="section">
       <view class="section-header">
         <text class="section-title">限时特惠</text>
-        <text class="section-more" @click="switchTab('/pages/category/category')">更多 ></text>
+        <text
+          class="section-more"
+          @click="switchTab('/pages/category/category')"
+          >更多 ></text
+        >
       </view>
-      <scroll-view v-if="recommendList.length > 0" scroll-x class="flash-scroll">
-        <view class="flash-card" v-for="item in recommendList.slice(0, 4)" :key="item.id" @click="goDetail(item.id)">
-          <image :src="getFirstImage(item.images)" mode="aspectFill" class="flash-img" />
+      <scroll-view
+        v-if="recommendList.length > 0"
+        scroll-x
+        class="flash-scroll"
+      >
+        <view
+          class="flash-card"
+          v-for="item in recommendList.slice(0, 4)"
+          :key="item.id"
+          @click="goDetail(item.id)"
+        >
+          <image
+            :src="getFirstImage(item.images)"
+            mode="aspectFill"
+            class="flash-img"
+          />
           <view class="flash-tag">特惠</view>
           <view class="flash-info">
             <text class="flash-name">{{ item.name }}</text>
             <view class="flash-bottom">
               <text class="flash-price">{{ formatPrice(item.price) }}</text>
-              <text class="flash-original" v-if="item.originalPrice">¥{{ item.originalPrice }}</text>
+              <text class="flash-original" v-if="item.originalPrice"
+                >¥{{ item.originalPrice }}</text
+              >
             </view>
             <text class="flash-sales">已售 {{ item.sales || 0 }}</text>
           </view>
         </view>
       </scroll-view>
       <view v-else class="placeholder-row">
-        <view class="placeholder-card" v-for="i in 3" :key="'p'+i">
+        <view class="placeholder-card" v-for="i in 3" :key="'p' + i">
           <view class="placeholder-img"></view>
           <view class="placeholder-line"></view>
           <view class="placeholder-line short"></view>
@@ -88,12 +111,23 @@
     <view class="section">
       <view class="section-header">
         <text class="section-title">新品上架</text>
-        <text class="section-more" @click="goPage('/pages/product/list')">更多 ></text>
+        <text class="section-more" @click="goPage('/pages/product/list')"
+          >更多 ></text
+        >
       </view>
       <view v-if="newList.length > 0" class="new-grid">
-        <view class="new-card" v-for="item in newList.slice(0, 4)" :key="item.id" @click="goDetail(item.id)">
+        <view
+          class="new-card"
+          v-for="item in newList.slice(0, 4)"
+          :key="item.id"
+          @click="goDetail(item.id)"
+        >
           <view class="new-img-wrap">
-            <image :src="getFirstImage(item.images)" mode="aspectFill" class="new-img" />
+            <image
+              :src="getFirstImage(item.images)"
+              mode="aspectFill"
+              class="new-img"
+            />
             <view class="new-tag">新品</view>
           </view>
           <text class="new-name">{{ item.name }}</text>
@@ -101,7 +135,7 @@
         </view>
       </view>
       <view v-else class="new-grid">
-        <view class="placeholder-card" v-for="i in 4" :key="'n'+i">
+        <view class="placeholder-card" v-for="i in 4" :key="'n' + i">
           <view class="placeholder-img"></view>
           <view class="placeholder-line"></view>
           <view class="placeholder-line short"></view>
@@ -113,11 +147,24 @@
     <view class="section">
       <view class="section-header">
         <text class="section-title">热门推荐</text>
-        <text class="section-more" @click="switchTab('/pages/category/category')">更多 ></text>
+        <text
+          class="section-more"
+          @click="switchTab('/pages/category/category')"
+          >更多 ></text
+        >
       </view>
       <view v-if="hotList.length > 0" class="hot-list">
-        <view class="hot-card" v-for="item in hotList" :key="item.id" @click="goDetail(item.id)">
-          <image :src="getFirstImage(item.images)" mode="aspectFill" class="hot-img" />
+        <view
+          class="hot-card"
+          v-for="item in hotList"
+          :key="item.id"
+          @click="goDetail(item.id)"
+        >
+          <image
+            :src="getFirstImage(item.images)"
+            mode="aspectFill"
+            class="hot-img"
+          />
           <view class="hot-info">
             <text class="hot-name">{{ item.name }}</text>
             <view class="hot-meta">
@@ -128,7 +175,7 @@
         </view>
       </view>
       <view v-else class="placeholder-row">
-        <view class="placeholder-card" v-for="i in 3" :key="'h'+i">
+        <view class="placeholder-card" v-for="i in 3" :key="'h' + i">
           <view class="placeholder-img"></view>
           <view class="placeholder-line"></view>
           <view class="placeholder-line short"></view>
@@ -218,6 +265,13 @@ export default {
       };
       return colors[id] || { bg: "$bg-page", text: "$text-hint" };
     },
+    onAddClick() {
+      if (this.isLogin) {
+        uni.navigateTo({ url: "/pages/product/add" });
+      } else {
+        uni.navigateTo({ url: "/pages/user/login" });
+      }
+    },
     goCategory(cat) {
       this.$store.commit("SET_CATEGORY_ID", cat.id);
       uni.switchTab({ url: "/pages/category/category" });
@@ -250,8 +304,32 @@ export default {
   color: $text-primary;
 }
 .search-bar {
+  display: flex;
+  align-items: center;
   padding: 12rpx 30rpx 20rpx;
   background: $bg-white;
+  gap: 16rpx;
+}
+.search-box {
+  flex: 1;
+  min-width: 0;
+}
+.add-btn {
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: 50%;
+  background: $gradient-green;
+  box-shadow: 0 2rpx 8rpx rgba(7, 193, 96, 0.3);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.add-icon {
+  color: $bg-white;
+  font-size: 32rpx;
+  font-weight: 500;
+  margin-top: -3rpx;
 }
 .banner-wrap {
   margin: 20rpx 30rpx;
@@ -345,7 +423,9 @@ export default {
 }
 
 /* 商品卡片 - 网格 */
-.flash-scroll { white-space: nowrap; }
+.flash-scroll {
+  white-space: nowrap;
+}
 .flash-card {
   display: inline-block;
   width: 300rpx;
@@ -355,9 +435,16 @@ export default {
   overflow: hidden;
   box-shadow: $shadow-md;
   position: relative;
-  &:last-child { margin-right: 0; }
+  &:last-child {
+    margin-right: 0;
+  }
 }
-.flash-img { width: 300rpx; height: 220rpx; display: block; background: $bg-input; }
+.flash-img {
+  width: 300rpx;
+  height: 220rpx;
+  display: block;
+  background: $bg-input;
+}
 .flash-tag {
   position: absolute;
   top: 0;
@@ -369,35 +456,171 @@ export default {
   padding: 6rpx 16rpx;
   border-radius: 0 0 10rpx 0;
 }
-.flash-info { padding: 16rpx 18rpx; }
-.flash-name { font-size: 26rpx; color: $text-primary; font-weight: 500; display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.flash-bottom { display: flex; align-items: baseline; gap: 10rpx; margin-top: 8rpx; }
-.flash-price { font-size: 32rpx; color: $accent-orange; font-weight: 700; }
-.flash-original { font-size: 22rpx; color: $text-placeholder; text-decoration: line-through; }
-.flash-sales { font-size: 20rpx; color: $text-hint; margin-top: 4rpx; display: block; }
+.flash-info {
+  padding: 16rpx 18rpx;
+}
+.flash-name {
+  font-size: 26rpx;
+  color: $text-primary;
+  font-weight: 500;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.flash-bottom {
+  display: flex;
+  align-items: baseline;
+  gap: 10rpx;
+  margin-top: 8rpx;
+}
+.flash-price {
+  font-size: 32rpx;
+  color: $accent-orange;
+  font-weight: 700;
+}
+.flash-original {
+  font-size: 22rpx;
+  color: $text-placeholder;
+  text-decoration: line-through;
+}
+.flash-sales {
+  font-size: 20rpx;
+  color: $text-hint;
+  margin-top: 4rpx;
+  display: block;
+}
 
-.new-grid { display: flex; flex-wrap: wrap; justify-content: space-between; }
-.new-card { width: calc(50% - 10rpx); background: $bg-white; border-radius: 12rpx; overflow: hidden; margin-bottom: 20rpx; box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.06); }
-.new-img-wrap { position: relative; width: 100%; overflow: hidden; }
-.new-img { width: 100%; height: 200rpx; display: block; background: $bg-input; }
-.new-tag { position: absolute; top: 8rpx; left: 8rpx; background: $gradient-green; color: $bg-white; font-size: 18rpx; font-weight: 600; padding: 4rpx 10rpx; border-radius: 4rpx; }
-.new-name { display: block; font-size: 26rpx; color: $text-primary; padding: 10rpx 16rpx 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.new-price { display: block; font-size: 28rpx; color: $accent-orange; font-weight: bold; padding: 4rpx 16rpx 14rpx; }
+.new-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.new-card {
+  width: calc(50% - 10rpx);
+  background: $bg-white;
+  border-radius: 12rpx;
+  overflow: hidden;
+  margin-bottom: 20rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.06);
+}
+.new-img-wrap {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+.new-img {
+  width: 100%;
+  height: 200rpx;
+  display: block;
+  background: $bg-input;
+}
+.new-tag {
+  position: absolute;
+  top: 8rpx;
+  left: 8rpx;
+  background: $gradient-green;
+  color: $bg-white;
+  font-size: 18rpx;
+  font-weight: 600;
+  padding: 4rpx 10rpx;
+  border-radius: 4rpx;
+}
+.new-name {
+  display: block;
+  font-size: 26rpx;
+  color: $text-primary;
+  padding: 10rpx 16rpx 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.new-price {
+  display: block;
+  font-size: 28rpx;
+  color: $accent-orange;
+  font-weight: bold;
+  padding: 4rpx 16rpx 14rpx;
+}
 
-.hot-list { }
-.hot-card { display: flex; background: $bg-white; border-radius: 12rpx; overflow: hidden; margin-bottom: 16rpx; box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.06); padding: 16rpx; }
-.hot-img { width: 160rpx; height: 160rpx; border-radius: 10rpx; flex-shrink: 0; background: $bg-input; margin-right: 20rpx; }
-.hot-info { flex: 1; display: flex; flex-direction: column; justify-content: center; }
-.hot-name { font-size: 28rpx; color: $text-primary; font-weight: 500; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; line-height: 1.4; }
-.hot-meta { display: flex; justify-content: space-between; align-items: baseline; margin-top: 12rpx; }
-.hot-price { font-size: 30rpx; color: $accent-orange; font-weight: 700; }
-.hot-sales { font-size: 22rpx; color: $text-hint; }
+.hot-list {
+}
+.hot-card {
+  display: flex;
+  background: $bg-white;
+  border-radius: 12rpx;
+  overflow: hidden;
+  margin-bottom: 16rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.06);
+  padding: 16rpx;
+}
+.hot-img {
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 10rpx;
+  flex-shrink: 0;
+  background: $bg-input;
+  margin-right: 20rpx;
+}
+.hot-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.hot-name {
+  font-size: 28rpx;
+  color: $text-primary;
+  font-weight: 500;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  line-height: 1.4;
+}
+.hot-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-top: 12rpx;
+}
+.hot-price {
+  font-size: 30rpx;
+  color: $accent-orange;
+  font-weight: 700;
+}
+.hot-sales {
+  font-size: 22rpx;
+  color: $text-hint;
+}
 
-.placeholder-row { display: flex; gap: 16rpx; }
-.placeholder-card { width: calc(50% - 10rpx); background: $bg-white; border-radius: 12rpx; overflow: hidden; margin-bottom: 20rpx; }
-.placeholder-img { width: 100%; height: 200rpx; background: $bg-input; }
-.placeholder-line { height: 20rpx; background: $bg-input; border-radius: 4rpx; margin: 16rpx 16rpx 0; }
-.placeholder-line.short { width: 60%; margin-top: 12rpx; margin-bottom: 16rpx; }
+.placeholder-row {
+  display: flex;
+  gap: 16rpx;
+}
+.placeholder-card {
+  width: calc(50% - 10rpx);
+  background: $bg-white;
+  border-radius: 12rpx;
+  overflow: hidden;
+  margin-bottom: 20rpx;
+}
+.placeholder-img {
+  width: 100%;
+  height: 200rpx;
+  background: $bg-input;
+}
+.placeholder-line {
+  height: 20rpx;
+  background: $bg-input;
+  border-radius: 4rpx;
+  margin: 16rpx 16rpx 0;
+}
+.placeholder-line.short {
+  width: 60%;
+  margin-top: 12rpx;
+  margin-bottom: 16rpx;
+}
 .empty-full {
   width: 100%;
   text-align: center;

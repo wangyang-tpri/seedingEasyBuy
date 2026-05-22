@@ -1,6 +1,6 @@
 <template>
   <view class="manage-page">
-    <view class="product-card" v-for="item in list" :key="item.id">
+    <view class="product-card" v-for="item in list" :key="item.id" @click="goDetail(item.id)">
       <view class="card-top">
         <image :src="fixImageUrl(getFirstImage(item.images))" mode="aspectFill" class="card-img" />
         <view class="card-info">
@@ -16,8 +16,8 @@
         </view>
       </view>
       <view class="card-actions">
-        <view class="btn-edit" @click="goEdit(item.id)">编辑</view>
-        <view class="btn-toggle" :class="item.status === 1 ? 'off' : 'on'" @click="toggleStatus(item)">
+        <view class="btn-edit" @click.stop="goEdit(item.id)">编辑</view>
+        <view class="btn-toggle" :class="item.status === 1 ? 'off' : 'on'" @click.stop="toggleStatus(item)">
           {{ item.status === 1 ? '下架' : '上架' }}
         </view>
       </view>
@@ -46,6 +46,7 @@ export default {
       }
       return url
     },
+    goDetail(id) { uni.navigateTo({ url: `/pages/product/detail?id=${id}` }) },
     goEdit(id) {
       uni.navigateTo({ url: `/pages/product/add?id=${id}` })
     },

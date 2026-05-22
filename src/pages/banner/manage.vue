@@ -1,7 +1,7 @@
 <template>
   <view class="manage-page">
     <view v-if="list.length > 0" class="list-wrap">
-      <view class="banner-card" v-for="item in list" :key="item.id">
+      <view class="banner-card" v-for="item in list" :key="item.id" @click="item.linkType === 1 && item.linkValue && goDetail(item.linkValue)">
         <view class="card-top">
           <image :src="fixImageUrl(item.imageUrl)" mode="aspectFill" class="banner-img" />
           <view class="card-info">
@@ -167,6 +167,7 @@ export default {
     async toggleStatus(item) {
       try { await post(`/banner/status/${item.id}`); this.loadList() } catch (e) {}
     },
+    goDetail(id) { uni.navigateTo({ url: '/pages/product/detail?id=' + id }) },
     onDelete(id) {
       uni.showModal({
         title: '确认删除', content: '确定删除该轮播图吗？',

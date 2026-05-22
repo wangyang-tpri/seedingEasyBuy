@@ -1,30 +1,50 @@
 <template>
   <view class="manage-page">
-    <view class="product-card" v-for="item in list" :key="item.id" @click="goDetail(item.id)">
-      <view class="card-top">
-        <image :src="fixImageUrl(getFirstImage(item.images))" mode="aspectFill" class="card-img" />
-        <view class="card-info">
-          <text class="card-name">{{ item.name }}</text>
-          <text class="card-price">{{ formatPrice(item.price) }}</text>
-          <view class="card-meta">
-            <text>库存: {{ item.stock || 0 }}</text>
-            <text>销量: {{ item.sales || 0 }}</text>
-          </view>
-          <text :class="['status-tag', item.status === 1 ? 'on' : 'off']">
-            {{ item.status === 1 ? '已上架' : '已下架' }}
-          </text>
-        </view>
-      </view>
-      <view class="card-actions">
-        <view class="btn-edit" @click.stop="goEdit(item.id)">编辑</view>
-        <view class="btn-toggle" :class="item.status === 1 ? 'off' : 'on'" @click.stop="toggleStatus(item)">
-          {{ item.status === 1 ? '下架' : '上架' }}
-        </view>
+    <!-- 搜索栏 -->
+    <view class="search-bar">
+      <u-search v-model="keyword" placeholder="搜索苗木名称" :clearable="true" searchIconColor="#07C160" bgColor="#f5f6fa"></u-search>
+    </view>
+
+    <!-- Tab栏 -->
+    <view class="tab-bar">
+      <view v-for="(t, i) in tabs" :key="i"
+        :class="['tab-item', { active: currentTab === i }]"
+        @click="currentTab = i">
+        <text>{{ t }}</text>
+        <view class="tab-indicator" v-if="currentTab === i"></view>
       </view>
     </view>
-    <view class="empty-box" v-if="list.length === 0">
+
+    <!-- 商品列表 -->
+    <z-paging ref="paging" v-model="list" @query="loadProducts" use-page-scroll :auto-show-back-to-top="true">
+      <view class="product-card" v-for="item in list" :key="item.id"
+        @click="item.status === 1 && goDetail(item.id)">
+        <view class="card-top">
+          <image :src="fixImageUrl(getFirstImage(item.images))" mode="aspectFill" class="card-img" />
+          <view class="card-info">
+            <text class="card-name">{{ item.name }}</text>
+            <text class="card-price">{{ formatPrice(item.price) }}</text>
+            <view class="card-meta">
+              <text>库存: {{ item.stock || 0 }}</text>
+              <text>销量: {{ item.sales || 0 }}</text>
+            </view>
+            <text :class="['status-tag', item.status === 1 ? 'on' : 'off']">
+              {{ item.status === 1 ? '已上架' : '已下架' }}
+            </text>
+          </view>
+        </view>
+        <view class="card-actions">
+          <view class="btn-edit" @click.stop="goEdit(item.id)">编辑</view>
+          <view class="btn-toggle" :class="item.status === 1 ? 'off' : 'on'" @click.stop="toggleStatus(item)">
+            {{ item.status === 1 ? '下架' : '上架' }}
+          </view>
+        </view>
+      </view>
+    </z-paging>
+
+    <view class="empty-box" v-if="list.length === 0 && loaded">
       <view class="empty-icon">📋</view>
-      <text class="empty-text">暂无发布的苗木</text>
+      <text class="empty-text">暂无苗木</text>
     </view>
   </view>
 </template>
@@ -32,11 +52,34 @@
 <script>
 import { get, post } from '@/utils/request'
 export default {
-  data() { return { list: [] } },
+  data() {
+    return {
+      list: [],
+      loaded: false,
+      keyword: '',
+      currentTab: 0,
+      tabs: ['全部', '已上架', '已下架']
+    }
+  },
+  watch: {
+    currentTab() { this.$refs.paging && this.$refs.paging.reload() },
+    keyword() { this.$refs.paging && this.$refs.paging.reload() }
+  },
   onShow() { this.loadList() },
   methods: {
-    async loadList() {
-      try { this.list = await get('/product/my') || [] } catch (e) {}
+    async loadProducts(pageNo, pageSize) {
+      let url = `/product/my?page=${pageNo}&size=${pageSize}`
+      if (this.keyword) url += `&keyword=${encodeURIComponent(this.keyword)}`
+      if (this.currentTab === 1) url += '&status=1'
+      else if (this.currentTab === 2) url += '&status=0'
+      try {
+        const result = await get(url) || {}
+        this.$refs.paging.complete(result.records || [], result.total || 0)
+        this.loaded = true
+      } catch (e) { this.$refs.paging.complete(false) }
+    },
+    loadList() {
+      this.$refs.paging && this.$refs.paging.reload()
     },
     fixImageUrl(url) {
       if (!url) return '/static/placeholder.png'
@@ -47,14 +90,11 @@ export default {
       return url
     },
     goDetail(id) { uni.navigateTo({ url: `/pages/product/detail?id=${id}` }) },
-    goEdit(id) {
-      uni.navigateTo({ url: `/pages/product/add?id=${id}` })
-    },
+    goEdit(id) { uni.navigateTo({ url: `/pages/product/add?id=${id}` }) },
     async toggleStatus(item) {
       const action = item.status === 1 ? '下架' : '上架'
       uni.showModal({
-        title: '确认操作',
-        content: `确定${action}该商品吗？`,
+        title: '确认操作', content: `确定${action}该商品吗？`,
         success: async (res) => {
           if (res.confirm) {
             try {
@@ -71,8 +111,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.manage-page { min-height: 100vh; background: $bg-page; padding: 20rpx 24rpx; }
-.product-card { background: $bg-white; border-radius: 14rpx; padding: 24rpx; margin-bottom: 16rpx; box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.04); }
+.manage-page { min-height: 100vh; background: $bg-page; }
+
+.search-bar { padding: 16rpx 24rpx; background: $bg-white; }
+
+.tab-bar { display: flex; background: $bg-white; padding: 8rpx 24rpx 16rpx; }
+.tab-item { flex: 1; display: flex; flex-direction: column; align-items: center; padding: 12rpx 0; font-size: 26rpx; color: #888; position: relative; }
+.tab-item.active { color: $primary-color; font-weight: 600; }
+.tab-indicator { width: 28rpx; height: 4rpx; background: $primary-color; border-radius: 2rpx; margin-top: 4rpx; }
+
+.product-card { background: $bg-white; margin: 16rpx 24rpx; border-radius: 14rpx; padding: 24rpx; box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.04); }
 .card-top { display: flex; }
 .card-img { width: 140rpx; height: 140rpx; border-radius: 10rpx; margin-right: 20rpx; flex-shrink: 0; background: $bg-input; }
 .card-info { flex: 1; min-width: 0; }

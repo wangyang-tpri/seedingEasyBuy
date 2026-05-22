@@ -20,7 +20,6 @@
         <view class="wechat-icon">💬</view>
         <text>微信手机号一键登录</text>
       </button>
-      <text class="wechat-hint">需微信认证小程序，开发时请用下方手机号登录</text>
 
       <!-- 分割线 -->
       <view class="divider">
@@ -50,7 +49,10 @@
             <text class="link">《隐私政策》</text></text
           >
         </view>
-        <view :class="['login-btn', phone ? '' : 'disabled']" @click="phone && loginByPhone()">
+        <view
+          :class="['login-btn', phone ? '' : 'disabled']"
+          @click="phone && loginByPhone()"
+        >
           <text>登 录</text>
         </view>
       </view>
@@ -68,7 +70,10 @@ export default {
   methods: {
     async onGetPhoneNumber(e) {
       if (e.detail.errMsg !== "getPhoneNumber:ok") {
-        uni.showToast({ title: "获取手机号需要微信认证的小程序", icon: "none" });
+        uni.showToast({
+          title: "获取手机号需要微信认证的小程序",
+          icon: "none",
+        });
         return;
       }
       uni.showLoading({ title: "登录中" });
@@ -163,7 +168,7 @@ export default {
 .wechat-btn {
   width: 100%;
   height: 96rpx;
-  background: $primary-color;
+  background: $gradient-green;
   color: $bg-white;
   border-radius: 48rpx;
   font-size: 30rpx;
@@ -172,7 +177,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 6rpx 20rpx rgba(7, 193, 96, 0.25);
+  box-shadow: $shadow-green;
 }
 
 .wechat-icon {
@@ -212,13 +217,19 @@ export default {
 .phone-input-wrap {
   display: flex;
   align-items: center;
-  background: #f8f9fa;
+  background: $bg-white;
   border-radius: 16rpx;
   padding: 0 24rpx;
   height: 96rpx;
   margin-bottom: 24rpx;
-  border: 2rpx solid transparent;
+  border: 2rpx solid rgba(255, 107, 53, 0.2);
+  box-shadow: 0 2rpx 12rpx rgba(255, 107, 53, 0.08);
   transition: border-color 0.2s;
+}
+.phone-input-wrap:focus-within {
+  border-color: $accent-orange;
+  background: $bg-white;
+  box-shadow: 0 2rpx 16rpx rgba(255, 107, 53, 0.15);
 }
 
 .phone-input-wrap:focus-within {
@@ -285,7 +296,7 @@ export default {
 .login-btn {
   width: 100%;
   height: 96rpx;
-  background: $gradient-green;
+  background: $gradient-orange;
   border-radius: 48rpx;
   display: flex;
   align-items: center;
@@ -293,9 +304,15 @@ export default {
   font-size: 32rpx;
   font-weight: 600;
   color: $bg-white;
-  box-shadow: $shadow-green;
-  &:active { opacity: 0.9; transform: scale(0.98); }
-  &.disabled { opacity: 0.4; pointer-events: none; }
+  box-shadow: 0 4rpx 16rpx rgba(255, 107, 53, 0.35);
+  &:active {
+    opacity: 0.9;
+    transform: scale(0.98);
+  }
+  &.disabled {
+    opacity: 0.4;
+    pointer-events: none;
+  }
 }
 .bottom-tip {
   display: block;

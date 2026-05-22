@@ -391,10 +391,11 @@ export default {
 
   font-size: 32rpx;
   font-weight: bold;
-  margin: 0 auto 10rpx;
+  margin: 0 auto 20rpx;
 }
 .category-name {
-  font-size: 22rpx;
+  font-size: 26rpx;
+  font-weight: bold;
   color: $text-primary;
 }
 

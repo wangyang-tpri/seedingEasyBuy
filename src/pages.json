@@ -96,6 +96,12 @@
       }
     },
     {
+      "path": "pages/banner/manage",
+      "style": {
+        "navigationBarTitleText": "轮播图管理"
+      }
+    },
+    {
       "path": "pages/collection/collection",
       "style": {
         "navigationBarTitleText": "我的收藏"

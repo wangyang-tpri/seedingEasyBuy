@@ -30,6 +30,8 @@
         :autoplay="true"
         keyName="image"
         circular
+        :title="true"
+        @click="onBannerClick"
       ></u-swiper>
       <view v-else class="placeholder-banner">
         <text class="placeholder-text">暂无轮播图</text>
@@ -209,7 +211,7 @@ export default {
         if (url && url.startsWith("/api/") && base) {
           url = base + url.substring(4);
         }
-        return { image: url };
+        return { image: url, title: item.title };
       });
     },
   },
@@ -264,6 +266,12 @@ export default {
         5: { bg: "#FFF3E0", text: "#E67E22" },
       };
       return colors[id] || { bg: "$bg-page", text: "$text-hint" };
+    },
+    onBannerClick(index) {
+      const banner = this.banners[index];
+      if (banner && banner.linkType === 1 && banner.linkValue) {
+        uni.navigateTo({ url: "/pages/product/detail?id=" + banner.linkValue });
+      }
     },
     onAddClick() {
       if (this.isLogin) {

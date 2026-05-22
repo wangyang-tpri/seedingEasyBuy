@@ -99,6 +99,7 @@ export default {
         { icon: "📍", label: "地址管理", url: "/pages/address/list" },
         { icon: "🌳", label: "苗木上架", url: "/pages/product/add" },
         { icon: "📋", label: "苗木管理", url: "/pages/product/manage" },
+        { icon: "🖼️", label: "轮播图管理", url: "/pages/banner/manage" },
         { icon: "❤️", label: "我的收藏", url: "/pages/collection/collection" },
         { icon: "🎫", label: "优惠券", url: "/pages/coupon/coupon" },
       ],

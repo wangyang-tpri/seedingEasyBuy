@@ -64,7 +64,7 @@
     <view class="menu-section">
       <view
         class="menu-item"
-        v-for="menu in menus"
+        v-for="menu in displayMenus"
         :key="menu.label"
         @click="goPage(menu.url)"
       >
@@ -95,11 +95,11 @@ export default {
         { icon: "🚚", label: "待收货", url: "/pages/order/list?status=2" },
         { icon: "⭐", label: "待评价", url: "/pages/order/list?status=3" },
       ],
+      couponCount: 0,
       menus: [
         { icon: "📍", label: "地址管理", url: "/pages/address/list" },
         { icon: "🌳", label: "苗木上架", url: "/pages/product/add" },
         { icon: "📋", label: "苗木管理", url: "/pages/product/manage" },
-        { icon: "🖼️", label: "轮播图管理", url: "/pages/banner/manage" },
         { icon: "❤️", label: "我的收藏", url: "/pages/collection/collection" },
         { icon: "🎫", label: "优惠券", url: "/pages/coupon/coupon" },
       ],
@@ -108,6 +108,13 @@ export default {
   computed: {
     ...mapState(["isLogin", "user"]),
     ...mapGetters(["isLoggedIn"]),
+    displayMenus() {
+      const list = [...this.menus]
+      if (this.user && (this.user.userType === 2 || this.user.roleId === '2' || this.user.roleId === 2)) {
+        list.splice(3, 0, { icon: "🖼️", label: "轮播图管理", url: "/pages/banner/manage" })
+      }
+      return list
+    },
   },
   onShow() {
     if (this.isLogin) this.loadCounts()

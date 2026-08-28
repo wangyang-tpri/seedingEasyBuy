@@ -341,9 +341,12 @@ export default {
 }
 .desc-content {
   margin: 0 30rpx;
-  padding: 0 30rpx 30rpx;
+  padding: 20rpx 30rpx 30rpx;
   background: $bg-white;
   border-radius: 0 0 12rpx 12rpx;
+  font-size: 26rpx;
+  color: $text-primary;
+  line-height: 1.6;
 }
 .specs-table {
   margin: 12rpx 30rpx 0;

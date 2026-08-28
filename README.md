@@ -174,3 +174,7 @@ VUE_APP_BASE_API = "http://10.218.72.64:8080/api"   # 后端 API 地址
 - [需求文档](demand.md)
 - [TabBar 设计文档](tabBar.md)
 - [数据库脚本](treeApplet.sql)
+
+## LICENSE
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

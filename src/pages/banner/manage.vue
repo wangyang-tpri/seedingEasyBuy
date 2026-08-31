@@ -2,7 +2,7 @@
   <view class="manage-page">
     <view v-if="list.length > 0" class="list-wrap">
       <view
-        class="banner-card"
+        class="banner-card card"
         v-for="item in list"
         :key="item.id"
         @click="
@@ -21,7 +21,7 @@
               getProductName(item.linkValue)
             }}</text>
             <text class="banner-link" v-else>未关联商品</text>
-            <view :class="['status-tag', item.status === 1 ? 'on' : 'off']">
+            <view :class="['status-tag', item.status === 1 ? 'tag-status-on' : 'tag-status-off']">
               {{ item.status === 1 ? "已启用" : "已禁用" }}
             </view>
           </view>
@@ -40,15 +40,11 @@
       </view>
     </view>
 
-    <view class="empty" v-else>
-      <view class="empty-icon">🖼️</view>
-      <text class="empty-text">暂无轮播图</text>
-      <text class="empty-sub">点击下方按钮添加</text>
-    </view>
+    <empty-state v-else icon="🖼️" text="暂无轮播图" sub="点击下方按钮添加" />
 
-    <view class="bottom-area">
-      <view class="btn-add" @click="showAdd = true">新增轮播图</view>
-    </view>
+    <bottom-bar class="banner-bar">
+      <view class="btn-add btn-primary" @click="showAdd = true">新增轮播图</view>
+    </bottom-bar>
 
     <!-- 新增/编辑弹窗 -->
     <u-popup :show="showAdd" mode="bottom" round @close="showAdd = false">
@@ -303,11 +299,8 @@ export default {
 }
 
 .banner-card {
-  background: $bg-white;
-  border-radius: 14rpx;
   padding: 24rpx;
   margin-bottom: 16rpx;
-  box-shadow: $shadow-card;
 }
 .card-top {
   display: flex;
@@ -343,14 +336,7 @@ export default {
   border-radius: 4rpx;
   margin-top: 8rpx;
 }
-.status-tag.on {
-  background: $primary-light;
-  color: $primary-color;
-}
-.status-tag.off {
-  background: $bg-gray;
-  color: $text-hint;
-}
+/* 启用/禁用配色复用公共 .tag-status-on/.tag-status-off */
 
 .card-actions {
   display: flex;
@@ -387,51 +373,9 @@ export default {
   font-size: 24rpx;
 }
 
-.empty {
-  text-align: center;
-  padding-top: 240rpx;
-}
-.empty-icon {
-  font-size: 80rpx;
-  opacity: 0.3;
-  margin-bottom: 20rpx;
-}
-.empty-text {
-  display: block;
-  font-size: 28rpx;
-  color: $text-placeholder;
-}
-.empty-sub {
-  display: block;
-  font-size: 24rpx;
-  color: $text-disabled;
-  margin-top: 8rpx;
-}
-
-.bottom-area {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 16rpx 24rpx;
-  padding-bottom: calc(16rpx + env(safe-area-inset-bottom));
-  background: $bg-white;
-  box-shadow: $shadow-bottom;
-  z-index: 10;
-}
+/* 空状态复用 <empty-state>；底部栏复用 <bottom-bar>；主按钮复用 .btn-primary */
 .btn-add {
-  text-align: center;
-  font-size: 28rpx;
-  font-weight: 600;
-  color: $bg-white;
-  background: $gradient-green;
-  border-radius: 40rpx;
   padding: 18rpx 0;
-  box-shadow: $shadow-green;
-  &:active {
-    opacity: 0.9;
-    transform: scale(0.97);
-  }
 }
 
 .popup {

@@ -1,8 +1,6 @@
 <template>
   <view class="coupon-page">
-    <view class="empty">
-      <text>暂无优惠券</text>
-    </view>
+    <empty-state text="暂无优惠券" />
   </view>
 </template>
 
@@ -13,5 +11,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.empty { text-align: center; padding: 200rpx 0; color: $text-hint; font-size: 28rpx; }
+/* 空状态复用 <empty-state> */
 </style>

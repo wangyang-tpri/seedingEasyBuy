@@ -32,11 +32,11 @@
       <!-- 骨架屏 -->
       <template #loading>
         <view class="product-grid">
-          <view class="skeleton-card" v-for="i in 6" :key="'s' + i">
-            <view class="sk-img"></view>
+          <view class="skeleton-card-2" v-for="i in 6" :key="'s' + i">
+            <view class="skeleton-img"></view>
             <view class="sk-info">
-              <view class="sk-line"></view>
-              <view class="sk-line w60"></view>
+              <view class="skeleton-line"></view>
+              <view class="skeleton-line skeleton-line-w60"></view>
             </view>
           </view>
         </view>
@@ -44,48 +44,19 @@
 
       <!-- 商品网格 -->
       <view class="product-grid" v-if="productList.length > 0">
-        <view
-          class="product-card"
+        <product-card
           v-for="item in productList"
           :key="item.id"
-          hover-class="card-hover"
+          :item="item"
+          :show-original="item.originalPrice && item.originalPrice > item.price"
+          :show-sales="true"
           @click="goDetail(item.id)"
-        >
-          <view class="img-wrap">
-            <image
-              :src="getFirstImage(item.images)"
-              mode="aspectFill"
-              class="product-img"
-              lazy-load
-            />
-            <view class="img-tag hot" v-if="item.tag === 1">特惠</view>
-            <view class="img-tag new" v-else-if="item.tag === 2">新品</view>
-            <view class="img-tag hot" v-else-if="item.sales > 100">热销</view>
-          </view>
-          <view class="card-info">
-            <text class="product-name">{{ item.name }}</text>
-            <view class="card-bottom">
-              <view class="price-col">
-                <text class="product-price">{{ formatPrice(item.price) }}</text>
-                <text
-                  class="product-original"
-                  v-if="item.originalPrice && item.originalPrice > item.price"
-                  >{{ formatPrice(item.originalPrice) }}</text
-                >
-              </view>
-              <text class="product-sales">已售 {{ item.sales || 0 }}</text>
-            </view>
-          </view>
-        </view>
+        />
       </view>
 
       <!-- 空状态 -->
       <template #empty>
-        <view class="empty-box">
-          <view class="empty-icon">📭</view>
-          <text class="empty-text">暂无商品</text>
-          <text class="empty-sub">换个关键词试试吧</text>
-        </view>
+        <empty-state icon="📭" text="暂无商品" sub="换个关键词试试吧" />
       </template>
     </z-paging>
   </view>
@@ -147,11 +118,7 @@ export default {
   background: $bg-page;
 }
 
-/* ========== 搜索栏 ========== */
-.search-bar {
-  padding: 16rpx 30rpx;
-  background: $bg-white;
-}
+/* ========== 搜索栏（复用公共 .search-bar） ========== */
 .search-box {
   display: flex;
   align-items: center;
@@ -200,140 +167,14 @@ export default {
   flex-wrap: wrap;
   justify-content: space-between;
   padding: 24rpx 24rpx 12rpx;
-} /* reuse .product-grid-2 */
+} /* 容器内边距页面自定，卡片复用 .product-card-2 */
 
-/* ========== 商品卡片 ========== */
-.product-card {
-  width: calc(50% - 10rpx);
-  background: $bg-white;
-  border-radius: 12rpx;
-  overflow: hidden;
-  margin-bottom: 20rpx;
-  box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.08);
-}
-.card-hover {
-  transform: scale(0.97);
-  opacity: 0.9;
-}
+/* ========== 商品卡片（复用公共组件 <product-card>） ========== */
 
-.img-wrap {
-  position: relative;
-  width: 100%;
-  overflow: hidden;
-}
-.product-img {
-  width: 100%;
-  height: 200rpx;
-  display: block;
-  background: $bg-input;
-}
-
-.img-tag {
-  position: absolute;
-  top: 10rpx;
-  left: 10rpx;
-  font-size: 18rpx;
-  color: $bg-white;
-  padding: 4rpx 12rpx;
-  border-radius: 6rpx;
-  font-weight: 600;
-  letter-spacing: 1rpx;
-  &.hot { background: linear-gradient(135deg, $accent-orange, $accent-orange); }
-  &.new { background: linear-gradient(135deg, $primary-color, $primary-dark); }
-}
-
-.card-info {
-  padding: 10rpx 16rpx 16rpx;
-}
-.product-name {
-  font-size: 26rpx;
-  color: $text-primary;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-.card-bottom {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  margin-top: 6rpx;
-}
-.price-col {
-  display: flex;
-  align-items: baseline;
-  gap: 8rpx;
-}
-.product-price {
-  font-size: 30rpx;
-  color: $accent-orange;
-  font-weight: bold;
-}
-.product-original {
-  font-size: 20rpx;
-  color: $text-placeholder;
-  text-decoration: line-through;
-}
-.product-sales {
-  font-size: 22rpx;
-  color: $text-hint;
-  flex-shrink: 0;
-}
-
-/* ========== 骨架屏 ========== */
-.skeleton-card {
-  width: calc(50% - 10rpx);
-  background: $bg-white;
-  border-radius: 14rpx;
-  overflow: hidden;
-  margin-bottom: 16rpx;
-}
-.sk-img {
-  width: 100%;
-  height: 200rpx;
-  background: linear-gradient(90deg, #f3f3f3 25%, #e8e8e8 50%, #f3f3f3 75%);
-  background-size: 200% 100%;
-  animation: shimmer 1.6s ease infinite;
-}
+/* ========== 骨架屏（复用 .skeleton-card-2/.skeleton-img/.skeleton-line） ========== */
 .sk-info {
   padding: 16rpx 16rpx 18rpx;
 }
-.sk-line {
-  height: 18rpx;
-  background: #f3f3f3;
-  border-radius: 4rpx;
-  margin-bottom: 12rpx;
-}
-.sk-line.w60 {
-  width: 60%;
-}
-@keyframes shimmer {
-  0% {
-    background-position: -200% 0;
-  }
-  100% {
-    background-position: 200% 0;
-  }
-}
 
-/* ========== 空状态 ========== */
-.empty-box {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-top: 220rpx;
-}
-.empty-icon {
-  font-size: 90rpx;
-  opacity: 0.3;
-  margin-bottom: 20rpx;
-}
-.empty-text {
-  font-size: 28rpx;
-  color: $text-placeholder;
-}
-.empty-sub {
-  font-size: 24rpx;
-  color: $text-disabled;
-  margin-top: 8rpx;
-}
+/* ========== 空状态（复用 <empty-state>） ========== */
 </style>

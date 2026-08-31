@@ -1,9 +1,7 @@
 <template>
   <view class="category-page">
     <!-- 标题 -->
-    <view class="nav-bar">
-      <text class="nav-title">苗木分类</text>
-    </view>
+    <page-nav title="苗木分类" />
     <!-- 搜索栏 -->
     <view class="search-bar">
       <u-search
@@ -79,42 +77,19 @@
 
         <!-- 商品列表 -->
         <view class="product-grid" v-else-if="productList.length > 0">
-          <view
-            class="product-card"
+          <product-card
             v-for="item in productList"
             :key="item.id"
-            hover-class="product-card-hover"
+            :item="item"
+            :lines="2"
+            :show-sales="true"
+            :sales-text="(item.sales || 0) + '人付款'"
             @click="goDetail(item.id)"
-          >
-            <view class="img-wrap">
-              <image
-                :src="getFirstImage(item.images)"
-                mode="aspectFill"
-                class="product-img"
-                lazy-load
-              />
-              <view class="img-tag hot" v-if="item.tag === 1">特惠</view>
-              <view class="img-tag new" v-else-if="item.tag === 2">新品</view>
-              <view class="img-tag hot" v-else-if="item.sales > 100">热销</view>
-            </view>
-            <view class="card-info">
-              <text class="product-name">{{ item.name }}</text>
-              <view class="card-bottom">
-                <view class="price-col">
-                  <text class="product-price">{{ formatPrice(item.price) }}</text>
-                  <text class="product-original" v-if="item.originalPrice">¥{{ item.originalPrice }}</text>
-                </view>
-                <text class="product-sales">{{ item.sales || 0 }}人付款</text>
-              </view>
-            </view>
-          </view>
+          />
         </view>
 
         <!-- 空状态 -->
-        <view v-else class="empty-box">
-          <view class="empty-icon">📭</view>
-          <text class="empty-text">该分类暂无商品</text>
-        </view>
+        <empty-state v-else icon="📭" text="该分类暂无商品" />
 
         <view class="safe-bottom"></view>
       </scroll-view>
@@ -227,19 +202,7 @@ export default {
   background: $bg-white;
 }
 
-.nav-bar {
-  padding: calc(var(--status-bar-height) + 50rpx) 30rpx 16rpx;
-  background: $bg-white;
-  text-align: center;
-}
-.nav-title {
-  font-size: 36rpx;
-  font-weight: 700;
-  color: $text-primary;
-}
 .search-bar {
-  padding: 12rpx 30rpx 20rpx;
-  background: $bg-white;
   box-shadow: 0 1rpx 0 rgba(0,0,0,0.04);
   z-index: 10;
 }
@@ -356,87 +319,12 @@ export default {
   font-weight: 500;
 }
 
-/* 商品网格 */
+/* 商品网格（卡片复用公共组件 <product-card>） */
 .product-grid {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   padding: 12rpx 4rpx 0;
-}
-.product-card {
-  width: calc(50% - 8rpx);
-  background: $bg-white;
-  border-radius: $radius-lg;
-  overflow: hidden;
-  margin-bottom: 12rpx;
-  box-shadow: $shadow-md;
-}
-.product-card-hover {
-  transform: scale(0.98);
-  box-shadow: 0 4rpx 16rpx rgba(0,0,0,0.1);
-}
-
-.img-wrap {
-  position: relative;
-  width: 100%;
-  overflow: hidden;
-}
-.product-img {
-  width: 100%;
-  height: 200rpx;
-  display: block;
-  background: $bg-input;
-}
-.img-tag {
-  position: absolute;
-  top: 6rpx;
-  left: 6rpx;
-  background: $gradient-orange;
-  color: $bg-white;
-  font-size: 18rpx;
-  padding: 3rpx 8rpx;
-  border-radius: $radius-sm;
-  font-weight: 600;
-  &.hot { background: $gradient-orange; }
-  &.new { background: $gradient-green; }
-}
-
-.card-info {
-  padding: 10rpx 14rpx 14rpx;
-}
-.product-name {
-  font-size: 25rpx;
-  color: $text-primary;
-  line-height: 1.4;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  overflow: hidden;
-}
-.card-bottom {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 6rpx;
-}
-.price-col {
-  display: flex;
-  align-items: baseline;
-  gap: 6rpx;
-}
-.product-price {
-  font-size: 28rpx;
-  color: $accent-orange;
-  font-weight: 700;
-}
-.product-original {
-  font-size: 18rpx;
-  color: $text-placeholder;
-  text-decoration: line-through;
-}
-.product-sales {
-  font-size: 18rpx;
-  color: $text-placeholder;
 }
 
 /* 骨架 */
@@ -469,15 +357,6 @@ export default {
   100% { background-position: 200% 0; }
 }
 
-/* 空状态 */
-.empty-box {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-top: 180rpx;
-}
-.empty-icon { font-size: 72rpx; opacity: 0.2; margin-bottom: 16rpx; }
-.empty-text { font-size: 26rpx; color: $text-placeholder; }
-
+/* 空状态（复用公共 .empty-state/.empty-icon/.empty-text） */
 .safe-bottom { height: 40rpx; }
 </style>

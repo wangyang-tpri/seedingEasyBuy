@@ -96,7 +96,7 @@
     </view>
 
     <!-- 底部操作栏 -->
-    <view class="bottom-bar">
+    <bottom-bar class="bottom-bar-flex">
       <view class="bottom-icons">
         <view class="bottom-icon" @click="goPage('/pages/cart/cart')"
           ><text class="bi-text">🛒</text
@@ -109,9 +109,9 @@
       </view>
       <view class="bottom-actions">
         <view class="btn-cart" @click="addToCart">加入购物车</view>
-        <view class="btn-buy" @click="buyNow">立即购买</view>
+        <view class="btn-buy btn-primary" @click="buyNow">立即购买</view>
       </view>
-    </view>
+    </bottom-bar>
 
     <!-- SKU选择弹窗 -->
     <u-popup :show="showSku" mode="bottom" round @close="showSku = false">
@@ -408,18 +408,9 @@ export default {
   font-weight: 600;
   font-size: 28rpx;
 }
-.bottom-bar {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: $bg-white;
-  padding: 14rpx 24rpx;
-  padding-bottom: calc(14rpx + env(safe-area-inset-bottom));
+.bottom-bar-flex {
   display: flex;
   align-items: center;
-  box-shadow: 0 -4rpx 20rpx rgba(0, 0, 0, 0.06);
-  z-index: 100;
 }
 .bottom-icons {
   display: flex;
@@ -460,18 +451,7 @@ export default {
 }
 .btn-buy {
   flex: 1;
-  text-align: center;
-  font-size: 28rpx;
-  font-weight: 600;
-  color: $bg-white;
-  background: linear-gradient(135deg, $primary-color, $primary-dark);
-  border-radius: 40rpx;
   padding: 18rpx 0;
-  box-shadow: 0 4rpx 16rpx rgba(7, 193, 96, 0.35);
-  &:active {
-    opacity: 0.9;
-    transform: scale(0.97);
-  }
 }
 .sku-popup {
   padding: 40rpx 30rpx 60rpx;

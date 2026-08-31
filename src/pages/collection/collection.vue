@@ -1,15 +1,15 @@
 <template>
   <view class="collection-page">
-    <view class="product-grid">
-      <view class="product-card" v-for="item in list" :key="item.id" @click="goDetail(item.productId)">
-        <image :src="fixImageUrl(item.image)" mode="aspectFill" class="product-img" />
-        <text class="product-name">{{ item.productName }}</text>
-        <text class="product-price">{{ formatPrice(item.price) }}</text>
-      </view>
+    <view class="product-grid product-grid-2">
+      <product-card
+        v-for="item in list"
+        :key="item.id"
+        :item="item"
+        :show-original="false"
+        @click="goDetail(item.productId)"
+      />
     </view>
-    <view class="empty" v-if="list.length === 0">
-      <text>暂无收藏</text>
-    </view>
+    <empty-state v-if="list.length === 0" icon="🤍" text="暂无收藏" />
   </view>
 </template>
 
@@ -36,10 +36,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.product-grid { display: flex; flex-wrap: wrap; justify-content: space-between; padding: 20rpx 30rpx; }
-.product-card { width: 48%; background: $bg-white; border-radius: 12rpx; overflow: hidden; margin-bottom: 20rpx; box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.08); }
-.product-img { width: 100%; height: 200rpx; }
-.product-name { display: block; font-size: 26rpx; color: $text-primary; padding: 8rpx 12rpx 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.product-price { display: block; font-size: 28rpx; color: $accent-orange; font-weight: bold; padding: 6rpx 12rpx 16rpx; }
-.empty { text-align: center; padding: 200rpx 0; color: $text-hint; font-size: 28rpx; }
+/* 网格复用 .product-grid-2；卡片复用公共组件 <product-card>；空状态复用 <empty-state> */
 </style>

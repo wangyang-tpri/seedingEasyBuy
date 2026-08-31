@@ -1,16 +1,12 @@
 <template>
   <view class="cart-page">
     <!-- 页面标题 -->
-    <view class="page-header">
-      <text class="page-title">购物车</text>
-    </view>
+    <page-nav title="购物车" />
 
     <!-- 未登录 -->
-    <view v-if="!isLogin" class="empty-cart">
-      <view class="empty-icon">🛒</view>
-      <text class="empty-text">登录后可查看购物车</text>
-      <view class="login-btn" @click="goPage('/pages/user/login')">去登录</view>
-    </view>
+    <empty-state v-if="!isLogin" icon="🛒" text="登录后可查看购物车">
+      <view class="login-btn btn-outline-red" @click="goPage('/pages/user/login')">去登录</view>
+    </empty-state>
 
     <!-- 已登录，有商品 -->
     <template v-else-if="cartData.length > 0">
@@ -66,7 +62,7 @@
       </scroll-view>
 
       <!-- 底部结算栏 -->
-      <view class="bottom-bar">
+      <bottom-bar class="cart-bar">
         <view class="bottom-left">
           <u-checkbox
             :checked="isAllSelected"
@@ -82,22 +78,20 @@
             <text class="total-label">合计</text>
             <text class="total-price">{{ formatPrice(totalPrice) }}</text>
           </view>
-          <view class="checkout-btn" @click="checkout">
+          <view class="checkout-btn btn-primary" @click="checkout">
             <text>去结算</text>
             <text v-if="selectedCount > 0">({{ selectedCount }})</text>
           </view>
         </view>
-      </view>
+      </bottom-bar>
     </template>
 
     <!-- 已登录，无商品 -->
-    <view v-else class="empty-cart">
-      <view class="empty-icon">🛒</view>
-      <text class="empty-text">购物车是空的~</text>
-      <view class="go-shop-btn" @click="switchTab('/pages/index/index')"
+    <empty-state v-else icon="🛒" text="购物车是空的~">
+      <view class="go-shop-btn btn-primary" @click="switchTab('/pages/index/index')"
         >去逛逛</view
       >
-    </view>
+    </empty-state>
   </view>
 </template>
 
@@ -239,20 +233,7 @@ export default {
   height: 20rpx;
 }
 
-.page-header {
-  padding: calc(var(--status-bar-height) + 50rpx) 30rpx 16rpx;
-  background: $bg-white;
-  text-align: center;
-}
-.page-title {
-  font-size: 36rpx;
-  font-weight: 700;
-  color: $text-primary;
-}
-.page-sub {
-  font-size: 24rpx;
-  color: $text-hint;
-}
+/* 页面标题复用公共 .page-nav/.page-nav-title */
 
 /* ========== 店铺分组 ========== */
 .shop-group {
@@ -350,20 +331,11 @@ export default {
   margin-left: 8rpx;
 }
 
-/* ========== 底部结算栏 ========== */
-.bottom-bar {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: $bg-white;
-  padding: 14rpx 24rpx;
-  padding-bottom: calc(14rpx + env(safe-area-inset-bottom));
+/* ========== 底部结算栏（容器复用 <bottom-bar>，这里只补 flex 布局） ========== */
+.cart-bar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 -4rpx 20rpx rgba(0, 0, 0, 0.06);
-  z-index: 100;
 }
 .bottom-left {
   flex-shrink: 0;
@@ -393,59 +365,17 @@ export default {
   margin-left: 6rpx;
 }
 .checkout-btn {
-  background: linear-gradient(135deg, $primary-color, $primary-dark);
-  color: $bg-white;
-  font-size: 28rpx;
-  font-weight: 600;
   padding: 16rpx 40rpx;
-  border-radius: 40rpx;
-  box-shadow: 0 4rpx 16rpx rgba(7, 193, 96, 0.35);
   white-space: nowrap;
-  &:active {
-    opacity: 0.9;
-    transform: scale(0.97);
-  }
 }
 
-/* ========== 空状态 ========== */
+/* ========== 空状态操作按钮（结构复用 <empty-state>，slot 内按钮样式） ========== */
 .login-btn {
-  display: inline-block;
-  border: 2rpx solid $accent-red;
-  color: $accent-red;
-  font-size: 28rpx;
-  font-weight: 600;
   padding: 14rpx 48rpx;
-  border-radius: 40rpx;
   margin-top: 20rpx;
 }
 .go-shop-btn {
-  display: inline-block;
-  background: linear-gradient(135deg, $primary-color, $primary-dark);
-  color: $bg-white;
-  font-size: 28rpx;
-  font-weight: 600;
   padding: 14rpx 48rpx;
-  border-radius: 40rpx;
-  box-shadow: 0 4rpx 16rpx rgba(7, 193, 96, 0.35);
   margin-top: 20rpx;
-  &:active {
-    opacity: 0.9;
-    transform: scale(0.97);
-  }
-}
-.empty-cart {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-top: 240rpx;
-}
-.empty-icon {
-  font-size: 100rpx;
-  margin-bottom: 24rpx;
-}
-.empty-text {
-  font-size: 28rpx;
-  color: $text-hint;
-  margin-bottom: 40rpx;
 }
 </style>

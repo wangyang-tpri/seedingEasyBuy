@@ -11,6 +11,24 @@
   background: $bg-page;
 }
 
+/* ========== 顶部导航栏 ========== */
+.page-nav {
+  padding: calc(var(--status-bar-height) + 50rpx) 30rpx 16rpx;
+  background: $bg-white;
+  text-align: center;
+}
+.page-nav-title {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: $text-primary;
+}
+
+/* ========== 搜索栏 ========== */
+.search-bar {
+  padding: 12rpx 30rpx 20rpx;
+  background: $bg-white;
+}
+
 /* ========== 卡片 ========== */
 .card {
   background: $bg-white;
@@ -244,6 +262,11 @@
 }
 
 /* ========== 标签 ========== */
+.img-tag {
+  position: absolute;
+  top: 6rpx;
+  left: 6rpx;
+}
 .tag-hot {
   background: $gradient-orange;
   color: $bg-white;

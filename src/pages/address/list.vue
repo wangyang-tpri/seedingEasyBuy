@@ -1,7 +1,7 @@
 <template>
   <view class="address-page">
     <view v-if="addressList.length > 0" class="list-wrap">
-      <view class="address-card" v-for="addr in addressList" :key="addr.id" @click="selectAddress(addr)">
+      <view class="address-card card" v-for="addr in addressList" :key="addr.id" @click="selectAddress(addr)">
         <view class="addr-row1">
           <text class="addr-name">{{ addr.receiverName }}</text>
           <text class="addr-phone">{{ addr.phone }}</text>
@@ -16,15 +16,11 @@
       </view>
     </view>
 
-    <view class="empty" v-else>
-      <view class="empty-icon">📍</view>
-      <text class="empty-text">还没有收货地址</text>
-      <text class="empty-sub">点击下方按钮添加</text>
-    </view>
+    <empty-state v-else icon="📍" text="还没有收货地址" sub="点击下方按钮添加" />
 
-    <view class="bottom-area">
-      <view class="btn-add" @click="editAddress()">新增收货地址</view>
-    </view>
+    <bottom-bar class="addr-bar">
+      <view class="btn-add btn-primary" @click="editAddress()">新增收货地址</view>
+    </bottom-bar>
   </view>
 </template>
 
@@ -77,11 +73,8 @@ export default {
 .list-wrap { }
 
 .address-card {
-  background: $bg-white;
-  border-radius: 14rpx;
   padding: 24rpx;
   margin-bottom: 16rpx;
-  box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.04);
 }
 
 .addr-row1 {
@@ -139,47 +132,8 @@ export default {
   font-size: 24rpx;
 }
 
-.empty {
-  text-align: center;
-  padding-top: 240rpx;
-}
-.empty-icon {
-  font-size: 80rpx;
-  opacity: 0.3;
-  margin-bottom: 20rpx;
-}
-.empty-text {
-  display: block;
-  font-size: 28rpx;
-  color: $text-placeholder;
-}
-.empty-sub {
-  display: block;
-  font-size: 24rpx;
-  color: $text-disabled;
-  margin-top: 8rpx;
-}
-
-.bottom-area {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 16rpx 24rpx;
-  padding-bottom: calc(16rpx + env(safe-area-inset-bottom));
-  background: $bg-white;
-  box-shadow: 0 -4rpx 20rpx rgba(0,0,0,0.06);
-  z-index: 10;
-}
+/* 空状态复用 <empty-state>；底部栏复用 <bottom-bar>；主按钮复用 .btn-primary */
 .btn-add {
-  text-align: center;
-  font-size: 28rpx;
-  font-weight: 600;
-  color: $bg-white;
-  background: linear-gradient(135deg, $primary-color, $primary-dark);
-  border-radius: 40rpx;
   padding: 18rpx 0;
-  box-shadow: 0 4rpx 16rpx rgba(7, 193, 96, 0.35);
-  &:active { opacity: 0.9; transform: scale(0.97); }
 }
 </style>

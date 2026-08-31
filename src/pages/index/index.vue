@@ -1,10 +1,8 @@
-<template>
+﻿<template>
   <view class="home-page">
     <!-- 固定头部 -->
     <view class="header-fixed">
-      <view class="nav-bar">
-        <text class="nav-title">苗木易购</text>
-      </view>
+      <page-nav title="苗木易购" />
       <view class="search-bar">
         <view class="search-box" @click="goPage('/pages/search/search')">
           <u-search
@@ -118,23 +116,14 @@
         >
       </view>
       <view v-if="newList.length > 0" class="new-grid">
-        <view
-          class="new-card"
+        <product-card
           v-for="item in newList.slice(0, 4)"
           :key="item.id"
+          :item="item"
+          tag="2"
+          :show-original="false"
           @click="goDetail(item.id)"
-        >
-          <view class="new-img-wrap">
-            <image
-              :src="getFirstImage(item.images)"
-              mode="aspectFill"
-              class="new-img"
-            />
-            <view class="new-tag">新品</view>
-          </view>
-          <text class="new-name">{{ item.name }}</text>
-          <text class="new-price">{{ formatPrice(item.price) }}</text>
-        </view>
+        />
       </view>
       <view v-else class="new-grid">
         <view class="placeholder-card" v-for="i in 4" :key="'n' + i">
@@ -301,21 +290,9 @@ export default {
   z-index: 100;
   background: $bg-white;
 }
-.nav-bar {
-  padding: calc(var(--status-bar-height) + 50rpx) 30rpx 16rpx;
-  background: $bg-white;
-  text-align: center;
-}
-.nav-title {
-  font-size: 36rpx;
-  font-weight: 700;
-  color: $text-primary;
-}
 .search-bar {
   display: flex;
   align-items: center;
-  padding: 12rpx 30rpx 20rpx;
-  background: $bg-white;
   gap: 16rpx;
 }
 .search-box {
@@ -403,33 +380,6 @@ export default {
 .section {
   margin: 0 30rpx 30rpx;
 }
-.section-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20rpx;
-}
-.section-title {
-  font-size: 32rpx;
-  font-weight: bold;
-  color: $text-primary;
-  padding-left: 16rpx;
-  position: relative;
-}
-.section-title::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 6rpx;
-  bottom: 6rpx;
-  width: 6rpx;
-  background: $primary-color;
-  border-radius: 3rpx;
-}
-.section-more {
-  font-size: 24rpx;
-  color: $text-hint;
-}
 
 /* 商品卡片 - 网格 */
 .flash-scroll {
@@ -505,52 +455,7 @@ export default {
   flex-wrap: wrap;
   justify-content: space-between;
 }
-.new-card {
-  width: calc(50% - 10rpx);
-  background: $bg-white;
-  border-radius: 12rpx;
-  overflow: hidden;
-  margin-bottom: 20rpx;
-  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.06);
-}
-.new-img-wrap {
-  position: relative;
-  width: 100%;
-  overflow: hidden;
-}
-.new-img {
-  width: 100%;
-  height: 200rpx;
-  display: block;
-  background: $bg-input;
-}
-.new-tag {
-  position: absolute;
-  top: 8rpx;
-  left: 8rpx;
-  background: $gradient-green;
-  color: $bg-white;
-  font-size: 18rpx;
-  font-weight: 600;
-  padding: 4rpx 10rpx;
-  border-radius: 4rpx;
-}
-.new-name {
-  display: block;
-  font-size: 26rpx;
-  color: $text-primary;
-  padding: 10rpx 16rpx 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-.new-price {
-  display: block;
-  font-size: 28rpx;
-  color: $accent-orange;
-  font-weight: bold;
-  padding: 4rpx 16rpx 14rpx;
-}
+/* 新品卡片复用公共组件 <product-card> */
 
 .hot-list {
 }

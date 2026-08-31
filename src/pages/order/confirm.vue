@@ -102,15 +102,15 @@
     <view class="footer-space"></view>
 
     <!-- 提交按钮 -->
-    <view class="submit-bar">
+    <bottom-bar class="submit-bar-flex">
       <view class="submit-left">
         <text class="submit-label">实付</text>
         <text class="submit-price">{{ formatPrice(realAmount) }}</text>
       </view>
-      <view class="submit-btn" @click="submitOrder">
+      <view class="submit-btn btn-primary" @click="submitOrder">
         <text>提交订单</text>
       </view>
-    </view>
+    </bottom-bar>
   </view>
 </template>
 
@@ -476,20 +476,11 @@ export default {
   height: 40rpx;
 }
 
-/* ========== 提交栏 ========== */
-.submit-bar {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: $bg-white;
-  padding: 16rpx 24rpx;
-  padding-bottom: calc(16rpx + env(safe-area-inset-bottom));
+/* ========== 提交栏（容器复用 <bottom-bar>，这里只补 flex 布局） ========== */
+.submit-bar-flex {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 -4rpx 20rpx rgba(0, 0, 0, 0.06);
-  z-index: 100;
 }
 .submit-left {
   display: flex;
@@ -506,16 +497,6 @@ export default {
   margin-left: 8rpx;
 }
 .submit-btn {
-  background: linear-gradient(135deg, $primary-color, $primary-dark);
-  color: $bg-white;
-  font-size: 30rpx;
-  font-weight: 600;
   padding: 18rpx 56rpx;
-  border-radius: 44rpx;
-  box-shadow: 0 4rpx 16rpx rgba(7, 193, 96, 0.35);
-  &:active {
-    opacity: 0.9;
-    transform: scale(0.97);
-  }
 }
 </style>

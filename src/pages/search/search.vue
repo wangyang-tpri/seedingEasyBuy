@@ -19,16 +19,14 @@
     <!-- 搜索结果 -->
     <view class="result-section" v-if="keyword">
       <view class="result-grid">
-        <view class="product-card" v-for="item in searchList" :key="item.id" @click="goDetail(item.id)">
-          <view class="img-wrap">
-            <image :src="getFirstImage(item.images)" mode="aspectFill" class="product-img" />
-            <view class="img-tag hot" v-if="item.tag === 1">特惠</view>
-            <view class="img-tag new" v-else-if="item.tag === 2">新品</view>
-            <view class="img-tag hot" v-else-if="item.sales > 100">热销</view>
-          </view>
-          <text class="product-name">{{ item.name }}</text>
-          <text class="product-price">{{ formatPrice(item.price) }}</text>
-        </view>
+        <product-card
+          v-for="item in searchList"
+          :key="item.id"
+          :item="item"
+          :show-original="false"
+          image-height="240rpx"
+          @click="goDetail(item.id)"
+        />
       </view>
       <view v-if="keyword && searchList.length === 0 && searched" class="empty-result">暂无相关商品</view>
     </view>
@@ -92,7 +90,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.search-bar { padding: 20rpx 30rpx; background: $bg-white; }
+/* 搜索栏复用公共 .search-bar */
 .history-section { padding: 30rpx; }
 .history-header { display: flex; justify-content: space-between; margin-bottom: 20rpx; }
 .history-title { font-size: 28rpx; color: $text-primary; }
@@ -101,13 +99,6 @@ export default {
 .history-tag { padding: 12rpx 28rpx; background: $bg-page; border-radius: 30rpx; margin: 0 16rpx 16rpx 0; font-size: 24rpx; color: $text-secondary; }
 .result-section { padding: 20rpx 30rpx; }
 .result-grid { display: flex; flex-wrap: wrap; justify-content: space-between; }
-.product-card { width: 48%; background: $bg-white; border-radius: 12rpx; overflow: hidden; margin-bottom: 20rpx; }
-.img-wrap { position: relative; width: 100%; overflow: hidden; }
-.product-img { width: 100%; height: 240rpx; }
-.img-tag { position: absolute; top: 6rpx; left: 6rpx; font-size: 18rpx; color: #fff; padding: 3rpx 8rpx; border-radius: 4rpx; font-weight: 600; }
-.img-tag.hot { background: linear-gradient(135deg, #FF6B35, #ff5c2a); }
-.img-tag.new { background: linear-gradient(135deg, #07C160, #06AD56); }
-.product-name { display: block; font-size: 26rpx; color: $text-primary; padding: 8rpx 12rpx 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.product-price { display: block; font-size: 28rpx; color: $accent-orange; font-weight: bold; padding: 6rpx 12rpx 16rpx; }
+/* 结果卡片复用公共组件 <product-card>（图片高度 240rpx，不显示销量/原价） */
 .empty-result { text-align: center; color: $text-hint; padding: 100rpx; font-size: 26rpx; }
 </style>

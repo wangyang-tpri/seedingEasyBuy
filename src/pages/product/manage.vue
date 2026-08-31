@@ -17,7 +17,7 @@
 
     <!-- 商品列表 -->
     <z-paging ref="paging" v-model="list" @query="loadProducts" use-page-scroll :auto-show-back-to-top="true">
-      <view class="product-card" v-for="item in list" :key="item.id"
+      <view class="product-card card" v-for="item in list" :key="item.id"
         @click="item.status === 1 && goDetail(item.id)">
         <view class="card-top">
           <image :src="fixImageUrl(getFirstImage(item.images))" mode="aspectFill" class="card-img" />
@@ -28,7 +28,7 @@
               <text>库存: {{ item.stock || 0 }}</text>
               <text>销量: {{ item.sales || 0 }}</text>
             </view>
-            <text :class="['status-tag', item.status === 1 ? 'on' : 'off']">
+            <text :class="['status-tag', item.status === 1 ? 'tag-status-on' : 'tag-status-off']">
               {{ item.status === 1 ? '已上架' : '已下架' }}
             </text>
           </view>
@@ -42,10 +42,7 @@
       </view>
     </z-paging>
 
-    <view class="empty-box" v-if="list.length === 0 && loaded">
-      <view class="empty-icon">📋</view>
-      <text class="empty-text">暂无苗木</text>
-    </view>
+    <empty-state v-if="list.length === 0 && loaded" icon="📋" text="暂无苗木" />
   </view>
 </template>
 
@@ -113,14 +110,14 @@ export default {
 <style lang="scss" scoped>
 .manage-page { min-height: 100vh; background: $bg-page; }
 
-.search-bar { padding: 16rpx 24rpx; background: $bg-white; }
+/* 搜索栏复用公共 .search-bar */
 
 .tab-bar { display: flex; background: $bg-white; padding: 8rpx 24rpx 16rpx; }
 .tab-item { flex: 1; display: flex; flex-direction: column; align-items: center; padding: 12rpx 0; font-size: 26rpx; color: #888; position: relative; }
 .tab-item.active { color: $primary-color; font-weight: 600; }
 .tab-indicator { width: 28rpx; height: 4rpx; background: $primary-color; border-radius: 2rpx; margin-top: 4rpx; }
 
-.product-card { background: $bg-white; margin: 16rpx 24rpx; border-radius: 14rpx; padding: 24rpx; box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.04); }
+.product-card { margin: 16rpx 24rpx; padding: 24rpx; }
 .card-top { display: flex; }
 .card-img { width: 140rpx; height: 140rpx; border-radius: 10rpx; margin-right: 20rpx; flex-shrink: 0; background: $bg-input; }
 .card-info { flex: 1; min-width: 0; }
@@ -128,14 +125,11 @@ export default {
 .card-price { font-size: 30rpx; color: $accent-orange; font-weight: bold; margin-top: 6rpx; display: block; }
 .card-meta { display: flex; gap: 20rpx; margin-top: 6rpx; font-size: 22rpx; color: $text-hint; }
 .status-tag { display: inline-block; font-size: 20rpx; padding: 2rpx 12rpx; border-radius: 4rpx; margin-top: 6rpx; }
-.status-tag.on { background: $primary-light; color: $primary-color; }
-.status-tag.off { background: $bg-gray; color: $text-hint; }
+/* 上/下架配色复用公共 .tag-status-on/.tag-status-off */
 .card-actions { display: flex; justify-content: flex-end; gap: 16rpx; margin-top: 20rpx; padding-top: 20rpx; border-top: 1rpx solid $bg-input; }
 .btn-edit { padding: 12rpx 36rpx; border-radius: 30rpx; border: 1rpx solid $primary-color; color: $primary-color; font-size: 24rpx; }
 .btn-toggle { padding: 12rpx 36rpx; border-radius: 30rpx; font-size: 24rpx; color: $bg-white; }
 .btn-toggle.off { background: $accent-red; }
 .btn-toggle.on { background: $primary-color; }
-.empty-box { text-align: center; padding-top: 200rpx; }
-.empty-icon { font-size: 80rpx; opacity: 0.3; margin-bottom: 20rpx; }
-.empty-text { font-size: 28rpx; color: $text-placeholder; display: block; }
+/* 空状态复用公共 .empty-state/.empty-icon/.empty-text */
 </style>

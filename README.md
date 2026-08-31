@@ -137,7 +137,7 @@ npm run build:mp-qq            # QQ 小程序
 
 ```bash
 # .env.development
-VUE_APP_BASE_API = "http://10.218.72.64:8080/api"   # 后端 API 地址
+VUE_APP_BASE_API = "http://10.218.72.69:8080/api"   # 后端 API 地址  根据自己ip确定
 ```
 
 | 文件 | 说明 |

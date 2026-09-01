@@ -1,5 +1,13 @@
+// #ifdef H5
+const baseUrl = process.env.NODE_ENV === 'development' ? '/api' : process.env.VUE_APP_BASE_API
+// #endif
+// #ifndef H5
+const baseUrl = process.env.VUE_APP_BASE_API
+// #endif
+
+
 const config = {
-  baseUrl: process.env.VUE_APP_BASE_API || 'http://localhost:8080/api',
+  baseUrl: baseUrl,
   timeout: 15000
 }
 

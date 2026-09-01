@@ -5,7 +5,7 @@
 
     <!-- 未登录 -->
     <empty-state v-if="!isLogin" icon="🛒" text="登录后可查看购物车">
-      <view class="login-btn btn-outline-red" @click="goPage('/pages/user/login')">去登录</view>
+      <view class="login-btn btn-outline-red" @click="goPage('/pages/mine/login')">去登录</view>
     </empty-state>
 
     <!-- 已登录，有商品 -->

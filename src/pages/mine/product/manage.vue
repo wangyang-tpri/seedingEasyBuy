@@ -87,7 +87,7 @@ export default {
       return url
     },
     goDetail(id) { uni.navigateTo({ url: `/pages/product/detail?id=${id}` }) },
-    goEdit(id) { uni.navigateTo({ url: `/pages/product/add?id=${id}` }) },
+    goEdit(id) { uni.navigateTo({ url: `/pages/mine/product/add?id=${id}` }) },
     async toggleStatus(item) {
       const action = item.status === 1 ? '下架' : '上架'
       uni.showModal({

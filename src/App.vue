@@ -5,7 +5,7 @@ const PUBLIC_PAGES = [
   'pages/product/list',
   'pages/product/detail',
   'pages/search/search',
-  'pages/user/login'
+  'pages/mine/login'
 ]
 
 export default {
@@ -25,7 +25,7 @@ export default {
       uni.addInterceptor('navigateTo', {
         invoke(args) {
           if (!checkLogin() && !PUBLIC_PAGES.some(p => args.url.startsWith('/' + p))) {
-            uni.reLaunch({ url: '/pages/user/login' })
+            uni.reLaunch({ url: '/pages/mine/login' })
             return false
           }
         }
@@ -34,7 +34,7 @@ export default {
         invoke(args) {
           const requiresAuth = ['pages/cart/cart', 'pages/user/user']
           if (!checkLogin() && requiresAuth.some(p => args.url.startsWith('/' + p))) {
-            uni.reLaunch({ url: '/pages/user/login' })
+            uni.reLaunch({ url: '/pages/mine/login' })
             return false
           }
         }

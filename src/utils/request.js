@@ -26,7 +26,7 @@ function handleUnauthorized() {
   isRedirecting = true
   uni.removeStorageSync('token')
   uni.removeStorageSync('user')
-  uni.reLaunch({ url: '/pages/user/login' })
+  uni.reLaunch({ url: '/pages/mine/login' })
   setTimeout(() => { isRedirecting = false }, 2000)
 }
 

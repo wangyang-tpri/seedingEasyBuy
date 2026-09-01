@@ -101,7 +101,7 @@ export default {
         }
       })
     },
-    goDetail(id) { uni.navigateTo({ url: `/pages/order/detail?id=${id}` }) }
+    goDetail(id) { uni.navigateTo({ url: `/pages/mine/order/detail?id=${id}` }) }
   }
 }
 </script>

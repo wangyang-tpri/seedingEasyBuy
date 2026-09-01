@@ -50,7 +50,7 @@ export default {
       })
     },
     editAddress(id) {
-      uni.navigateTo({ url: `/pages/address/edit${id ? '?id=' + id : ''}` })
+      uni.navigateTo({ url: `/pages/mine/address/edit${id ? '?id=' + id : ''}` })
     },
     selectAddress(addr) {
       const pages = getCurrentPages()

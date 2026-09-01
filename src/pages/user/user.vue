@@ -13,7 +13,7 @@
           <text class="user-phone">{{ user.phone || "点击查看资料" }}</text>
         </view>
       </view>
-      <view v-else class="user-info" @click="goPage('/pages/user/login')">
+      <view v-else class="user-info" @click="goPage('/pages/mine/login')">
         <u-avatar icon="account" size="120rpx"></u-avatar>
         <view class="user-text">
           <text class="user-name">点击登录</text>
@@ -32,7 +32,7 @@
         ><text class="asset-num">{{ couponCount }}</text
         ><text class="asset-label">优惠券</text></view
       >
-      <view class="asset-item" @click="goPage('/pages/collection/collection')"
+      <view class="asset-item" @click="goPage('/pages/mine/collection/collection')"
         ><text class="asset-num">{{ collectionCount }}</text
         ><text class="asset-label">收藏</text></view
       >
@@ -42,7 +42,7 @@
     <view class="order-section">
       <view
         class="section-header"
-        @click="goPage('/pages/order/list?status=-1')"
+        @click="goPage('/pages/mine/order/list?status=-1')"
       >
         <text class="section-title">我的订单</text>
         <text class="section-more">查看全部 ></text>
@@ -90,18 +90,18 @@ export default {
       collectionCount: 0,
       couponCount: 0,
       orderTabs: [
-        { icon: "💰", label: "待付款", url: "/pages/order/list?status=0" },
-        { icon: "📦", label: "待发货", url: "/pages/order/list?status=1" },
-        { icon: "🚚", label: "待收货", url: "/pages/order/list?status=2" },
-        { icon: "⭐", label: "待评价", url: "/pages/order/list?status=3" },
+        { icon: "💰", label: "待付款", url: "/pages/mine/order/list?status=0" },
+        { icon: "📦", label: "待发货", url: "/pages/mine/order/list?status=1" },
+        { icon: "🚚", label: "待收货", url: "/pages/mine/order/list?status=2" },
+        { icon: "⭐", label: "待评价", url: "/pages/mine/order/list?status=3" },
       ],
       couponCount: 0,
       menus: [
-        { icon: "📍", label: "地址管理", url: "/pages/address/list" },
-        { icon: "🌳", label: "苗木上架", url: "/pages/product/add" },
-        { icon: "📋", label: "苗木管理", url: "/pages/product/manage" },
-        { icon: "❤️", label: "我的收藏", url: "/pages/collection/collection" },
-        { icon: "🎫", label: "优惠券", url: "/pages/coupon/coupon" },
+        { icon: "📍", label: "地址管理", url: "/pages/mine/address/list" },
+        { icon: "🌳", label: "苗木上架", url: "/pages/mine/product/add" },
+        { icon: "📋", label: "苗木管理", url: "/pages/mine/product/manage" },
+        { icon: "❤️", label: "我的收藏", url: "/pages/mine/collection/collection" },
+        { icon: "🎫", label: "优惠券", url: "/pages/mine/coupon/coupon" },
       ],
     };
   },
@@ -111,7 +111,7 @@ export default {
     displayMenus() {
       const list = [...this.menus]
       if (this.user && (this.user.userType === 2 || this.user.roleId === '2' || this.user.roleId === 2)) {
-        list.splice(3, 0, { icon: "🖼️", label: "轮播图管理", url: "/pages/banner/manage" })
+        list.splice(3, 0, { icon: "🖼️", label: "轮播图管理", url: "/pages/mine/banner/manage" })
       }
       return list
     },

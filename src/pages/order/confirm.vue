@@ -1,7 +1,7 @@
 <template>
   <view class="confirm-page">
     <!-- 收货地址 -->
-    <view class="address-card" @click="goPage('/pages/address/list')">
+    <view class="address-card" @click="goPage('/pages/mine/address/list')">
       <view class="addr-left">
         <view class="addr-icon">📍</view>
         <view class="addr-body" v-if="selectedAddress">
@@ -201,7 +201,7 @@ export default {
         uni.hideLoading();
         this.showToast("下单成功");
         setTimeout(() => {
-          uni.switchTab({ url: "/pages/order/list?status=-1" });
+          uni.switchTab({ url: "/pages/mine/order/list?status=-1" });
         }, 1000);
       } catch (e) {
         uni.hideLoading();

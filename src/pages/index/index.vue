@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <view class="home-page">
     <!-- 固定头部 -->
     <view class="header-fixed">
@@ -264,9 +264,9 @@ export default {
     },
     onAddClick() {
       if (this.isLogin) {
-        uni.navigateTo({ url: "/pages/product/add" });
+        uni.navigateTo({ url: "/pages/mine/product/add" });
       } else {
-        uni.navigateTo({ url: "/pages/user/login" });
+        uni.navigateTo({ url: "/pages/mine/login" });
       }
     },
     goCategory(cat) {

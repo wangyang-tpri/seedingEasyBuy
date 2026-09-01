@@ -30,12 +30,6 @@
       }
     },
     {
-      "path": "pages/user/login",
-      "style": {
-        "navigationBarTitleText": "登录"
-      }
-    },
-    {
       "path": "pages/product/list",
       "style": {
         "navigationBarTitleText": "商品列表"
@@ -54,64 +48,77 @@
       }
     },
     {
-      "path": "pages/order/list",
-      "style": {
-        "navigationBarTitleText": "我的订单"
-      }
-    },
-    {
-      "path": "pages/order/detail",
-      "style": {
-        "navigationBarTitleText": "订单详情"
-      }
-    },
-    {
       "path": "pages/order/confirm",
       "style": {
         "navigationBarTitleText": "确认订单"
       }
-    },
+    }
+  ],
+  "subPackages": [
     {
-      "path": "pages/address/list",
-      "style": {
-        "navigationBarTitleText": "地址管理"
-      }
-    },
-    {
-      "path": "pages/address/edit",
-      "style": {
-        "navigationBarTitleText": "编辑地址"
-      }
-    },
-    {
-      "path": "pages/product/add",
-      "style": {
-        "navigationBarTitleText": "苗木上架"
-      }
-    },
-    {
-      "path": "pages/product/manage",
-      "style": {
-        "navigationBarTitleText": "苗木管理"
-      }
-    },
-    {
-      "path": "pages/banner/manage",
-      "style": {
-        "navigationBarTitleText": "轮播图管理"
-      }
-    },
-    {
-      "path": "pages/collection/collection",
-      "style": {
-        "navigationBarTitleText": "我的收藏"
-      }
-    },
-    {
-      "path": "pages/coupon/coupon",
-      "style": {
-        "navigationBarTitleText": "优惠券"
-      }
+      "root": "pages/mine",
+      "pages": [
+        {
+          "path": "login",
+          "style": {
+            "navigationBarTitleText": "登录"
+          }
+        },
+        {
+          "path": "order/list",
+          "style": {
+            "navigationBarTitleText": "我的订单"
+          }
+        },
+        {
+          "path": "order/detail",
+          "style": {
+            "navigationBarTitleText": "订单详情"
+          }
+        },
+        {
+          "path": "address/list",
+          "style": {
+            "navigationBarTitleText": "地址管理"
+          }
+        },
+        {
+          "path": "address/edit",
+          "style": {
+            "navigationBarTitleText": "编辑地址"
+          }
+        },
+        {
+          "path": "product/add",
+          "style": {
+            "navigationBarTitleText": "苗木上架"
+          }
+        },
+        {
+          "path": "product/manage",
+          "style": {
+            "navigationBarTitleText": "苗木管理"
+          }
+        },
+        {
+          "path": "banner/manage",
+          "style": {
+            "navigationBarTitleText": "轮播图管理"
+          }
+        },
+        {
+          "path": "collection/collection",
+          "style": {
+            "navigationBarTitleText": "我的收藏"
+          }
+        },
+        {
+          "path": "coupon/coupon",
+          "style": {
+            "navigationBarTitleText": "优惠券"
+          }
+        }
+      ]
     }
   ],
   "tabBar": {
